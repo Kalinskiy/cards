@@ -1,14 +1,28 @@
 import React from 'react';
-import logo from '../logo.svg';
 import './App.css';
+import Header from "./header/Header";
+import {HashRouter, Route} from "react-router-dom";
+import LogIn from "./components/LogIn/LogIn";
+import Profile from "./components/Profile/Profile";
 
-function App() {
+const App = ()=> {
+
+
     return (
         <div className="App">
             {/*HashRouter, Provider*/}
-            <>
-                {/*Header*/}
-            </>
+            <HashRouter>
+                <Header/>
+
+
+
+
+                <Route exact path='/log-in' render={() => <LogIn/>}/>
+                <Route exact path='/profile' render={() => <Profile/>}/>
+            </HashRouter>
+
+
+
         </div>
     );
 }

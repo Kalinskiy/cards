@@ -1,7 +1,6 @@
 const initialState = {}
 
-
-const loginReducer = (state: any = initialState, action: any) => {
+const newPasswordReducer = (state: any = initialState, action: any) => {
 
     switch (action.type) {
 
@@ -14,4 +13,4 @@ const loginReducer = (state: any = initialState, action: any) => {
 
 
 
-export default loginReducer;
+export default newPasswordReducer;
