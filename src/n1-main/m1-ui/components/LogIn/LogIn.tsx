@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import s from './login.module.css'
 import {useFormik} from "formik";
+import {useDispatch} from "react-redux";
+import {loginTC} from "../../../m2-bll/login-reducer";
 
 const LogIn = () => {
 
     // const [login, setLogin] = useState('');
     // const [password, setPassword] = useState('');
     // const [rememberMe, setRememberMe] = useState(false);
-
+    const dispatch = useDispatch()
     const formik = useFormik({
         validate: (values) => {
             if (!values.email.trim())
@@ -26,7 +28,8 @@ const LogIn = () => {
             rememberMe: false
         },
         onSubmit: values => {
-            alert(JSON.stringify(values))
+            dispatch(loginTC(values))
+
         }
     })
 
@@ -39,7 +42,7 @@ const LogIn = () => {
                         type="text"
                         {...formik.getFieldProps('email')}
                     />
-                    {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                    {formik.errors.email ? <div className={s.error}>{formik.errors.email}</div> : null}
 
                 </div>
                 <div className={s.input}>
@@ -49,7 +52,7 @@ const LogIn = () => {
                         {...formik.getFieldProps('password')}
                         checked={formik.values.rememberMe}
                     />
-                    {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+                    {formik.errors.password ? <div className={s.error}>{formik.errors.password}</div> : null}
                 </div>
                 <div>
                     <input type="checkbox"
@@ -58,7 +61,9 @@ const LogIn = () => {
                     <span>remember me</span>
                 </div>
                 <div>
-                    <button>login</button>
+                    <button
+                    type='submit'
+                    >login</button>
                 </div>
             </form>
         </div>

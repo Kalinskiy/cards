@@ -1,4 +1,6 @@
-const initialState = {}
+const initialState = {
+    isLogged:true
+}
 
 const profileReducer = (state: any = initialState, action: any) => {
 

@@ -1,3 +1,7 @@
 .container{
     margin: 20px;
 }
+.error{
+    font-size: 0.7em;
+    color:red
+}
