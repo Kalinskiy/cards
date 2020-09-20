@@ -1,14 +1,17 @@
 import React from 'react';
 import s from './login.module.css'
 import {useFormik} from "formik";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginTC} from "../../../m2-bll/login-reducer";
+import {AppStateType} from "../../../m2-bll/store";
+import {NavLink, Redirect} from "react-router-dom";
+import {Preloader} from "../../../../n3-common_components/Preloader/Preloader";
 
 const LogIn = () => {
 
-    // const [login, setLogin] = useState('');
-    // const [password, setPassword] = useState('');
-    // const [rememberMe, setRememberMe] = useState(false);
+    //Hooks
+    const preloader = useSelector<AppStateType, boolean>(state => state.register.preloader)
+    const isLogged = useSelector<AppStateType, boolean>(state => state.login.isLogged)
     const dispatch = useDispatch()
     const formik = useFormik({
         validate: (values) => {
@@ -25,16 +28,24 @@ const LogIn = () => {
         initialValues: {
             email: '',
             password: '',
-            rememberMe: false
+            rememberMe: false,
+
         },
         onSubmit: values => {
-            dispatch(loginTC(values))
+            dispatch(loginTC(values)
 
+            )
         }
     })
+    //______________________________________________________________________________________________________________________
+
+
+
 
     return (
         <div className={s.container}>
+            {isLogged ? <Redirect to={"/profile"}/> : null}
+            {preloader ? <Preloader/> : null}
             <form onSubmit={formik.handleSubmit}>
                 <div className={s.input}>
                     <div>email</div>
@@ -62,8 +73,12 @@ const LogIn = () => {
                 </div>
                 <div>
                     <button
-                    type='submit'
-                    >login</button>
+                        type='submit'
+                    >login
+                    </button>
+                </div>
+                <div>
+                    <NavLink to={'/forgot'}>forgot password?</NavLink>
                 </div>
             </form>
         </div>

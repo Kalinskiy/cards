@@ -1,11 +1,11 @@
 import React from 'react';
 import s from './profile.module.css'
 import {useSelector} from "react-redux";
-import {AppStoreType} from "../../../m2-bll/store";
 import {Redirect} from "react-router-dom";
+import {AppStateType} from "../../../m2-bll/store";
 
 const Profile = () => {
-    const isLogged =  useSelector<AppStoreType,boolean>(state=>state.login.isLogged)
+    const isLogged =  useSelector<AppStateType,boolean>(state=>state.login.isLogged)
     if(!isLogged)return <Redirect to={'log-in'}/>
 
     return (

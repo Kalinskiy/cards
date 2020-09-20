@@ -1,4 +1,5 @@
 import axios from "axios";
+import {loginParamsType} from "../m2-bll/login-reducer";
 
 
 const instance = axios.create({
@@ -8,9 +9,16 @@ const instance = axios.create({
 
 
 export const loginAPI = {
-    login(email: string, password: string, rememberMe: boolean = false) {
-        return instance.post(`auth/login`, {email, password, rememberMe});
+    login(data:loginParamsType) {
+        return instance.post(`auth/login`,data)
     },
+    logout() {
+        return instance.delete(`auth/login`).then(res=>res.data);
+    },
+    auth(token:string){
+        return instance.post(`auth/me`,token)
+    }
+
 
 }
 
