@@ -1,22 +1,27 @@
 import React from 'react';
 import './App.css';
-import Header from "./header/Header";
+import Header from "../Header/Header";
 import {HashRouter, Route} from "react-router-dom";
-import LogIn from "./components/LogIn/LogIn";
-import Profile from "./components/Profile/Profile";
-import Register from "./components/Register/Register";
+import LogIn from "../Login/LogIn";
+import Profile from "../Profile/Profile";
+import {RegistrationPage} from "../Registration-Page/Registration-Page";
+import Forgot from "../Forgot/Forgot";
+import Reset from "../Reset/Reset";
+
 
 const App = ()=> {
-
 
     return (
         <div className="App">
 
             <HashRouter>
                 <Header/>
-                <Route exact path='/log-in' render={() => <LogIn/>}/>
-                <Route exact path='/profile' render={() => <Profile/>}/>
-                <Route exact path='/register' render={() => <Register/>}/>
+                <Route  path='/log-in' render={() => <LogIn/>}/>
+                <Route  path='/profile' render={() => <Profile/>}/>
+                <Route  path='/register' render={() => <RegistrationPage/>}/>
+                <Route  path='/forgot' render={() => <Forgot/>}/>
+                <Route  path='/set-new-password/:id' render={() => <Reset/>}/>
+
             </HashRouter>
 
 
