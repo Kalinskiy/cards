@@ -9,25 +9,23 @@ import Forgot from "../Forgot/Forgot";
 import Reset from "../Reset/Reset";
 
 
-const App = ()=> {
+const App = () => {
 
     return (
         <div className="App">
 
             <HashRouter>
                 <Header/>
-                <Route  path='/log-in' render={() => <LogIn/>}/>
-                <Route  path='/profile' render={() => <Profile/>}/>
-                <Route  path='/register' render={() => <RegistrationPage/>}/>
-                <Route  path='/forgot' render={() => <Forgot/>}/>
-                <Route  path='/set-new-password/:id' render={() => <Reset/>}/>
+                <Route path='/log-in' render={() => <LogIn/>}/>
+                <Route path='/profile' render={() => <Profile/>}/>
+                <Route path='/register' render={() => <RegistrationPage/>}/>
+                <Route path='/forgot' render={() => <Forgot/>}/>
+                <Route path='/set-new-password/:token' render={() => <Reset/>}/>
 
             </HashRouter>
-
 
 
         </div>
     );
 }
-
 export default App;

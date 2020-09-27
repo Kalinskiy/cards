@@ -16,7 +16,9 @@ const Reset = () => {
     const error = useSelector<AppStateType, string | null>(state => state.login.error)
     const preloader = useSelector<AppStateType, boolean>(state => state.register.preloader)
     const resetPasswordToken = useSelector<any>(state => state.login.resetPasswordToken)
-    let url = useParams()
+    let {token} =useParams()
+    console.log('')
+   //let token = {id:url.token}
 
     const dispatch = useDispatch()
     const formik = useFormik({
@@ -28,12 +30,12 @@ const Reset = () => {
         },
         initialValues: {
             password: '',
-            resetPasswordToken:''
+
 
         },
 
         onSubmit: values => {
-               dispatch(recoverPasswordTC({ password: values.password,resetPasswordToken:''})) // как достать токен из url?
+               dispatch(recoverPasswordTC({ password: values.password, resetPasswordToken:token})) // как достать токен из url?
 
         }
     })

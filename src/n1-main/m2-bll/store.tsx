@@ -7,13 +7,15 @@ import profileReducer from "../Profile/Reducer/profile-reducer";
 import forgotPasswordReducer from "../Forgot/Reducer/forgot-reducer";
 
 
+
 const reducers = combineReducers({
 
     login: loginReducer,
     register: registrationReducer,
     newPass:newPasswordReducer,
     profile:profileReducer,
-    forgot: forgotPasswordReducer
+    forgot: forgotPasswordReducer,
+
 
 
 

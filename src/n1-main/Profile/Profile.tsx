@@ -1,20 +1,27 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import s from './profile.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../m2-bll/store";
-import {authTC} from "../Login/Reducer/login-reducer";
+import {authTC, initializedApp} from "../Login/Reducer/login-reducer";
 
 const Profile = () => {
     const isLogged =  useSelector<AppStateType,boolean>(state=>state.login.isLogged)
     const dispatch = useDispatch()
+    const [value, setValue] = useState(false)
 
     useEffect(()=>{
-        dispatch (authTC())
+        handleAuth()
     },[])
 
+    const handleAuth = async () => {
+        await dispatch (authTC())
+        setValue(true)
+    }
 
-    if(!isLogged)return <Redirect to={'log-in'}/>
+    if(value && !isLogged) {
+        return <Redirect to={'log-in'}/>
+    }
 
 
     return (
