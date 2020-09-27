@@ -1,9 +1,8 @@
 import React from 'react';
 import s from './header.module.css'
-import {NavLink, Redirect, useHistory} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {NavLink, useHistory} from "react-router-dom";
+import {useDispatch} from "react-redux";
 import {logoutTC} from "../Login/Reducer/login-reducer";
-import {AppStateType} from "../m2-bll/store";
 
 const Header = () => {
     const dispatch = useDispatch()

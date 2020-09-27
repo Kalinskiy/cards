@@ -8,7 +8,6 @@ import {setProfile} from "../../Profile/Reducer/profile-reducer";
 
 //ActionTypes
 type SetLoginType = ReturnType<typeof setLogin>
-type InitializedSuccessType = ReturnType<typeof initializedSuccess>
 type SetProfileType = ReturnType<typeof setProfile>
 type SetErrorType = ReturnType<typeof setError>
 type SetPreloaderActionType = ReturnType<typeof setPreloader>
@@ -19,7 +18,7 @@ type LoginReducerActionsType =
     | SetProfileType
     | SetErrorType
     | SetPreloaderActionType
-    | InitializedSuccessType
+
 
 //Thunk Types
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, LoginReducerActionsType>
@@ -64,10 +63,6 @@ const loginReducer = (state: InitialStateType = initialState, action: LoginReduc
 
             return {...state, error: action.error}
         }
-        case "app/INITIALIZED_SUCCESS": {
-
-            return {...state, initialized: true}
-        }
 
         default:
             return state;
@@ -105,7 +100,7 @@ export const logoutTC = (): ThunkActionType => async (dispatch) => {
 export const authTC = (): ThunkActionType => async (dispatch) => {
     try {
         dispatch(setPreloader(true))
-      const res = await loginAPI.auth()
+        const res = await loginAPI.auth()
         if (res.data.email && res.data.name) {
             dispatch(setLogin(true))
         }
@@ -116,25 +111,12 @@ export const authTC = (): ThunkActionType => async (dispatch) => {
     }
 
 }
-export const initializedApp = (): ThunkActionType => async (dispatch) => {
-    try {
-        dispatch(setPreloader(true))
-        dispatch(authTC())
-        dispatch(initializedSuccess(true))
-
-    } catch (e) {
-        console.log(e.response.data.error)
-    } finally {
-        dispatch(setPreloader(false))
-    }
-}
 
 
 //______________________________________________________________________________________________________________________
 
 //Action Creators
 export const setLogin = (isLogged: boolean) => ({type: "login/IS_LOGGED", isLogged} as const)
-export const initializedSuccess = (initialized:boolean) => ({type: "app/INITIALIZED_SUCCESS",initialized} as const)
 export const setError = (error: string | null) => ({type: "login/SET_ERROR", error} as const)
 
 

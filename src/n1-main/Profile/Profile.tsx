@@ -3,7 +3,7 @@ import s from './profile.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../m2-bll/store";
-import {authTC, initializedApp} from "../Login/Reducer/login-reducer";
+import {authTC} from "../Login/Reducer/login-reducer";
 
 const Profile = () => {
     const isLogged =  useSelector<AppStateType,boolean>(state=>state.login.isLogged)
