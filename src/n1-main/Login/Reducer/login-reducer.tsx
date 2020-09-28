@@ -13,7 +13,12 @@ type SetErrorType = ReturnType<typeof setError>
 type SetPreloaderActionType = ReturnType<typeof setPreloader>
 
 
-type LoginReducerActionsType = SetLoginType | SetProfileType | SetErrorType | SetPreloaderActionType
+type LoginReducerActionsType =
+    SetLoginType
+    | SetProfileType
+    | SetErrorType
+    | SetPreloaderActionType
+
 
 //Thunk Types
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, LoginReducerActionsType>
@@ -23,21 +28,23 @@ type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, LoginRe
 
 //initialState
 const initialState = {
+    initializedApp: false,
     isLogged: false,
     verified: false,
     error: null,
     email: null,
     name: null,
-    password:null,
+    password: null,
     resetPasswordToken: null
 }
- type InitialStateType  = {
+type InitialStateType = {
+    initializedApp: boolean,
     isLogged: boolean,
     verified: boolean,
     error: null | string,
     email: null | string,
     name: null | string,
-    password:null | string,
+    password: null | string,
     resetPasswordToken: null | string
 }
 
@@ -86,7 +93,6 @@ export const logoutTC = (): ThunkActionType => async (dispatch) => {
         dispatch(setLogin(false))
         dispatch(setProfile(null, null))
 
-
     } catch (error) {
         console.log(error.response.data.error)
     }
@@ -103,6 +109,7 @@ export const authTC = (): ThunkActionType => async (dispatch) => {
     } finally {
         dispatch(setPreloader(false))
     }
+
 }
 
 
