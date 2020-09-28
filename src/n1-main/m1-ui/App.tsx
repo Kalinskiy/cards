@@ -7,25 +7,21 @@ import Profile from "../Profile/Profile";
 import {RegistrationPage} from "../Registration-Page/Registration-Page";
 import Forgot from "../Forgot/Forgot";
 import Reset from "../Reset/Reset";
+import {Table} from "../Table/Table";
 
 
-const App = ()=> {
-
+const App = () => {
     return (
         <div className="App">
-
             <HashRouter>
                 <Header/>
-                <Route  path='/log-in' render={() => <LogIn/>}/>
-                <Route  path='/profile' render={() => <Profile/>}/>
-                <Route  path='/register' render={() => <RegistrationPage/>}/>
-                <Route  path='/forgot' render={() => <Forgot/>}/>
-                <Route  path='/set-new-password/:id' render={() => <Reset/>}/>
-
+                <Route path='/log-in' render={() => <LogIn/>}/>
+                <Route path='/profile' render={() => <Profile/>}/>
+                <Route path='/register' render={() => <RegistrationPage/>}/>
+                <Route path='/forgot' render={() => <Forgot/>}/>
+                <Route path='/table' render={() => <Table/>}/>
+                <Route path='/set-new-password/:id' render={() => <Reset/>}/>
             </HashRouter>
-
-
-
         </div>
     );
 }

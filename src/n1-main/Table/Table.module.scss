@@ -1,0 +1,16 @@
+.container {
+  margin-top: 3%;
+ table {
+   border-collapse: collapse;
+   width: 80%;
+   margin: 0 auto;
+   .header {
+     color: white;
+     background: steelblue;
+     th {
+       padding: 0 40px 0 40px;
+     }
+   }
+ }
+
+}

@@ -5,18 +5,16 @@ import registrationReducer from "../Registration-Page/Reducer/RegistrationReduce
 import newPasswordReducer from "../Reset/Reducer/reset-reducer";
 import profileReducer from "../Profile/Reducer/profile-reducer";
 import forgotPasswordReducer from "../Forgot/Reducer/forgot-reducer";
+import tableReducer from "../Table/Reducer/TableReducer";
 
 
 const reducers = combineReducers({
-
     login: loginReducer,
     register: registrationReducer,
     newPass:newPasswordReducer,
     profile:profileReducer,
-    forgot: forgotPasswordReducer
-
-
-
+    forgot: forgotPasswordReducer,
+    table: tableReducer
 })
 
 

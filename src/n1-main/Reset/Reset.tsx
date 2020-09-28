@@ -6,6 +6,7 @@ import {AppStateType} from "../m2-bll/store";
 import {Preloader} from "../../n3-common_components/Preloader/Preloader";
 import { useParams } from 'react-router-dom';
 import {recoverPasswordTC} from "./Reducer/reset-reducer";
+import loginReducer from "../Login/Reducer/login-reducer";
 
 const Reset = () => {
 
@@ -16,8 +17,8 @@ const Reset = () => {
     const error = useSelector<AppStateType, string | null>(state => state.login.error)
     const preloader = useSelector<AppStateType, boolean>(state => state.register.preloader)
     const resetPasswordToken = useSelector<any>(state => state.login.resetPasswordToken)
-    let url = useParams()
-
+    // let params = useParams<{id: string}>()
+    // console.log(params.id)
     const dispatch = useDispatch()
     const formik = useFormik({
         validate: (values) => {
