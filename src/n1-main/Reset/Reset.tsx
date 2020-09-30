@@ -17,7 +17,7 @@ const Reset = () => {
     const error = useSelector<AppStateType, string | null>(state => state.login.error)
     const preloader = useSelector<AppStateType, boolean>(state => state.register.preloader)
     const resetPasswordToken = useSelector<any>(state => state.login.resetPasswordToken)
-    // let params = useParams<{id: string}>()
+    let params = useParams<{id: string}>()
     // console.log(params.id)
     const dispatch = useDispatch()
     const formik = useFormik({

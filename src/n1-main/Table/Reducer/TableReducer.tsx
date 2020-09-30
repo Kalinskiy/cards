@@ -52,9 +52,9 @@ export const savePack = (packs: PackType[]) => ({type: "table/SAVE_PACK", packs}
 
 //Thunks
 
-export const getPacksTC = (): ThunkActionType => async (dispatch) => {
+export const getPacksTC = (userId: string | null): ThunkActionType => async (dispatch) => {
     try {
-        const data = await packsAPI.getPacks()
+        const data = await packsAPI.getPacks(userId)
         dispatch(savePack(data.cardPacks))
     }
     catch (error) {
@@ -63,15 +63,27 @@ export const getPacksTC = (): ThunkActionType => async (dispatch) => {
 
 }
 
-export const addPackTC = (addPackData: AddPackDataType): ThunkActionType => async (dispatch) => {
+export const addPackTC = (userId: string | null, addPackData?: AddPackDataType): ThunkActionType => async (dispatch) => {
     try {
-        const response = await packsAPI.addPack(addPackData)
-       // dispatch(getPacksTC)
+        const cardsPack = addPackData ? addPackData : {}
+        const response = await packsAPI.addPack(cardsPack)
+        debugger
+       dispatch(getPacksTC(userId))
     }
     catch (error) {
         console.log(error)
     }
 
+}
+
+export const deletePackTC = (packId: string | null, userId: string | null) : ThunkActionType => async (dispatch) => {
+    try {
+        const response = packsAPI.deletePack(packId)
+        dispatch(getPacksTC(userId))
+    }
+    catch (error) {
+
+    }
 }
 
 //______________________________________________________________________________________________________________________

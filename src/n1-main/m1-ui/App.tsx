@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import Header from "../Header/Header";
 import {HashRouter, Route} from "react-router-dom";
@@ -8,9 +8,17 @@ import {RegistrationPage} from "../Registration-Page/Registration-Page";
 import Forgot from "../Forgot/Forgot";
 import Reset from "../Reset/Reset";
 import {Table} from "../Table/Table";
+import {authTC} from "../Login/Reducer/login-reducer";
+import {useDispatch} from "react-redux";
 
 
 const App = () => {
+
+    const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch (authTC())
+    },[])
+
     return (
         <div className="App">
             <HashRouter>

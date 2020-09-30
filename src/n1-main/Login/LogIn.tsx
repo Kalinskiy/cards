@@ -2,7 +2,7 @@ import React from 'react';
 import s from './login.module.css'
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {loginTC} from "./Reducer/login-reducer";
+import {LoginAuthStateType, loginTC} from "./Reducer/login-reducer";
 import {AppStateType} from "../m2-bll/store";
 import {NavLink, Redirect} from "react-router-dom";
 import {Preloader} from "../../n3-common_components/Preloader/Preloader";
@@ -41,6 +41,7 @@ const LogIn = () => {
         },
         onSubmit: values => {
             dispatch(loginTC(values)
+
             )
         }
     })

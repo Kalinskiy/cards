@@ -2,7 +2,8 @@ import axios from "axios";
 
 
 const instance = axios.create({
-    baseURL: 'https://neko-back.herokuapp.com/2.0',
+   // baseURL: 'https://neko-back.herokuapp.com/2.0',
+    baseURL: "http://localhost:7542/2.0/",
     withCredentials: true
 })
 
@@ -102,20 +103,20 @@ export type UpdateCardDataType = {
 
 
 export const packsAPI = {
-    getPacks(userId?: string) {
-        const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=7`).then(res =>res.data)
+    getPacks(userId?: string | null) {
+        const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=7&user_id=${userId}`).then(res =>res.data)
         return promise
     },
-    addPack(addPackData: AddPackDataType) {
-        const promise = instance.post(`cards/pack`, addPackData)
+    addPack(cardsPack: AddPackDataType) {
+        const promise = instance.post(`/cards/pack`, {cardsPack})
         return promise
     },
-    deletePack(packId: string) {
-        const promise = instance.delete(`cards/pack?id=${packId}`)
+    deletePack(packId: string | null) {
+        const promise = instance.delete(`/cards/pack?id=${packId}`)
         return promise
     },
     renamePack(renamePackData: RenamePackDataType) {
-        const promise = instance.put(`cards/pack`, renamePackData)
+        const promise = instance.put(`/cards/pack`, renamePackData)
         return promise
     }
 }
