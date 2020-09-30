@@ -5,8 +5,9 @@ import {AppStateType} from "../../m2-bll/store";
 
 
 type SavePackType = ReturnType<typeof savePack>
+type TotalPackType = ReturnType<typeof setTotalCadrds>
 
-type ActionType = SavePackType
+type ActionType = SavePackType | TotalPackType
 
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 
@@ -18,6 +19,7 @@ type InitialStateType = {
     minGrade: number | null
     page: number | null
     pageCount: number | null
+    packsCount: null | number
 }
 //______________________________________________________________________________________________________________________
 
@@ -30,6 +32,7 @@ const initialState = {
     minGrade: null,
     page: null,
     pageCount: null,
+    packsCount: null
 }
 
 const tableReducer = (state: InitialStateType = initialState, action: ActionType) => {
@@ -39,6 +42,11 @@ const tableReducer = (state: InitialStateType = initialState, action: ActionType
                ...state,
                packs: action.packs
            }
+        case "table/SET_TOTAL_CARDS" :
+            return {
+                ...state,
+                packsCount: action.packsCount
+            }
         default:
             return state;
     }
@@ -47,15 +55,17 @@ const tableReducer = (state: InitialStateType = initialState, action: ActionType
 //Action Creators
 
 export const savePack = (packs: PackType[]) => ({type: "table/SAVE_PACK", packs} as const)
+export const setTotalCadrds = (packsCount: number) => ({type: "table/SET_TOTAL_CARDS", packsCount} as const)
 
 //______________________________________________________________________________________________________________________
 
 //Thunks
 
-export const getPacksTC = (userId: string | null): ThunkActionType => async (dispatch) => {
+export const getPacksTC = (userId: string | null, pageCount=7, page=1): ThunkActionType => async (dispatch) => {
     try {
-        const data = await packsAPI.getPacks(userId)
+        const data = await packsAPI.getPacks(userId, pageCount, page)
         dispatch(savePack(data.cardPacks))
+        dispatch( setTotalCadrds(data.cardPacksTotalCount) )
     }
     catch (error) {
         console.log(error)
@@ -67,7 +77,6 @@ export const addPackTC = (userId: string | null, addPackData?: AddPackDataType):
     try {
         const cardsPack = addPackData ? addPackData : {}
         const response = await packsAPI.addPack(cardsPack)
-        debugger
        dispatch(getPacksTC(userId))
     }
     catch (error) {

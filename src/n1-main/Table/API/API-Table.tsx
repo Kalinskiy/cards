@@ -103,8 +103,8 @@ export type UpdateCardDataType = {
 
 
 export const packsAPI = {
-    getPacks(userId?: string | null) {
-        const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=7&user_id=${userId}`).then(res =>res.data)
+    getPacks(userId?: string | null, pageCount=7, page=1) {
+        const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userId}`).then(res =>res.data)
         return promise
     },
     addPack(cardsPack: AddPackDataType) {

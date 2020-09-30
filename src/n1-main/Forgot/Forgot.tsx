@@ -30,7 +30,7 @@ const Forgot = () => {
             email: '',
         },
         onSubmit: values => {
-           dispatch(forgotTC({ email: values.email, from: 'Sasha', message: `<div> <a href="http://localhost:3000/#/reset/">Recover your password</a> </div>`} ))
+           dispatch(forgotTC({ email: values.email, from: 'test-front-admin <sasha.kalinskiy@yandex.ru', message: `<div> <a href="http://localhost:3000/#/reset/">Recover your password</a> </div>`} ))
 
         }
     })
