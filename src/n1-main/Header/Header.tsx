@@ -10,7 +10,7 @@ const Header = () => {
 
     const logOutClick = async () => {
         await dispatch(logoutTC())
-        history.push('/profile')
+        history.push('/log-in')
     }
 
     return (

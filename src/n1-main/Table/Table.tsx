@@ -8,7 +8,7 @@ import {PackType} from "./API/API-Table";
 import {AddPackForm} from "./Add-Pack/Add-pack";
 import Search from "./Search/Search";
 import ReactSimplePagination from "../../n3-common_components/Pagination/Pagination";
-//import ReactSimplePagination from "@naoki85/react-simple-pagination-component";
+
 
 
 export const Table = () => {
