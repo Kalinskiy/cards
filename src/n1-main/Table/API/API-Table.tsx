@@ -115,8 +115,8 @@ export const packsAPI = {
         const promise = instance.delete(`/cards/pack?id=${packId}`)
         return promise
     },
-    renamePack(renamePackData: RenamePackDataType) {
-        const promise = instance.put(`/cards/pack`, renamePackData)
+    renamePack(cardsPack: RenamePackDataType) {
+        const promise = instance.put(`/cards/pack`, {cardsPack})
         return promise
     }
 }

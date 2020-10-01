@@ -1,13 +1,15 @@
 import React from "react";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {addPackTC} from "../Reducer/TableReducer";
-import {AppStateType} from "../../m2-bll/store";
+import {changePackNameTC} from "../../n1-main/Table/Reducer/TableReducer";
+import {AppStateType} from "../../n1-main/m2-bll/store";
 
-export const AddPackForm = () => {
+export const RenameWindow = () => {
 
     const dispatch = useDispatch()
+    const packId = useSelector<AppStateType, string | null>(state => state.rename.packId)
     const userId = useSelector<AppStateType, string | null>(state => state.login.auth._id)
+
 
     const formik = useFormik({
         validate: (values) => {},
@@ -15,13 +17,18 @@ export const AddPackForm = () => {
             name: '',
         },
         onSubmit: values => {
-            dispatch(addPackTC(userId, values))
+
+            let data = {
+                _id: packId,
+                name: values.name
+            }
+           dispatch(changePackNameTC(data, userId))
         }
     })
 
     return (
         <form onSubmit={formik.handleSubmit}>
-            <label htmlFor={"name"}>Card Name</label>
+            <label htmlFor={"name"}>New Card Name</label>
             <br/>
             <input
                 type="text"

@@ -1,12 +1,17 @@
 import {PackType, packsAPI, CardsType, AddPackDataType} from "../API/API-Table";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../../m2-bll/store";
+import {changeTrigger, changeTriggerRenameType} from "../../../n3-common_components/Rename-window/Reducer/Rename-Reducer";
+import {
+    changePreloaderTrigger,
+    changeTriggerPreloaderActionType
+} from "../../../n3-common_components/Preloader/Reducer/PreloaderReducer";
 
 
 
 type SavePackType = ReturnType<typeof savePack>
 
-type ActionType = SavePackType
+type ActionType = SavePackType | changeTriggerRenameType | changeTriggerPreloaderActionType
 
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 
@@ -65,13 +70,16 @@ export const getPacksTC = (userId: string | null): ThunkActionType => async (dis
 
 export const addPackTC = (userId: string | null, addPackData?: AddPackDataType): ThunkActionType => async (dispatch) => {
     try {
+        dispatch(changePreloaderTrigger(true))
         const cardsPack = addPackData ? addPackData : {}
         const response = await packsAPI.addPack(cardsPack)
-        debugger
        dispatch(getPacksTC(userId))
+        dispatch(changePreloaderTrigger(false))
     }
     catch (error) {
+        dispatch(changePreloaderTrigger(true))
         console.log(error)
+        dispatch(changePreloaderTrigger(false))
     }
 
 }
@@ -85,6 +93,18 @@ export const deletePackTC = (packId: string | null, userId: string | null) : Thu
 
     }
 }
+
+export const changePackNameTC = (data: any, userId: string | null) : ThunkActionType => async (dispatch) => {
+    try {
+        const response = packsAPI.renamePack(data)
+        dispatch(changeTrigger(false))
+        dispatch(getPacksTC(userId))
+    }
+    catch (error) {
+
+    }
+}
+
 
 //______________________________________________________________________________________________________________________
 

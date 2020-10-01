@@ -7,15 +7,20 @@ export type PackType = {
     cardsCount: number
     lastUpdate: string
     userId: string | null
-    onClick: (packId: string | null, userId: string | null) => void
+    onClickDeleteHandler: (packId: string | null, userId: string | null) => void
+    onClickUpdateHandler: (packId:string | null) => void
 }
 
 
 
 export const Pack = (props: PackType) => {
 
-    const onClickHandler = () => {
-        props.onClick(props.packId, props.userId)
+    const onClickDeleteHandler = () => {
+        props.onClickDeleteHandler(props.packId, props.userId)
+    }
+
+    const onClickUpdateHandler = () => {
+        props.onClickUpdateHandler(props.packId)
     }
 
     return (
@@ -25,10 +30,10 @@ export const Pack = (props: PackType) => {
                 <td>{props.cardsCount}</td>
                 <td>{props.lastUpdate}</td>
                 <td>
-                    <button onClick={onClickHandler}>Delete</button>
+                    <button onClick={onClickDeleteHandler}>Delete</button>
                 </td>
                 <td>
-                    <button>Update</button>
+                    <button onClick={onClickUpdateHandler}>Update</button>
                 </td>
                 <td>cards</td>
             </tr>
