@@ -6,6 +6,8 @@ import newPasswordReducer from "../Reset/Reducer/reset-reducer";
 import profileReducer from "../Profile/Reducer/profile-reducer";
 import forgotPasswordReducer from "../Forgot/Reducer/forgot-reducer";
 import tableReducer from "../Table/Reducer/TableReducer";
+import {renamePackReducer} from "../../n3-common_components/Rename-window/Reducer/Rename-Reducer";
+import {preloaderReducer} from "../../n3-common_components/Preloader/Reducer/PreloaderReducer";
 
 
 const reducers = combineReducers({
@@ -14,7 +16,9 @@ const reducers = combineReducers({
     newPass:newPasswordReducer,
     profile:profileReducer,
     forgot: forgotPasswordReducer,
-    table: tableReducer
+    table: tableReducer,
+    rename: renamePackReducer,
+    preloader: preloaderReducer
 })
 
 
