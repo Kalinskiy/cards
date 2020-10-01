@@ -5,9 +5,10 @@ import {AppStateType} from "../../m2-bll/store";
 
 
 type SavePackType = ReturnType<typeof savePack>
+type GetPageType = ReturnType<typeof getPage>
 type TotalPackType = ReturnType<typeof setTotalCadrds>
 
-type ActionType = SavePackType | TotalPackType
+type ActionType = SavePackType | TotalPackType | GetPageType
 
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 
@@ -47,6 +48,11 @@ const tableReducer = (state: InitialStateType = initialState, action: ActionType
                 ...state,
                 packsCount: action.packsCount
             }
+            case "table/GET_PAGE" :
+            return {
+                ...state,
+                page: action.page
+            }
         default:
             return state;
     }
@@ -55,6 +61,7 @@ const tableReducer = (state: InitialStateType = initialState, action: ActionType
 //Action Creators
 
 export const savePack = (packs: PackType[]) => ({type: "table/SAVE_PACK", packs} as const)
+export const getPage = (page: number | null) => ({type: "table/GET_PAGE", page} as const)
 export const setTotalCadrds = (packsCount: number) => ({type: "table/SET_TOTAL_CARDS", packsCount} as const)
 
 //______________________________________________________________________________________________________________________
@@ -66,6 +73,7 @@ export const getPacksTC = (userId: string | null, pageCount=7, page=1): ThunkAct
         const data = await packsAPI.getPacks(userId, pageCount, page)
         dispatch(savePack(data.cardPacks))
         dispatch( setTotalCadrds(data.cardPacksTotalCount) )
+        dispatch(getPage(page))
     }
     catch (error) {
         console.log(error)

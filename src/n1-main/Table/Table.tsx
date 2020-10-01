@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import style from "./Table.module.scss"
 import {Pack} from "./Pack/Pack";
 import {useDispatch, useSelector} from "react-redux";
-import {deletePackTC, getPacksTC} from "./Reducer/TableReducer";
+import {deletePackTC, getPacksTC, getPage} from "./Reducer/TableReducer";
 import {AppStateType} from "../m2-bll/store";
 import {PackType} from "./API/API-Table";
 import {AddPackForm} from "./Add-Pack/Add-pack";
@@ -20,7 +20,7 @@ export const Table = () => {
  //--------------------------------------------------------------------------------------------------------------------
 
     const dispatch = useDispatch()
-
+    const page = useSelector<AppStateType,number | null>(state => state.table.page)
     const packs = useSelector<AppStateType, PackType[]>(state => state.table.packs)
     const userId = useSelector<AppStateType, string | null>(state => state.login.auth._id)
     const totalCards = useSelector<AppStateType, number | null>(state => state.table.packsCount)
@@ -38,6 +38,7 @@ export const Table = () => {
 
     const handleChangePage = ( page: number) => {
         dispatch(getPacksTC(userId, 7, page ))
+
     }
 
     return (
@@ -64,8 +65,8 @@ export const Table = () => {
             </table>
             <AddPackForm/>
               <ReactSimplePagination
-                page={totalCards ? Math.ceil(totalCards/7 ) : 0}
-                maxPage={10}
+                page={page?page:0}
+                maxPage={totalCards? Math.ceil( totalCards/7 ) : 0}
                 onClickAction={handleChangePage}
             />
 

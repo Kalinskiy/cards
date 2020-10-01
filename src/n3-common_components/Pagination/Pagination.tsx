@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
 import  s from './Pagination.module.css';
+import {useSelector} from "react-redux";
+import {AppStateType} from "../../n1-main/m2-bll/store";
 
 interface PaginateProps {
     maxPage: number;
@@ -8,6 +10,8 @@ interface PaginateProps {
 }
 
 const ReactSimplePagination: FC<PaginateProps> = (props: PaginateProps) => {
+    const pageState = useSelector<AppStateType,number | null>(state => state.table.page)
+
     const range = (start: number, end: number): number[] => {
         return Array.from({ length: end - start + 1 }, (v, k) => k + start)
     };
@@ -43,11 +47,12 @@ const ReactSimplePagination: FC<PaginateProps> = (props: PaginateProps) => {
                         &lt;
                     </li>
                 )}
-                {pages.map(i => {
+                {pages.map(i =>
+                    {
                     return (
                         <li
                             key={i}
-                            className={props.page === i ? s.current : ''}
+                            className={pageState === i ? s.current : ''}
                             onClick={() => props.onClickAction(i) }
                         >
                             {i}
