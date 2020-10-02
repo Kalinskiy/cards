@@ -58,9 +58,12 @@ export const Table = () => {
                     <th>Name</th>
                     <th>Cards Count</th>
                     <th>Last update</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 </thead>
-                {
+               <tbody> {
                     packs.filter(e => e.name.includes(searchValue)).map(e => <Pack key={e._id}
                                                                                    packId={e._id}
                                                                                    name={e.name}
@@ -70,7 +73,7 @@ export const Table = () => {
                                                                                    onClickDeleteHandler={onClickDeleteHandler}
                                                                                    onClickUpdateHandler={onClickUpdateHandler}
                     />)
-                }
+                }</tbody>
             </table>
             <AddPackForm/>
             <ReactSimplePagination

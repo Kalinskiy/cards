@@ -24,7 +24,7 @@ export const Pack = (props: PackType) => {
     }
 
     return (
-        <tbody className={style.body}>
+
             <tr>
                 <td>{props.name}</td>
                 <td>{props.cardsCount}</td>
@@ -37,6 +37,6 @@ export const Pack = (props: PackType) => {
                 </td>
                 <td>cards</td>
             </tr>
-        </tbody>
+        //className={style.body}
     )
 }
