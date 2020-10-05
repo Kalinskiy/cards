@@ -1,7 +1,7 @@
 import React from "react";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {changePackNameTC} from "../../n1-main/Table/Reducer/TableReducer";
+import {changePackNameTC} from "../../n1-main/Table/Table-Reducer/TableReducer";
 import {AppStateType} from "../../n1-main/m2-bll/store";
 
 export const RenameWindow = () => {

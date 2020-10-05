@@ -1,13 +1,13 @@
 import axios from "axios";
 
 
-const instance = axios.create({
+export const instance = axios.create({
    // baseURL: 'https://neko-back.herokuapp.com/2.0',
     baseURL: "http://localhost:7542/2.0/",
     withCredentials: true
 })
 
-//types...
+//types-----------------------------------------------------------------------------------------------------------------
 export type PackType = {
     cardsCount: number
     created: string
@@ -53,54 +53,7 @@ export type RenamePackDataType = {
     name?: string
 }
 
-export type CardsType = {
-    answer: string
-    question: string
-    cardsPack_id: string
-    grade: number
-    rating: number
-    shots: number
-    type: string
-    user_id: string
-    created: string
-    updated: string
-    __v: number
-    _id: string
-}
-
-export type GetCardsResponseType = {
-    cards: CardsType[]
-    cardsTotalCount: number
-    maxGrade: number
-    minGrade: number
-    page: number
-    pageCount: number
-}
-
-export type CardDataType = {
-    cardsPack_id: string
-    question?: string
-    answer?: string
-    grade?: number
-    shots?: number
-    rating?: number
-    answerImg?: string
-    questionImg?: string
-    questionVideo?: string
-    answerVideo?: string
-    type?: string
-}
-
-export type AddCardDataType = {
-    card: CardDataType
-}
-
-export type UpdateCardDataType = {
-    id: string
-    question?: string
-    comments?: string
-}
-
+//Object-----------------------------------------------------------------------------------------------------------------
 
 export const packsAPI = {
     getPacks(userId?: string | null, pageCount=7, page=1) {
@@ -121,21 +74,3 @@ export const packsAPI = {
     }
 }
 
-export const cardsAPI = {
-    getCards() {
-        const promise = instance.get<GetCardsResponseType>(`/cards/pack?pageCount=7`)
-        return promise
-    },
-    addCard(AddCardData: AddCardDataType) {
-        const promise = instance.post(`/cards/card`, AddCardData)
-        return promise
-    },
-    deleteCard() {
-        const promise = instance.delete(`/cards/card`)
-        return promise
-    },
-    updateCard(UpdateCardData: UpdateCardDataType) {
-        const promise = instance.put(`/cards/card`, UpdateCardData)
-        return promise
-    }
-}

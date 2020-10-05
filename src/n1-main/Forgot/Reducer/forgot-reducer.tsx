@@ -22,7 +22,7 @@ type InitialStateType  = {}
 //______________________________________________________________________________________________________________________
 
 
-//Reducer
+//Table-Reducer
 export const forgotPasswordReducer = (state: InitialStateType = initialState, action: ForgotReducerActionType) => {
 
     switch (action.type) {

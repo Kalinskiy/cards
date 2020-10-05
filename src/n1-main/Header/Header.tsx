@@ -14,10 +14,8 @@ const Header = () => {
     }
 
     return (
-
         <div>
             <nav>
-
                 <div className={s.links}>
                     <NavLink className={s.link} to={'/profile'}>profile</NavLink>
                     <NavLink className={s.link} to={'/register'}>registration</NavLink>
@@ -26,10 +24,7 @@ const Header = () => {
                     <NavLink className={s.link} to={'/forgot'}>forgot password?</NavLink>
                     <NavLink className={s.link} to={'table'}>Table</NavLink>
                 </div>
-
             </nav>
-
-
         </div>
     );
 }

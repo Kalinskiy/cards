@@ -1,8 +1,8 @@
 import React from "react";
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {addPackTC} from "../Reducer/TableReducer";
-import {AppStateType} from "../../m2-bll/store";
+import {addPackTC} from "../../Table-Reducer/TableReducer";
+import {AppStateType} from "../../../m2-bll/store";
 import s from './Add-pack.module.css'
 
 
@@ -21,9 +21,6 @@ export const AddPackForm = () => {
         onSubmit: (values, {resetForm}:any) => {
             dispatch(addPackTC(userId, values))
             resetForm({values:''})
-
-
-
         }
 
     })

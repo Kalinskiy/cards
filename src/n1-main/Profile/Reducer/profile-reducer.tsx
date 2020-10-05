@@ -30,7 +30,7 @@ type InitialStateType = {
 //______________________________________________________________________________________________________________________
 
 
-//Reducer
+//Table-Reducer
 const profileReducer = (state: InitialStateType = initialState, action: ProfileReducerActionsType) => {
     switch (action.type) {
         case "profile/SET_PROFILE": {

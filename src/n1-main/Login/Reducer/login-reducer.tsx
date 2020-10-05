@@ -99,7 +99,7 @@ type InitialStateType = {
 //______________________________________________________________________________________________________________________
 
 
-//Reducer
+//Table-Reducer
 const loginReducer = (state: InitialStateType = initialState, action: LoginReducerActionsType) => {
     switch (action.type) {
         case "login/IS_LOGGED":

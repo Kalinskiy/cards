@@ -42,7 +42,7 @@ const initialState = {
 //______________________________________________________________________________________________________________________
 
 
-//Reducer
+//Table-Reducer
 const newPasswordReducer = (state: InitialStateType = initialState, action: ResetReducerActionsType) => {
 
 

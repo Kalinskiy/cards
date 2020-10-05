@@ -5,9 +5,10 @@ import registrationReducer from "../Registration-Page/Reducer/RegistrationReduce
 import newPasswordReducer from "../Reset/Reducer/reset-reducer";
 import profileReducer from "../Profile/Reducer/profile-reducer";
 import forgotPasswordReducer from "../Forgot/Reducer/forgot-reducer";
-import tableReducer from "../Table/Reducer/TableReducer";
+import tableReducer from "../Table/Table-Reducer/TableReducer";
 import {renamePackReducer} from "../../n3-common_components/Rename-window/Reducer/Rename-Reducer";
 import {preloaderReducer} from "../../n3-common_components/Preloader/Reducer/PreloaderReducer";
+import {cardsReducer} from "../Cards/Cards-reducer/Cards-reducer";
 
 
 const reducers = combineReducers({
@@ -18,7 +19,8 @@ const reducers = combineReducers({
     forgot: forgotPasswordReducer,
     table: tableReducer,
     rename: renamePackReducer,
-    preloader: preloaderReducer
+    preloader: preloaderReducer,
+    cards: cardsReducer
 })
 
 

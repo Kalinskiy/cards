@@ -1,6 +1,6 @@
 import React from "react";
 import s from './Search.module.css'
-import {PackType} from "../API/API-Table";
+import {PackType} from "../../Table-API/API-Table";
 
 
 type PropsType = {
