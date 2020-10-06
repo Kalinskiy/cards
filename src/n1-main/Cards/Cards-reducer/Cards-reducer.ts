@@ -7,15 +7,17 @@ import {AppStateType} from "../../m2-bll/store";
 type SaveCardsActionType = ReturnType<typeof saveCards>
 type SavePackIdActionType = ReturnType<typeof savePackId>
 type AddCardActionType = ReturnType<typeof addCard>
+type ChangeCurrentCardActionType = ReturnType<typeof changeCurrentCard>
 
-type ActionsType = SaveCardsActionType | SavePackIdActionType | AddCardActionType
+type ActionsType = SaveCardsActionType | SavePackIdActionType | AddCardActionType | ChangeCurrentCardActionType
 
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
 type InitialStateType = {
     cards: CardsType[]
     packId: string | null
-    addCard: boolean
+    addCard: boolean,
+    currentCard: number
 }
 
 //state-----------------------------------------------------------------------------------------------------------------
@@ -26,7 +28,7 @@ const initialState = {
             answer: null,
             question: null,
             cardsPack_id: null,
-            grade: null,
+            grade: 0,
             rating: null,
             shots: null,
             type: null,
@@ -37,6 +39,7 @@ const initialState = {
             _id: null,
         }
     ],
+    currentCard: 0,
     packId: null,
     addCard: false
 }
@@ -51,6 +54,8 @@ export const cardsReducer = (state:InitialStateType = initialState, action: Acti
             return {...state, packId: action.packId}
         case "cards/SET_ADD_CARD":
             return {...state, addCard: action.value}
+        case "cards/SET_CURRENT_CARD":
+            return {...state, currentCard: action.value}
         default:
             return state;
     }
@@ -61,10 +66,11 @@ export const cardsReducer = (state:InitialStateType = initialState, action: Acti
 export const saveCards = (cards: any) => ({type: "cards/SAVE_CARDS", cards} as const)
 export const savePackId = (packId: string | null) => ({type: "cards/SAVE_PACK_ID", packId} as const)
 export const addCard = (value: boolean) => ({type: "cards/SET_ADD_CARD", value} as const)
+export const changeCurrentCard = (value: number) => ({type: "cards/SET_CURRENT_CARD", value} as const)
 
 //thunks-----------------------------------------------------------------------------------------------------------------
 
-export const getCardsTC = (packId: string | null, pageCount: any ): ThunkActionType => async (dispatch) => {
+export const getCardsTC = (packId: string | null, pageCount: any = 10 ): ThunkActionType => async (dispatch) => {
     try {
         const data = await cardsAPI.getCards(packId, pageCount)
         dispatch(savePackId(packId))
@@ -93,4 +99,17 @@ export const deleteCardTC = (cardId: string | null, packId?: any, pageCount?: an
     }
 }
 
+export const updateCardGrade = (grade: number, card_id: string): ThunkActionType => async (dispatch) => {
+    try {
+        const data = await cardsAPI.updateCardGrade(grade, card_id)
+
+    } catch (error) {
+
+    }
+}
+
+
+export const selectorCard = (state: AppStateType) => {
+    return state.cards.cards[state.cards.currentCard]
+}
 

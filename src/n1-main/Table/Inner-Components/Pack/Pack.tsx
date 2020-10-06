@@ -55,7 +55,7 @@ export const Pack = (props: PackType) => {
             </td>
             <td>
                 <NavLink onClick={getCardsOnClick}
-                         to={'cards'}
+                         to={`cards/${props.packId}`}
                 >
                     Cards
                 </NavLink>

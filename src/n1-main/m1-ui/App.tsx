@@ -11,6 +11,7 @@ import {Table} from "../Table/Table";
 import {authTC} from "../Login/Reducer/login-reducer";
 import {useDispatch} from "react-redux";
 import {Cards} from "../Cards/Cards";
+import {CardGame} from "../Cards/Inner-components/Card-game/Card-game";
 
 
 const App = () => {
@@ -30,7 +31,8 @@ const App = () => {
                 <Route path='/forgot' render={() => <Forgot/>}/>
                 <Route path='/table' render={() => <Table/>}/>
                 <Route path='/set-new-password/:id' render={() => <Reset/>}/>
-                <Route path='/cards' render={() => <Cards/>}/>
+                <Route path='/cards/:packId' render={() => <Cards/>}/>
+                <Route path='/card-game' render={() => <CardGame/>}/>
             </HashRouter>
         </div>
     );

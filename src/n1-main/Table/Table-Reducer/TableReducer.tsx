@@ -3,7 +3,7 @@ import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../../m2-bll/store";
 import {changeTrigger, changeTriggerRenameType} from "../../../n3-common_components/Rename-window/Reducer/Rename-Reducer";
 import {
-    changePreloaderTrigger,
+    setPreloader,
     changeTriggerPreloaderActionType
 } from "../../../n3-common_components/Preloader/Reducer/PreloaderReducer";
 import {CardsType} from "../../Cards/Cards-API/Cards-API";
@@ -81,7 +81,7 @@ export const getPacksTC = (userId: string | null, pageCount=7, page=1): ThunkAct
     try {
         const data = await packsAPI.getPacks(userId, pageCount, page)
         dispatch(savePack(data.cardPacks))
-        dispatch( setTotalCadrds(data.cardPacksTotalCount) )
+        dispatch(setTotalCadrds(data.cardPacksTotalCount) )
         dispatch(getPage(page))
     }
     catch (error) {
@@ -92,17 +92,16 @@ export const getPacksTC = (userId: string | null, pageCount=7, page=1): ThunkAct
 
 export const addPackTC = (userId: string | null, addPackData?: AddPackDataType): ThunkActionType => async (dispatch) => {
     try {
-        dispatch(changePreloaderTrigger(true))
+        dispatch(setPreloader(true))
         const cardsPack = addPackData ? addPackData : {}
         const response = await packsAPI.addPack(cardsPack)
-        debugger
        dispatch(getPacksTC(userId))
-        dispatch(changePreloaderTrigger(false))
+        dispatch(setPreloader(false))
     }
     catch (error) {
-        dispatch(changePreloaderTrigger(true))
+        dispatch(setPreloader(true))
         console.log(error)
-        dispatch(changePreloaderTrigger(false))
+        dispatch(setPreloader(false))
     }
 
 }

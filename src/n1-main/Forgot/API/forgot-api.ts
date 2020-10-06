@@ -1,4 +1,5 @@
 import axios from "axios";
+import {instance} from "../../Table/Table-API/API-Table";
 
 
 //Login Parameters type
@@ -13,14 +14,14 @@ export type forgotParamsType = {
     from: string,
     message: string
 }
-const instance = axios.create({
-    // baseURL: 'https://cards-nya-back.herokuapp.com/1.0/',
-    baseURL: 'https://neko-back.herokuapp.com/2.0/',
-    //baseURL: "http://localhost:7542/2.0/",
-    withCredentials: true
-    //  baseURL: 'http://localhost:3000/'
-
-});
+// const instance = axios.create({
+//     // baseURL: 'https://cards-nya-back.herokuapp.com/1.0/',
+//     //baseURL: 'https://neko-back.herokuapp.com/2.0/',
+//     baseURL: "http://localhost:7542/2.0/",
+//     withCredentials: true
+//     //  baseURL: 'http://localhost:3000/'
+//
+// });
 
 
 export const forgotAPI = {

@@ -2,7 +2,8 @@ import axios from "axios";
 
 
 export const instance = axios.create({
-   // baseURL: 'https://neko-back.herokuapp.com/2.0',
+    // baseURL: 'https://cards-nya-back.herokuapp.com/1.0/',
+    //  baseURL: 'https://neko-back.herokuapp.com/2.0/',
     baseURL: "http://localhost:7542/2.0/",
     withCredentials: true
 })
@@ -56,8 +57,8 @@ export type RenamePackDataType = {
 //Object-----------------------------------------------------------------------------------------------------------------
 
 export const packsAPI = {
-    getPacks(userId?: string | null, pageCount=7, page=1) {
-        const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userId}`).then(res =>res.data)
+    getPacks(userId?: string | null, pageCount = 7, page = 1) {
+        const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userId}`).then(res => res.data)
         return promise
     },
     addPack(cardsPack: AddPackDataType) {
