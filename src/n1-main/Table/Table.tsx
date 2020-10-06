@@ -64,53 +64,55 @@ export const Table = () => {
     return (
 
         <div className={style.container}>
+            {triggerPreloader ? <Preloader/> : <div>
+                <Search packs={packs}
+                        value={searchValue}
+                        setInputValue={setSearchValue}
+                        onChangeSearch={onChangeSearch}/>
+                <button className={style.buttonPlus} onClick={addPackOnClick}>Add +</button>
+                <table>
+                    <thead className={style.header}>
+                    <tr>
+                        <th>Name</th>
+                        <th>Cards Count</th>
+                        <th>Last update</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
 
-            <Search packs={packs}
-                    value={searchValue}
-                    setInputValue={setSearchValue}
-                    onChangeSearch={onChangeSearch}/>
-            <button className={style.buttonPlus} onClick={addPackOnClick}>Add +</button>
-            <table>
-                <thead className={style.header}>
-                <tr>
-                    <th>Name</th>
-                    <th>Cards Count</th>
-                    <th>Last update</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {
+                        packs
+                            .filter(e =>
+                                e.name.includes(searchValue))
+                            .map(e =>
+                                <Pack key={e._id}
+                                      packId={e._id}
+                                      name={e.name}
+                                      cardsCount={e.cardsCount}
+                                      lastUpdate={e.updated}
+                                      userId={userId}
+                                      onClickDeleteHandler={onClickDeleteHandler}
+                                      onClickUpdateHandler={onClickUpdateHandler}
+                                      onClickAddCardHandler={onClickAddCardHandler}
+                                      getCardsOnClick={getCardsOnClick}
+                                />)
+                    }
+                    </tbody>
+                </table>
+                {isAddCardOpen && <AddPackForm/>}
 
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    packs
-                        .filter(e =>
-                            e.name.includes(searchValue))
-                        .map(e =>
-                            <Pack key={e._id}
-                                  packId={e._id}
-                                  name={e.name}
-                                  cardsCount={e.cardsCount}
-                                  lastUpdate={e.updated}
-                                  userId={userId}
-                                  onClickDeleteHandler={onClickDeleteHandler}
-                                  onClickUpdateHandler={onClickUpdateHandler}
-                                  onClickAddCardHandler={onClickAddCardHandler}
-                                  getCardsOnClick={getCardsOnClick}
-                            />)
-                }
-                </tbody>
-            </table>
-            {isAddCardOpen && <AddPackForm/>}
+                {triggerRename && <div className={style.rename}><RenameWindow/></div>}
 
-            {triggerRename && <div className={style.rename}><RenameWindow/></div>}
-            {triggerPreloader && <Preloader/>}
-            <ReactSimplePagination
-                page={page ? page : 0}
-                maxPage={totalCards ? Math.ceil(totalCards / 7) : 0}
-                onClickAction={handleChangePage}
-            />
+
+                <ReactSimplePagination
+                    page={page ? page : 0}
+                    maxPage={totalCards ? Math.ceil(totalCards / 7) : 0}
+                    onClickAction={handleChangePage}
+                />
+            </div>}
         </div>
 
     )

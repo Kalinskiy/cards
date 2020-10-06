@@ -1,6 +1,10 @@
 import {CardDataType, cardsAPI, CardsType} from "../Cards-API/Cards-API";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../../m2-bll/store";
+import {
+    changePreloaderTrigger,
+    changeTriggerPreloaderActionType
+} from "../../../n3-common_components/Preloader/Reducer/PreloaderReducer";
 
 //types-----------------------------------------------------------------------------------------------------------------
 
@@ -8,7 +12,7 @@ type SaveCardsActionType = ReturnType<typeof saveCards>
 type SavePackIdActionType = ReturnType<typeof savePackId>
 type AddCardActionType = ReturnType<typeof addCard>
 
-type ActionsType = SaveCardsActionType | SavePackIdActionType | AddCardActionType
+type ActionsType = SaveCardsActionType | SavePackIdActionType | AddCardActionType | changeTriggerPreloaderActionType
 
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
 
@@ -43,7 +47,7 @@ const initialState = {
 
 //reducer-----------------------------------------------------------------------------------------------------------------
 
-export const cardsReducer = (state:InitialStateType = initialState, action: ActionsType) => {
+export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case "cards/SAVE_CARDS":
             return {...state, cards: action.cards}
@@ -64,17 +68,20 @@ export const addCard = (value: boolean) => ({type: "cards/SET_ADD_CARD", value} 
 
 //thunks-----------------------------------------------------------------------------------------------------------------
 
-export const getCardsTC = (packId: string | null, pageCount: any ): ThunkActionType => async (dispatch) => {
+export const getCardsTC = (packId: string | null, pageCount: any): ThunkActionType => async (dispatch) => {
+    dispatch(changePreloaderTrigger(true))
     try {
         const data = await cardsAPI.getCards(packId, pageCount)
         dispatch(savePackId(packId))
         dispatch(saveCards(data))
     } catch (error) {
-
     }
+    dispatch(changePreloaderTrigger(false))
+
 }
 
-export const addCardTC = (card: CardDataType, packId?: any, pageCount?: any ): ThunkActionType => async (dispatch) => {
+export const addCardTC = (card: CardDataType, packId?: any, pageCount?: any): ThunkActionType => async (dispatch) => {
+    dispatch(changePreloaderTrigger(true))
     try {
         const data = await cardsAPI.addCard(card)
         dispatch(addCard(false))
@@ -82,15 +89,19 @@ export const addCardTC = (card: CardDataType, packId?: any, pageCount?: any ): T
     } catch (error) {
         console.log(error)
     }
+    dispatch(changePreloaderTrigger(false))
+
 }
 
 export const deleteCardTC = (cardId: string | null, packId?: any, pageCount?: any): ThunkActionType => async (dispatch) => {
+    dispatch(changePreloaderTrigger(true))
     try {
         const data = await cardsAPI.deleteCard(cardId)
         dispatch(getCardsTC(packId, pageCount))
     } catch (error) {
-
     }
+    dispatch(changePreloaderTrigger(false))
+
 }
 
 

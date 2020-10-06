@@ -1,13 +1,15 @@
 import {PackType, packsAPI, AddPackDataType} from "../Table-API/API-Table";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../../m2-bll/store";
-import {changeTrigger, changeTriggerRenameType} from "../../../n3-common_components/Rename-window/Reducer/Rename-Reducer";
+import {
+    changeTrigger,
+    changeTriggerRenameType
+} from "../../../n3-common_components/Rename-window/Reducer/Rename-Reducer";
 import {
     changePreloaderTrigger,
     changeTriggerPreloaderActionType
 } from "../../../n3-common_components/Preloader/Reducer/PreloaderReducer";
 import {CardsType} from "../../Cards/Cards-API/Cards-API";
-
 
 
 type SavePackType = ReturnType<typeof savePack>
@@ -48,16 +50,16 @@ const initialState = {
 const tableReducer = (state: InitialStateType = initialState, action: ActionType) => {
     switch (action.type) {
         case "table/SAVE_PACK" :
-           return {
-               ...state,
-               packs: action.packs
-           }
+            return {
+                ...state,
+                packs: action.packs
+            }
         case "table/SET_TOTAL_CARDS" :
             return {
                 ...state,
                 packsCount: action.packsCount
             }
-            case "table/GET_PAGE" :
+        case "table/GET_PAGE" :
             return {
                 ...state,
                 page: action.page
@@ -77,57 +79,62 @@ export const setTotalCadrds = (packsCount: number) => ({type: "table/SET_TOTAL_C
 
 //Thunks
 
-export const getPacksTC = (userId: string | null, pageCount=7, page=1): ThunkActionType => async (dispatch) => {
+export const getPacksTC = (userId: string | null, pageCount = 7, page = 1): ThunkActionType => async (dispatch) => {
     dispatch(changePreloaderTrigger(true))
     try {
         const data = await packsAPI.getPacks(userId, pageCount, page)
         dispatch(savePack(data.cardPacks))
-        dispatch( setTotalCadrds(data.cardPacksTotalCount) )
+        dispatch(setTotalCadrds(data.cardPacksTotalCount))
         dispatch(getPage(page))
-        dispatch(changePreloaderTrigger(false))
-    }
-    catch (error) {
+
+    } catch (error) {
         console.log(error)
     }
+
+    dispatch(changePreloaderTrigger(false))
+
 
 }
 
 export const addPackTC = (userId: string | null, addPackData?: AddPackDataType): ThunkActionType => async (dispatch) => {
+    dispatch(changePreloaderTrigger(true))
     try {
-        dispatch(changePreloaderTrigger(true))
         const cardsPack = addPackData ? addPackData : {}
         const response = await packsAPI.addPack(cardsPack)
+        dispatch(getPacksTC(userId))
 
-       dispatch(getPacksTC(userId))
-        dispatch(changePreloaderTrigger(false))
-    }
-    catch (error) {
-        dispatch(changePreloaderTrigger(true))
+    } catch (error) {
         console.log(error)
-        dispatch(changePreloaderTrigger(false))
     }
+
+    dispatch(changePreloaderTrigger(false))
+
 
 }
 
-export const deletePackTC = (packId: string | null, userId: string | null) : ThunkActionType => async (dispatch) => {
+export const deletePackTC = (packId: string | null, userId: string | null): ThunkActionType => async (dispatch) => {
+    dispatch(changePreloaderTrigger(true))
     try {
         const response = await packsAPI.deletePack(packId)
         dispatch(getPacksTC(userId))
+    } catch (error) {
     }
-    catch (error) {
 
-    }
+    dispatch(changePreloaderTrigger(false))
+
 }
 
-export const changePackNameTC = (data: any, userId: string | null) : ThunkActionType => async (dispatch) => {
+export const changePackNameTC = (data: any, userId: string | null): ThunkActionType => async (dispatch) => {
+    dispatch(changePreloaderTrigger(true))
     try {
         const response = await packsAPI.renamePack(data)
         dispatch(changeTrigger(false))
         dispatch(getPacksTC(userId))
-    }
-    catch (error) {
+    } catch (error) {
 
     }
+    dispatch(changePreloaderTrigger(false))
+
 }
 
 

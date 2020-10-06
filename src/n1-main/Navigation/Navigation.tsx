@@ -26,6 +26,7 @@ const Navigation = () => {
                     <NavLink className={s.link} to={'/forgot'}>forgot password?</NavLink>
                     <NavLink className={s.link} to={'table'}>Table</NavLink>
                 </div>
+                
             </nav>
         </div>
     );

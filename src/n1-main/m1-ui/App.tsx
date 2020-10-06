@@ -19,6 +19,8 @@ import {initializeApp} from "./app-reducer";
 const App = () => {
     const initialized = useSelector<AppStateType, boolean>(state => state.app.initialized)
 
+    const triggerPreloader = useSelector<AppStateType, boolean>(state => state.preloader.trigger)
+
 
     const dispatch = useDispatch()
     useEffect(() => {
@@ -31,17 +33,19 @@ const App = () => {
 
 
         <div className="App">
-            {/*{!initialized && <Preloader/>}*/}
+            {!initialized && <Preloader/>}
 
             <HashRouter>
                 <Header/>
-                <Route path='/log-in' render={() => <LogIn/>}/>
-                <Route path='/profile' render={() => <Profile/>}/>
-                <Route path='/register' render={() => <RegistrationPage/>}/>
-                <Route path='/forgot' render={() => <Forgot/>}/>
-                <Route path='/table' render={() => <Table/>}/>
-                <Route path='/set-new-password/:id' render={() => <Reset/>}/>
-                <Route path='/cards' render={() => <Cards/>}/>
+
+                   <> <Route path='/log-in' render={() => <LogIn/>}/>
+                    <Route path='/profile' render={() => <Profile/>}/>
+                    <Route path='/register' render={() => <RegistrationPage/>}/>
+                    <Route path='/forgot' render={() => <Forgot/>}/>
+                    <Route path='/table' render={() => <Table/>}/>
+                    <Route path='/set-new-password/:id' render={() => <Reset/>}/>
+                    <Route path='/cards' render={() => <Cards/>}/></>
+
             </HashRouter>
 
         </div>
