@@ -1,17 +1,30 @@
 .container {
   margin-top: 3%;
   position: relative;
- table {
-   border-collapse: collapse;
-   width: 80%;
-   margin: 0 auto;
-   .header {
-     color: white;
-     background: steelblue;
-     th {
-       padding: 0 40px 0 40px;
-     }
-   }
- }
+
+  .buttonPlus {
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto;
+
+
+    .header {
+      color: white;
+      background: steelblue;
+
+      th {
+        padding: 0 40px 0 40px;
+      }
+    }
+  }
+
+  .rename {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
 }

@@ -34,7 +34,7 @@ const Reset = () => {
         },
 
         onSubmit: values => {
-               dispatch(recoverPasswordTC({ password: values.password,resetPasswordToken:''})) // как достать токен из url?
+               dispatch(recoverPasswordTC({ password: values.password,resetPasswordToken:params.id})) // как достать токен из url?
 
         }
     })

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import style from "./Table.module.scss"
 import {Pack} from "./Inner-Components/Pack/Pack";
 import {useDispatch, useSelector} from "react-redux";
-import {deletePackTC, getPacksTC, getPage} from "./Table-Reducer/TableReducer";
+import {deletePackTC, getPacksTC} from "./Table-Reducer/TableReducer";
 import {AppStateType} from "../m2-bll/store";
 import {PackType} from "./Table-API/API-Table";
 import {AddPackForm} from "./Inner-Components/Add-Pack/Add-pack";
@@ -18,6 +18,7 @@ import {CardDataType} from "../Cards/Cards-API/Cards-API";
 export const Table = () => {
 
     const [searchValue, setSearchValue] = useState('')
+    const [isAddCardOpen, setIsAddCardOpen] = useState(false)
 
     const dispatch = useDispatch()
 
@@ -34,6 +35,9 @@ export const Table = () => {
 
     const onClickDeleteHandler = (packId: string | null, userId: string | null) => {
         dispatch(deletePackTC(packId, userId))
+    }
+    const addPackOnClick = () => {
+        setIsAddCardOpen(!isAddCardOpen)
     }
 
     const onClickUpdateHandler = (packId: string | null) => {
@@ -58,11 +62,14 @@ export const Table = () => {
     }
 
     return (
+
         <div className={style.container}>
+
             <Search packs={packs}
                     value={searchValue}
                     setInputValue={setSearchValue}
-                     onChangeSearch={onChangeSearch}/>
+                    onChangeSearch={onChangeSearch}/>
+            <button className={style.buttonPlus} onClick={addPackOnClick}>Add +</button>
             <table>
                 <thead className={style.header}>
                 <tr>
@@ -72,6 +79,7 @@ export const Table = () => {
                     <th></th>
                     <th></th>
                     <th></th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -94,14 +102,16 @@ export const Table = () => {
                 }
                 </tbody>
             </table>
-            <AddPackForm/>
+            {isAddCardOpen && <AddPackForm/>}
+
+            {triggerRename && <div className={style.rename}><RenameWindow/></div>}
+            {triggerPreloader && <Preloader/>}
             <ReactSimplePagination
                 page={page ? page : 0}
                 maxPage={totalCards ? Math.ceil(totalCards / 7) : 0}
                 onClickAction={handleChangePage}
             />
-            {triggerRename && <RenameWindow/>}
-            {triggerPreloader && <Preloader/>}
         </div>
+
     )
 }

@@ -1,0 +1,14 @@
+.links {
+    background-color: steelblue;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 50px;
+}
+
+.link {
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+
+}

@@ -78,11 +78,13 @@ export const setTotalCadrds = (packsCount: number) => ({type: "table/SET_TOTAL_C
 //Thunks
 
 export const getPacksTC = (userId: string | null, pageCount=7, page=1): ThunkActionType => async (dispatch) => {
+    dispatch(changePreloaderTrigger(true))
     try {
         const data = await packsAPI.getPacks(userId, pageCount, page)
         dispatch(savePack(data.cardPacks))
         dispatch( setTotalCadrds(data.cardPacksTotalCount) )
         dispatch(getPage(page))
+        dispatch(changePreloaderTrigger(false))
     }
     catch (error) {
         console.log(error)
@@ -95,7 +97,7 @@ export const addPackTC = (userId: string | null, addPackData?: AddPackDataType):
         dispatch(changePreloaderTrigger(true))
         const cardsPack = addPackData ? addPackData : {}
         const response = await packsAPI.addPack(cardsPack)
-        debugger
+
        dispatch(getPacksTC(userId))
         dispatch(changePreloaderTrigger(false))
     }

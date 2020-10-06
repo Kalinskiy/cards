@@ -66,6 +66,7 @@ export const recoverPasswordTC = (data:recoveringPasswordType): ThunkActionType 
         dispatch(setPreloader(true))
        const res = await resetAPI.recovering(data)
 
+
     } catch (e) {
         console.log(e.response.data.error)
     } finally {

@@ -1,3 +1,10 @@
 .body {
   width: 80%;
+  border-bottom: 1px solid rgba(12, 10, 10, 0.32);
+  & td{
+    padding: 7px;
+  }
+  &:nth-child(2n){
+    background-color: #d6dfe8;
+  }
 }

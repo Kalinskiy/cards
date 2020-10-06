@@ -4,6 +4,7 @@ import {setPreloader} from "../../Registration-Page/Reducer/RegistrationReducer"
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../../m2-bll/store";
 import {setProfile} from "../../Profile/Reducer/profile-reducer";
+import {initializedSuccess} from "../../m1-ui/app-reducer";
 
 
 //ActionTypes
@@ -13,6 +14,7 @@ type SetErrorType = ReturnType<typeof setError>
 type SetPreloaderActionType = ReturnType<typeof setPreloader>
 type setLoginDataType = ReturnType<typeof setLoginData>
 type setAuthDataType = ReturnType<typeof setAuthData>
+type initializedSuccessType = ReturnType<typeof initializedSuccess>
 
 
 type LoginReducerActionsType =
@@ -22,6 +24,7 @@ type LoginReducerActionsType =
     | SetPreloaderActionType
     | setLoginDataType
     | setAuthDataType
+    | initializedSuccessType
 
 
 //Thunk Types
@@ -144,11 +147,13 @@ export const logoutTC = (): ThunkActionType => async (dispatch) => {
 }
 export const authTC = (): ThunkActionType => async (dispatch) => {
     try {
+        dispatch(initializedSuccess(true))
         dispatch(setPreloader(true))
         const res = await loginAPI.auth()
         if (res.data.email && res.data.name) {
             dispatch(setAuthData(res.data))
             dispatch(setLogin(true))
+
         }
     } catch (e) {
         console.log(e.response.data.error)
