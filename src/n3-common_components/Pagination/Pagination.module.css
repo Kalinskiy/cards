@@ -1,6 +1,13 @@
+
 .paginateArea {
-    text-align: center;
-    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    align-content: flex-end;
+
+
+    
 }
 
 li {
@@ -15,6 +22,11 @@ li {
     display: inline-flex;
     display: -ms-inline-flexbox;
     padding: 9px 8px;
+    display: flex;
+    margin:100px;
+
+
+
 }
 
 .paginate li {

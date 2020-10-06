@@ -9,6 +9,7 @@ import tableReducer from "../Table/Table-Reducer/TableReducer";
 import {renamePackReducer} from "../../n3-common_components/Rename-window/Reducer/Rename-Reducer";
 import {preloaderReducer} from "../../n3-common_components/Preloader/Reducer/PreloaderReducer";
 import {cardsReducer} from "../Cards/Cards-reducer/Cards-reducer";
+import appReducer from "../m1-ui/app-reducer";
 
 
 const reducers = combineReducers({
@@ -20,7 +21,8 @@ const reducers = combineReducers({
     table: tableReducer,
     rename: renamePackReducer,
     preloader: preloaderReducer,
-    cards: cardsReducer
+    cards: cardsReducer,
+    app:appReducer
 })
 
 

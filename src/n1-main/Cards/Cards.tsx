@@ -6,13 +6,14 @@ import {Card} from "./Inner-components/Card.tsx/Card";
 import {CardDataType, CardsType} from "./Cards-API/Cards-API";
 import {addCard, addCardTC, getCardsTC} from "./Cards-reducer/Cards-reducer";
 import {AddCard} from "./Inner-components/Add-card/Add-Card";
+import {Preloader} from "../../n3-common_components/Preloader/Preloader";
 import {NavLink, useParams} from "react-router-dom";
 
 export const Cards = () => {
     const params = useParams<{ packId: string }>()
     const dispatch = useDispatch()
     const cards = useSelector<AppStateType, CardsType[]>(state => state.cards.cards)
-
+    const triggerPreloader = useSelector<AppStateType, boolean>(state => state.preloader.trigger)
     const addCard1 = useSelector<AppStateType, boolean>(state => state.cards.addCard)
 
     useEffect(() => {
@@ -26,7 +27,9 @@ export const Cards = () => {
         dispatch(addCard(true))
     }
 
-    return (
+    return (<>
+        {
+            triggerPreloader ? <Preloader/> : <div className={style.container}>
         <div className={style.container}>
             <button onClick={addCardHandler}>add card</button>
             <NavLink onClick={() => {
@@ -45,5 +48,6 @@ export const Cards = () => {
             {addCard1 && <AddCard/>}
 
         </div>
-    )
+            }
+    </> )
 }

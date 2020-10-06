@@ -17,7 +17,6 @@ export type PackType = {
 }
 
 
-
 export const Pack = (props: PackType) => {
     const onClickDeleteHandler = () => {
         props.onClickDeleteHandler(props.packId, props.userId)

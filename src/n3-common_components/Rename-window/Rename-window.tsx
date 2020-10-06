@@ -3,6 +3,7 @@ import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {changePackNameTC} from "../../n1-main/Table/Table-Reducer/TableReducer";
 import {AppStateType} from "../../n1-main/m2-bll/store";
+import style from './Rename.module.scss'
 
 export const RenameWindow = () => {
 
@@ -27,14 +28,16 @@ export const RenameWindow = () => {
     })
 
     return (
-        <form onSubmit={formik.handleSubmit}>
-            <label htmlFor={"name"}>New Card Name</label>
+        <form onSubmit={formik.handleSubmit} >
+            <div className={style.rename}>
+                <label  htmlFor={"name"}><span>Rename Card</span></label>
             <br/>
             <input
                 type="text"
                 {...formik.getFieldProps("name")}
             />
             <button type="submit">Submit</button>
+            </div>
         </form>
     )
 }

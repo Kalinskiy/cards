@@ -11,11 +11,6 @@ type PropsType = {
 
 }
 const Search = (props: PropsType) => {
-
-
-
-
-
     return <div className={s.search}>
         <input type="text"
 

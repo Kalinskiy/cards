@@ -1,0 +1,14 @@
+.rename {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 30px;
+
+  & label {
+
+  }
+
+  & span {
+    margin-left: -5px;
+  }
+}

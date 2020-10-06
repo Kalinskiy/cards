@@ -9,20 +9,30 @@ import Forgot from "../Forgot/Forgot";
 import Reset from "../Reset/Reset";
 import {Table} from "../Table/Table";
 import {authTC} from "../Login/Reducer/login-reducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Cards} from "../Cards/Cards";
 import {CardGame} from "../Cards/Inner-components/Card-game/Card-game";
+import {AppStateType} from "../m2-bll/store";
+import {Preloader} from "../../n3-common_components/Preloader/Preloader";
+import {initializeApp} from "./app-reducer";
 
 
 const App = () => {
+    const initialized = useSelector<AppStateType, boolean>(state => state.app.initialized)
+    const triggerPreloader = useSelector<AppStateType, boolean>(state => state.preloader.trigger)
+
 
     const dispatch = useDispatch()
-    useEffect(()=>{
-        dispatch (authTC())
-    },[])
-
+    useEffect(() => {
+        dispatch(initializeApp())
+    }, [])
+    if (!initialized) {
+        return <Preloader/>
+    }
     return (
         <div className="App">
+            {!initialized && <Preloader/>}
+
             <HashRouter>
                 <Header/>
                 <Route path='/log-in' render={() => <LogIn/>}/>
