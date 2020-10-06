@@ -31,15 +31,6 @@ export const Pack = (props: PackType) => {
         props.getCardsOnClick(props.packId, 10)
     }
 
-    // const onClickAddCardHandler = () => {
-    //
-    //     const card: CardDataType = {
-    //         cardsPack_id: props.packId,
-    //         question: 'How to learn JS'
-    //     }
-    //
-    //     props.onClickAddCardHandler(card)
-    // }
 
     return (
 
