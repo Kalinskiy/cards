@@ -42,6 +42,7 @@ export const Cards = () => {
                                              answer={e.answer}
                                              id={e._id}
                                              key={e._id}
+                                             grade={e.grade}
                         />)
                     }
                     {addCard1 && <AddCard/>}
