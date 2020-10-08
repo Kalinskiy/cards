@@ -1,8 +1,9 @@
 import React from "react";
-import style from "./Card.module.scss"
+import style from "./Game-card.module.scss"
 import {useDispatch, useSelector} from "react-redux";
-import {deleteCardTC} from "../../Cards-reducer/Cards-reducer";
-import {AppStateType} from "../../../m2-bll/store";
+import {AppStateType} from "../../../../m2-bll/store";
+import {deleteCardTC} from "../../../Cards-reducer/Cards-reducer";
+
 
 export type CardType = {
     question: string | null
@@ -11,7 +12,7 @@ export type CardType = {
     grade: number | null
 }
 
-export const Card = (props: CardType) => {
+export const GameCard = (props: CardType) => {
 
     const dispatch = useDispatch()
     const packId = useSelector<AppStateType, string | null>(state => state.cards.packId)

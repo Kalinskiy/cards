@@ -1,5 +1,4 @@
 import axios from "axios";
-import {instance} from "../../Table/Table-API/API-Table";
 
 
 const instance = axios.create({

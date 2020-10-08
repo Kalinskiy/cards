@@ -42,7 +42,7 @@ const App = () => {
                 <Route path='/table' render={() => <Table/>}/>
                 <Route path='/set-new-password/:id' render={() => <Reset/>}/>
                 <Route path='/cards/:packId' render={() => <Cards/>}/>
-                <Route path='/card-game' render={() => <CardGame/>}/>
+                <Route path='/card-game:packId' render={() => <CardGame/>}/>
             </HashRouter>
         </div>
     );

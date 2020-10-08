@@ -21,33 +21,34 @@ export const Cards = () => {
     }, [params.packId])
 
 
-
     const addCardHandler = () => {
 
         dispatch(addCard(true))
     }
 
-    return (<>
-        {
-            triggerPreloader ? <Preloader/> : <div className={style.container}>
-        <div className={style.container}>
-            <button onClick={addCardHandler}>add card</button>
-            <NavLink onClick={() => {
-            }}
-                     to={'/card-game'}
-            >
-                Start learning
-            </NavLink>
-            {
-                cards.map(e => <Card question={e.question}
-                                     answer={e.answer}
-                                     id={e._id}
-                                     key={e._id}
-                />)
-            }
-            {addCard1 && <AddCard/>}
+    return (
+        <>
+            {triggerPreloader ? <Preloader/> :
+                <div className={style.container}>
+                    <button onClick={addCardHandler}>add card</button>
+                    <NavLink onClick={() => {
+                    }}
+                             to={`/card-game${params.packId}`}
+                    >
+                        Start learning
+                    </NavLink>
+                    {
+                        cards.map(e => <Card question={e.question}
+                                             answer={e.answer}
+                                             grade={e.grade}
+                                             id={e._id}
+                                             key={e._id}
+                        />)
+                    }
+                    {addCard1 && <AddCard/>}
 
-        </div>
-            }
-    </> )
+                </div>}
+
+        </>
+    )
 }

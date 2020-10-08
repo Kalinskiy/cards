@@ -24,7 +24,7 @@ const Navigation = () => {
                     <NavLink className={s.link} to={'/log-in'}>log-in</NavLink>
                     <NavLink onClick={logOutClick} className={s.link} to={'/log-out'}>log-out</NavLink>
                     <NavLink className={s.link} to={'/forgot'}>forgot password?</NavLink>
-                    <NavLink className={s.link} to={'table'}>Table</NavLink>
+                    <NavLink className={s.link} to={'/table'}>Table</NavLink>
                 </div>
                 
             </nav>

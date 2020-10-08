@@ -13,7 +13,11 @@ type SavePackIdActionType = ReturnType<typeof savePackId>
 type AddCardActionType = ReturnType<typeof addCard>
 type ChangeCurrentCardActionType = ReturnType<typeof changeCurrentCard>
 
-type ActionsType = SaveCardsActionType | SavePackIdActionType | AddCardActionType | ChangeCurrentCardActionType | changeTriggerPreloaderActionType
+type ActionsType = SaveCardsActionType
+    | SavePackIdActionType
+    | AddCardActionType
+    | ChangeCurrentCardActionType
+    | changeTriggerPreloaderActionType
 
 
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
@@ -51,7 +55,7 @@ const initialState = {
 
 //reducer-----------------------------------------------------------------------------------------------------------------
 
-export const cardsReducer = (state:InitialStateType = initialState, action: ActionsType) => {
+export const cardsReducer = (state: InitialStateType = initialState, action: ActionsType) => {
     switch (action.type) {
         case "cards/SAVE_CARDS":
             return {...state, cards: action.cards}
@@ -75,13 +79,14 @@ export const changeCurrentCard = (value: number) => ({type: "cards/SET_CURRENT_C
 
 //thunks-----------------------------------------------------------------------------------------------------------------
 
-export const getCardsTC = (packId: string | null, pageCount: any = 10 ): ThunkActionType => async (dispatch) => {
+export const getCardsTC = (packId: string | null, pageCount: any = 10): ThunkActionType => async (dispatch) => {
 
     dispatch(changePreloaderTrigger(true))
     try {
         const data = await cardsAPI.getCards(packId, pageCount)
         dispatch(savePackId(packId))
         dispatch(saveCards(data))
+        console.log(data)
     } catch (error) {
 
     }
@@ -112,10 +117,11 @@ export const deleteCardTC = (cardId: string | null, packId?: any, pageCount?: an
     }
 }
 
-export const updateCardGrade = (grade: number, card_id: string): ThunkActionType => async (dispatch) => {
+export const updateCardGrade = (grade: number, card_id: string | null, packId: string | null): ThunkActionType => async (dispatch) => {
     try {
-        const data = await cardsAPI.updateCardGrade(grade, card_id)
 
+        const data = await cardsAPI.updateCardGrade(grade, card_id)
+       // getCardsTC(packId)
     } catch (error) {
 
     }
@@ -124,7 +130,5 @@ export const updateCardGrade = (grade: number, card_id: string): ThunkActionType
 }
 
 
-export const selectorCard = (state: AppStateType) => {
-    return state.cards.cards[state.cards.currentCard]
-}
+
 
