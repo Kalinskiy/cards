@@ -69,7 +69,7 @@ export const cardsAPI = {
         const promise = instance.put(`/cards/card`, {UpdateCardData})
         return promise
     },
-    updateCardGrade(grade: number, card_id: string) {
+    updateCardGrade(grade: number, card_id: string | null) {
         const promise = instance.put(`/cards/grade`, {grade: grade, card_id: card_id})
         return promise
     }
