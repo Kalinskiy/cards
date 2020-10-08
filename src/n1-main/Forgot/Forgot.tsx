@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {forgotTC} from "./Reducer/forgot-reducer"
 import {AppStateType} from "../m2-bll/store";
 import {Preloader} from "../../n3-common_components/Preloader/Preloader";
+import common from '../../n3-common_components/CommonStyles/common.module.css'
 
 const Forgot = () => {
 
@@ -41,20 +42,20 @@ const Forgot = () => {
 
 
     return (
-        <div className={s.container}>
+        <div className={common.container}>
 
             {preloader ? <Preloader/> : null}
-            <h1>Forgot password</h1>
+
             <form onSubmit={formik.handleSubmit}>
                 {error !== null ? <div style={{color: 'red'}}>{error}</div> : null}
+                <h1>Forgot password</h1>
                 <div className={s.input}>
                     <div>Email</div>
                     <input
                         type="text"
                         {...formik.getFieldProps('email')}
                     />
-                    {formik.errors.email ? <div className={s.error}>{formik.errors.email}</div> : null}
-
+                    {formik.errors.email ? <div className={common.error}>{formik.errors.email}</div> : null}
                 </div>
                 <div>
                     <button

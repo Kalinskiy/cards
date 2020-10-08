@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import style from "./Pack.module.scss"
 import {AddCardDataType, CardDataType, CardsType} from "../../../Cards/Cards-API/Cards-API";
-import s from "../../../Header/header.module.css";
+import s from "./Pack.module.scss";
 import {NavLink} from "react-router-dom";
+import Modal from "../../../../n3-common_components/Modal/Modal";
 
 export type PackType = {
+
     name: string
     packId: string
     cardsCount: number
@@ -18,7 +20,10 @@ export type PackType = {
 
 
 export const Pack = (props: PackType) => {
+
+
     const onClickDeleteHandler = () => {
+
         props.onClickDeleteHandler(props.packId, props.userId)
     }
 
@@ -32,25 +37,31 @@ export const Pack = (props: PackType) => {
 
 
     return (
+        <>
 
-        <tr className={style.body}>
-            <td>{props.name}</td>
-            <td>{props.cardsCount}</td>
-            <td>{props.lastUpdate}</td>
-            <td>
-                <button onClick={onClickDeleteHandler}>Delete</button>
-            </td>
-            <td>
-                <button onClick={onClickUpdateHandler}>Update</button>
-            </td>
-            <td>
-                <NavLink onClick={getCardsOnClick}
-                         to={`cards/${props.packId}`}
-                >
-                    Cards
-                </NavLink>
-            </td>
-        </tr>
+
+            <tr className={style.body}>
+                <td>{props.name}</td>
+                <td>{props.cardsCount}</td>
+                <td>{props.lastUpdate}</td>
+                <td>
+
+                    <button onClick={onClickDeleteHandler}>Delete</button>
+                </td>
+                <td>
+                    <button onClick={onClickUpdateHandler}>Update</button>
+
+                </td>
+                <td>
+                    <NavLink onClick={getCardsOnClick}
+                             className={s.card}
+                             to={`cards/${props.packId}`}
+                    >
+                        Cards
+                    </NavLink>
+                </td>
+            </tr>
+        </>
 
     )
 }

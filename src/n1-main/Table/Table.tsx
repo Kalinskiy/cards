@@ -13,14 +13,18 @@ import {changeTrigger, savePackId} from "../../n3-common_components/Rename-windo
 import {Preloader} from "../../n3-common_components/Preloader/Preloader";
 import {addCardTC, getCardsTC} from "../Cards/Cards-reducer/Cards-reducer";
 import {CardDataType} from "../Cards/Cards-API/Cards-API";
+import common from '../../n3-common_components/CommonStyles/common.module.css'
+import Modal from "../../n3-common_components/Modal/Modal";
 
 
 export const Table = () => {
 
-    const [searchValue, setSearchValue] = useState('')
     const [isAddCardOpen, setIsAddCardOpen] = useState(false)
+    const [modalActive, setModalActive] = useState(false)
+
 
     const dispatch = useDispatch()
+
 
     const page = useSelector<AppStateType, number | null>(state => state.table.page)
     const packs = useSelector<AppStateType, PackType[]>(state => state.table.packs)
@@ -31,13 +35,14 @@ export const Table = () => {
 
     useEffect(() => {
         userId && dispatch(getPacksTC(userId))
-    }, [userId])
+    }, [])
 
     const onClickDeleteHandler = (packId: string | null, userId: string | null) => {
         dispatch(deletePackTC(packId, userId))
     }
     const addPackOnClick = () => {
         setIsAddCardOpen(!isAddCardOpen)
+
     }
 
     const onClickUpdateHandler = (packId: string | null) => {
@@ -47,9 +52,11 @@ export const Table = () => {
 
     const getCardsOnClick = (packId: string, pageCount: number) => {
         dispatch(getCardsTC(packId, pageCount))
+
     }
 
     const onClickAddCardHandler = (card: CardDataType) => {
+        setModalActive(true)
         dispatch(addCardTC(card))
     }
 
@@ -57,18 +64,16 @@ export const Table = () => {
         dispatch(getPacksTC(userId, 7, page))
     }
 
-    const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(e.currentTarget.value)
-    }
 
     return (
 
-        <div className={style.container}>
-            {triggerPreloader ? <Preloader/> : <div>
-                <Search packs={packs}
-                        value={searchValue}
-                        setInputValue={setSearchValue}
-                        onChangeSearch={onChangeSearch}/>
+        <div className={common.container2}>
+            <Modal modalActive={modalActive} setModalActive={setModalActive} onClick={onClickAddCardHandler} onCancel={() => setModalActive(false)}>
+                <p>Do you want to delete this pack?</p>
+            </Modal>
+
+            {triggerPreloader ? <Preloader/> : <div style={{padding:'100px'}}>
+                <Search />
                 <button className={style.buttonPlus} onClick={addPackOnClick}>Add +</button>
                 <table>
                     <thead className={style.header}>
@@ -84,36 +89,35 @@ export const Table = () => {
                     </thead>
                     <tbody>
                     {
-                        packs
-                            .filter(e =>
-                                e.name.includes(searchValue))
-                            .map(e =>
-                                <Pack key={e._id}
-                                      packId={e._id}
-                                      name={e.name}
-                                      cardsCount={e.cardsCount}
-                                      lastUpdate={e.updated}
-                                      userId={userId}
-                                      onClickDeleteHandler={onClickDeleteHandler}
-                                      onClickUpdateHandler={onClickUpdateHandler}
-                                      onClickAddCardHandler={onClickAddCardHandler}
-                                      getCardsOnClick={getCardsOnClick}
-                                />)
+                        packs.map(e =>
+                            <Pack key={e._id}
+                                  packId={e._id}
+                                  name={e.name}
+                                  cardsCount={e.cardsCount}
+                                  lastUpdate={e.updated}
+                                  userId={userId}
+                                  onClickDeleteHandler={onClickDeleteHandler}
+                                  onClickUpdateHandler={onClickUpdateHandler}
+                                  onClickAddCardHandler={onClickAddCardHandler}
+                                  getCardsOnClick={getCardsOnClick}
+                            />)
                     }
                     </tbody>
                 </table>
-                {isAddCardOpen && <AddPackForm/>}
+                {isAddCardOpen && <AddPackForm modalActive={modalActive} setModalActive={setModalActive}/>}
 
                 {triggerRename && <div className={style.rename}><RenameWindow/></div>}
-
-
-                <ReactSimplePagination
-                    page={page ? page : 0}
+                {page
+                    ? <ReactSimplePagination
+                    page={page}
                     maxPage={totalCards ? Math.ceil(totalCards / 7) : 0}
                     onClickAction={handleChangePage}
-                />
+                    />
+                    : null
+                }
             </div>}
         </div>
+
 
     )
 }

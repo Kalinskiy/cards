@@ -7,4 +7,17 @@
   &:nth-child(2n){
     background-color: #d6dfe8;
   }
+  .card{
+    font-weight: 500;
+    text-decoration: none;
+    animation: color-shift 1s alternate infinite;
+  }
+  .card:hover{
+    animation: color-shift 1s alternate infinite;
+  }
+  @keyframes color-shift {
+    0% { color: #0a7d87; }
+    50% { color: #094c45; }
+    100% { color: #62DCFB; }
+  }
 }

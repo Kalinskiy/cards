@@ -6,9 +6,9 @@ import {LoginAuthStateType, loginTC} from "./Reducer/login-reducer";
 import {AppStateType} from "../m2-bll/store";
 import {NavLink, Redirect} from "react-router-dom";
 import {Preloader} from "../../n3-common_components/Preloader/Preloader";
+import common from '../../n3-common_components/CommonStyles/common.module.css'
 
 const LogIn = () => {
-
 
 
     //Hooks
@@ -41,7 +41,6 @@ const LogIn = () => {
         },
         onSubmit: values => {
             dispatch(loginTC(values)
-
             )
         }
     })
@@ -52,19 +51,21 @@ const LogIn = () => {
 
 
     return (
-        <div className={s.container}>
+        <div className={common.container}>
             {isLogged ? <Redirect to={"/profile"}/> : null}
             {preloader ? <Preloader/> : null}
-            <h1>Login</h1>
+
             <form onSubmit={formik.handleSubmit}>
-                {error !==null?<div style={{color:'red'}}>{error}</div>:null}
+
+                {error !== null ? <div style={{color: 'red'}}>{error}</div> : null}
                 <div className={s.input}>
+                    <div><h1>Login</h1></div>
                     <div>email</div>
                     <input
                         type="text"
                         {...formik.getFieldProps('email')}
                     />
-                    {formik.errors.email ? <div className={s.error}>{formik.errors.email}</div> : null}
+                    {formik.errors.email ? <div className={common.error}>{formik.errors.email}</div> : null}
 
                 </div>
                 <div className={s.input}>
@@ -74,7 +75,7 @@ const LogIn = () => {
                         {...formik.getFieldProps('password')}
                         checked={formik.values.rememberMe}
                     />
-                    {formik.errors.password ? <div className={s.error}>{formik.errors.password}</div> : null}
+                    {formik.errors.password ? <div className={common.error}>{formik.errors.password}</div> : null}
                 </div>
                 <div>
                     <input type="checkbox"
@@ -82,6 +83,7 @@ const LogIn = () => {
                     />
                     <span>remember me</span>
                 </div>
+
                 <div>
                     <button
                         disabled={disabled}
@@ -89,14 +91,10 @@ const LogIn = () => {
                     >login
                     </button>
                 </div>
-                <div>
-                    <NavLink to={'/forgot'}>forgot password?</NavLink>
+                <div><NavLink className={common.link} to={'/forgot'}>forgot password?</NavLink></div>
+                <div><NavLink className={common.link} to={'/register'}>Don`t have an account?</NavLink></div>
 
-                </div>
-                <div>
-                    <NavLink to={'/register'}>Don`t have an account?</NavLink>
 
-                </div>
             </form>
         </div>
     );

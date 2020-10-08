@@ -4,7 +4,7 @@ type InitialStateType = {
     trigger: boolean
 }
 
-export type changeTriggerPreloaderActionType = ReturnType<typeof setPreloader>
+export type changeTriggerPreloaderActionType = ReturnType<typeof changePreloaderTrigger>
 
 type ActionType = changeTriggerPreloaderActionType
 
@@ -25,7 +25,7 @@ export const preloaderReducer = (state: InitialStateType = initialState, action:
 }
 
 
-export const setPreloader = (value: boolean) => ({type: "preloader/CHANGE_TRIGGER", value} as const)
+export const changePreloaderTrigger = (value: boolean) => ({type: "preloader/CHANGE_TRIGGER", value} as const)
 
 
 

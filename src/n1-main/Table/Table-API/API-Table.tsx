@@ -28,6 +28,7 @@ export type PackType = {
 }
 
 export type GetPacksResponseType = {
+    name:string
     cardPacks: PackType[]
     cardPacksTotalCount: number
     maxCardsCount: number
@@ -56,9 +57,10 @@ export type RenamePackDataType = {
 
 //Object-----------------------------------------------------------------------------------------------------------------
 
+
 export const packsAPI = {
-    getPacks(userId?: string | null, pageCount = 7, page = 1) {
-        const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userId}`).then(res => res.data)
+    getPacks(userId?: string | null, pageCount = 7, page = 1, name?: string) {
+        const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userId}&packName=${name ? name : ''}`).then(res => res.data)
         return promise
     },
     addPack(cardsPack: AddPackDataType) {

@@ -6,6 +6,7 @@ import {registrationTC} from "./Reducer/RegistrationReducer";
 import {Preloader} from "../../n3-common_components/Preloader/Preloader";
 import {AppStateType} from "../m2-bll/store";
 import {Redirect} from "react-router-dom";
+import common from '../../n3-common_components/CommonStyles/common.module.css'
 
 
 export const RegistrationPage = (props: any) => {
@@ -57,11 +58,12 @@ export const RegistrationPage = (props: any) => {
     const successRegistration = useSelector<AppStateType, boolean>(state => state.register.success)
 
     return (
-        <div className={style.container}>
+        <div className={common.container}>
             {successRegistration ? <Redirect to={"/log-in"}/> : null}
             {preloader ? <Preloader/> : null}
-            <h1>Registration</h1>
+
             <form onSubmit={formik.handleSubmit}>
+                <div>   <h1>Registration</h1></div>
                 <div className={style.input}>
                     <label htmlFor={"email"}>Email</label>
                     <br/>
@@ -90,7 +92,7 @@ export const RegistrationPage = (props: any) => {
                     />
                     {formik.errors.confirmPassword ? <div style={{color: "red"}}>{formik.errors.confirmPassword}</div> : null}
                 </div>
-                <div>
+                <div className={style.submit}>
                     <button type="submit"
                             disabled={disabled}
                     >Submit

@@ -1,20 +1,30 @@
-import React from "react";
+import React, {ChangeEvent, useState} from "react";
 import s from './Search.module.css'
 import {PackType} from "../../Table-API/API-Table";
+import {useDispatch, useSelector} from "react-redux";
+import {getPacksTC} from "../../Table-Reducer/TableReducer";
+import {AppStateType} from "../../../m2-bll/store";
 
 
-type PropsType = {
-    packs: Array<PackType>
-    value:string
-    setInputValue:(value:string)=>void
-    onChangeSearch:(e: React.ChangeEvent<HTMLInputElement>)=>void
 
-}
-const Search = (props: PropsType) => {
+const Search = () => {
+    const dispatch = useDispatch()
+    const [searchName, setSearchName] = useState('')
+    const userId = useSelector<AppStateType, string | null>(state => state.login.auth._id)
+    const page = useSelector<AppStateType, number>(state => state.table.page)
+
+    const onChangeInput = (e:ChangeEvent<HTMLInputElement>) => {
+        setSearchName( e.currentTarget.value )
+    }
+
+    const search = () => {
+        dispatch(getPacksTC(userId, 7, page, searchName))
+    }
+
     return <div className={s.search}>
-        <input type="text"
-
-               value={props.value} onChange={props.onChangeSearch} placeholder={'Search...'}/>
+        <input onChange={onChangeInput} value={searchName} type="text"
+               placeholder={'Search...'}/>
+        <button onClick={search}>Find</button>
     </div>
 }
 

@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import s from './profile.module.css'
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../m2-bll/store";
-import {authTC, LoginAuthStateType} from "../Login/Reducer/login-reducer";
+import {authTC} from "../Login/Reducer/login-reducer";
+import common from '../../n3-common_components/CommonStyles/common.module.css'
 
 const Profile = () => {
     const isLogged =  useSelector<AppStateType,boolean>(state=>state.login.isLogged)
@@ -27,7 +27,7 @@ const Profile = () => {
     }
 
     return (
-        <div className={s.container}>
+        <div className={common.container}>
             PROFILE
         </div>
     );

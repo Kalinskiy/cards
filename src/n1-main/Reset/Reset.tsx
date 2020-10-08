@@ -7,6 +7,7 @@ import {Preloader} from "../../n3-common_components/Preloader/Preloader";
 import { useParams } from 'react-router-dom';
 import {recoverPasswordTC} from "./Reducer/reset-reducer";
 import loginReducer from "../Login/Reducer/login-reducer";
+import common from '../../n3-common_components/CommonStyles/common.module.css'
 
 const Reset = () => {
 
@@ -44,7 +45,7 @@ const Reset = () => {
 
 
     return (
-        <div className={s.container}>
+        <div className={common.container}>
 
             {preloader ? <Preloader/> : null}
             <h1>Reset password</h1>
