@@ -63,7 +63,7 @@ export const RegistrationPage = (props: any) => {
             {preloader ? <Preloader/> : null}
 
             <form onSubmit={formik.handleSubmit}>
-                <div>   <h1>Registration</h1></div>
+                <div>   <h2>Registration</h2></div>
                 <div className={style.input}>
                     <label htmlFor={"email"}>Email</label>
                     <br/>

@@ -2,5 +2,21 @@
     display: flex;
     justify-content: center;
     text-align: center;
-    margin:10px;
+    margin: 10px;
+}
+
+.searchIcon {
+    width: 25px;
+}
+
+.searchButton {
+    border: none;
+    outline: none;
+    height: 30px;
+    width: 40px;
+
+}
+
+.searchButton:hover {
+    background-color: whitesmoke;
 }

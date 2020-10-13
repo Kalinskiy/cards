@@ -86,7 +86,7 @@ export const getPacksTC = (userId: string | null, pageCount = 7, page = 0, name?
         dispatch(savePack(data.cardPacks))
         dispatch(setTotalCadrds(data.cardPacksTotalCount))
         dispatch(getPage(data.page))
-        console.log(data)
+
     } catch (error) {
         console.log(error)
     }
@@ -95,12 +95,15 @@ export const getPacksTC = (userId: string | null, pageCount = 7, page = 0, name?
 
 
 
-export const addPackTC = (userId: string | null, addPackData?: AddPackDataType): ThunkActionType => async (dispatch) => {
+export const addPackTC = (userId: string | null, addPackData?: string): ThunkActionType => async (dispatch) => {
     dispatch(changePreloaderTrigger(true))
     try {
-        const cardsPack = addPackData ? addPackData : {}
+        const cardsPack = addPackData ? {name: addPackData} : {}
         const response = await packsAPI.addPack(cardsPack)
-        dispatch(getPacksTC(userId))
+        console.log( response )
+        if( response.status === 201 ) {
+            dispatch(getPacksTC(userId))
+        }
 
     } catch (error) {
         console.log(error)
@@ -123,9 +126,11 @@ export const deletePackTC = (packId: string | null, userId: string | null): Thun
 export const changePackNameTC = (data: any, userId: string | null): ThunkActionType => async (dispatch) => {
     dispatch(changePreloaderTrigger(true))
     try {
+        debugger
         const response = await packsAPI.renamePack(data)
-        dispatch(changeTrigger(false))
-        dispatch(getPacksTC(userId))
+        console.log()
+       dispatch(changeTrigger(false))
+       dispatch(getPacksTC(userId))
     } catch (error) {
 
     }

@@ -35,19 +35,6 @@ type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, LoginRe
 
 //initialState
 const initialState = {
-    login: {
-        _id: null,
-        email: null,
-        name: null,
-        avatar: null,
-        publicCardPacksCount: null,
-        created: null,
-        updated: null,
-        isAdmin: null,
-        verified: null,
-        rememberMe: null,
-        error: null
-    },
     auth: {
         _id: null,
         email: null,
@@ -86,7 +73,6 @@ export type LoginAuthStateType = {
 }
 
 type InitialStateType = {
-    login: LoginAuthStateType
     auth: LoginAuthStateType
     initializedApp: boolean
     isLogged: boolean
@@ -111,8 +97,7 @@ const loginReducer = (state: InitialStateType = initialState, action: LoginReduc
             return {...state, error: action.error}
         case "login/SET_AUTH_DATA":
             return {...state, auth: action.data}
-        case "login/SET_LOGIN_DATA":
-            return {...state, login: action.data}
+
         default:
             return state;
     }
@@ -124,11 +109,10 @@ export const loginTC = (data: loginParamsType): ThunkActionType => async (dispat
     try {
         dispatch(setPreloader(true))
         let res = await loginAPI.login(data)
-        if (res.status === 200) {
-            dispatch(setLoginData(res.data))
-            dispatch(setLogin(true))
-            dispatch(setProfile(res.data.name, res.data.email))
-        }
+        dispatch(setAuthData(res.data))
+        dispatch(setLogin(true))
+        dispatch(setProfile(res.data.name, res.data.email))
+
     } catch (error) {
         dispatch(setError(error.response.data.error + ' more details in console'))
     } finally {
@@ -147,6 +131,7 @@ export const logoutTC = (): ThunkActionType => async (dispatch) => {
 }
 export const authTC = (): ThunkActionType => async (dispatch) => {
     try {
+
         dispatch(initializedSuccess(true))
         dispatch(setPreloader(true))
         const res = await loginAPI.auth()

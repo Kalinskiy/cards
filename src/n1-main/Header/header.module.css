@@ -6,6 +6,7 @@
     width: 100vw;
     height: auto;
     transition: .5s ease background-color;
+
 }
 
 
@@ -169,7 +170,7 @@
     .navList ul {
         position: initial;
         display: block;
-        height: auto;
+        height: 70px;
         width: fit-content;
         background-color: transparent;
     }

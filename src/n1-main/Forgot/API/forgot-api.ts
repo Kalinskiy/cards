@@ -1,4 +1,3 @@
-import axios from "axios";
 import {instance} from "../../Table/Table-API/API-Table";
 
 
@@ -14,7 +13,6 @@ export type forgotParamsType = {
     from: string,
     message: string
 }
-
 
 
 export const forgotAPI = {

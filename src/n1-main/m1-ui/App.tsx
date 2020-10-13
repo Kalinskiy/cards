@@ -21,10 +21,11 @@ const App = () => {
     const initialized = useSelector<AppStateType, boolean>(state => state.app.initialized)
     const isLogged = useSelector<AppStateType, boolean>(state => state.login.isLogged)
     const triggerPreloader = useSelector<AppStateType, boolean>(state => state.preloader.trigger)
-    const IsTableAccess = isLogged?<Table/> : <ErrorPage errorText={'Sorry, you don`t have access to see this page. Please Log-in'}/>
+    const IsTableAccess = initialized?<Table/> : <ErrorPage errorText={'Sorry, you don`t have access to see this page. Please Log-in'}/>
 
     const dispatch = useDispatch()
     useEffect(() => {
+
         dispatch(initializeApp())
     }, [])
     if (!initialized) {
@@ -38,13 +39,12 @@ const App = () => {
                 <Header/>
 
                 <Route path='/log-in' render={() => <LogIn/>}/>
-                <Route path='/profile' render={() => <Profile/>}/>
                 <Route path='/register' render={() => <RegistrationPage/>}/>
                 <Route path='/forgot' render={() => <Forgot/>}/>
-                <Route path='/table' render={() => IsTableAccess}/>
+                <Route path='/table' render={() => <Table/>}/>
                 <Route path='/set-new-password/:id' render={() => <Reset/>}/>
                 <Route path='/cards/:packId' render={() => <Cards/>}/>
-                <Route path='/card-game:packId' render={() => <CardGame/>}/>
+                <Route path='/card-game/:packId' render={() => <CardGame/>}/>
             </HashRouter>
         </div>
     );

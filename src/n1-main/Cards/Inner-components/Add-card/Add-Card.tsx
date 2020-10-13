@@ -5,7 +5,7 @@ import {addCardTC} from "../../Cards-reducer/Cards-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../../m2-bll/store";
 
-export const AddCard = () => {
+export const AddCard = (props: any) => {
 
     const dispatch = useDispatch()
 
@@ -26,6 +26,7 @@ export const AddCard = () => {
                 question: values.question,
                 answer: values.answer
             }
+            props.hideModalAddCard(true)
 
             dispatch(addCardTC(card, packId, 10))
         }
@@ -48,6 +49,8 @@ export const AddCard = () => {
                 />
                 <br/>
                 <button type="submit">Submit</button>
+                <button type="reset" onClick={props.hideModalAddCard}>Cancel</button>
+
             </div>
         </form>
     )

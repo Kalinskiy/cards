@@ -32,22 +32,7 @@ type InitialStateType = {
 //state-----------------------------------------------------------------------------------------------------------------
 
 const initialState = {
-    cards: [
-        {
-            answer: null,
-            question: null,
-            cardsPack_id: null,
-            grade: 0,
-            rating: null,
-            shots: null,
-            type: null,
-            user_id: null,
-            created: null,
-            updated: null,
-            __v: null,
-            _id: null,
-        }
-    ],
+    cards: [],
     currentCard: 0,
     packId: null,
     addCard: false
@@ -80,15 +65,13 @@ export const changeCurrentCard = (value: number) => ({type: "cards/SET_CURRENT_C
 //thunks-----------------------------------------------------------------------------------------------------------------
 
 export const getCardsTC = (packId: string | null, pageCount: any = 10): ThunkActionType => async (dispatch) => {
-
     dispatch(changePreloaderTrigger(true))
     try {
         const data = await cardsAPI.getCards(packId, pageCount)
         dispatch(savePackId(packId))
         dispatch(saveCards(data))
-        console.log(data)
     } catch (error) {
-
+        console.log('catch')
     }
     dispatch(changePreloaderTrigger(false))
 

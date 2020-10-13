@@ -52,14 +52,14 @@ const LogIn = () => {
 
     return (
         <div className={common.container}>
-            {isLogged ? <Redirect to={"/profile"}/> : null}
+            {isLogged ? <Redirect to={"/table"}/> : null}
             {preloader ? <Preloader/> : null}
 
             <form onSubmit={formik.handleSubmit}>
 
                 {error !== null ? <div style={{color: 'red'}}>{error}</div> : null}
                 <div className={s.input}>
-                    <div><h1>Login</h1></div>
+                    <div><h2>Login</h2></div>
                     <div>email</div>
                     <input
                         type="text"

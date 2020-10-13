@@ -41,7 +41,7 @@ const Header = () => {
             <div className={`${s.container} ${s.header}`}>
                 <div className={s.navBar}>
                     <div className={s.brand}>
-                        <NavLink to={'/profile'}>
+                        <NavLink to={'/table'}>
                             <img src={icon} alt=""/>
                         </NavLink>
                     </div>
@@ -51,7 +51,7 @@ const Header = () => {
                         </div>
 
                         <ul onClick={getBurger} className={hamburger ? s.active : ''}>
-                            <NavLink className={s.link} to={'/profile'}>profile</NavLink>
+
                             <NavLink className={s.link} to={'/register'}>registration</NavLink>
                             <NavLink className={s.link} to={'/log-in'}>log-in</NavLink>
                             <NavLink onClick={logOutClick} className={s.link} to={'/log-out'}>log-out</NavLink>

@@ -4,12 +4,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {addPackTC} from "../../Table-Reducer/TableReducer";
 import {AppStateType} from "../../../m2-bll/store";
 import s from './Add-pack.module.css'
-import Modal from "../../../../n3-common_components/Modal/Modal";
+
 import { Dispatch } from "redux";
 
 type PropsType = {
     modalActive: boolean
     setModalActive: (modalActive: boolean) => void
+    setModalAddPack: (isActive: boolean) => void
 }
 
 export const AddPackForm = (props: PropsType) => {
@@ -21,9 +22,9 @@ export const AddPackForm = (props: PropsType) => {
     const dispatch = useDispatch()
     const userId = useSelector<AppStateType, string | null>(state => state.login.auth._id)
 
-    const setModule = {}
+
     const onSubmitFunc = () => {
-        dispatch(addPackTC(userId, values))
+       // dispatch(addPackTC(userId, values))
         props.setModalActive(false)
 
 
@@ -36,12 +37,12 @@ export const AddPackForm = (props: PropsType) => {
             name: '',
         },
         onSubmit: (values, {resetForm}: any) => {
-            // dispatch(addPackTC(userId, values))
+           // dispatch(addPackTC(userId, values))
             // resetForm({values: ''})
             setValues(values)
             setResetForm(resetForm)
             props.setModalActive(true)
-
+            props.setModalAddPack( false )
         }
 
     })
@@ -49,10 +50,7 @@ export const AddPackForm = (props: PropsType) => {
 
     return (
         <>
-            <Modal modalActive={props.modalActive} setModalActive={props.setModalActive} onClick={onSubmitFunc}
-                   onCancel={() => props.setModalActive(false)}>
-                <p>Do you want to add new pack?</p>
-            </Modal>
+
             <form onSubmit={formik.handleSubmit}>
                 <div className={s.cardName}>
                     <label htmlFor={"name"}>Card Name</label>

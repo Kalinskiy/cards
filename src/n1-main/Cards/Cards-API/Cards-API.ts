@@ -54,8 +54,8 @@ export type UpdateCardDataType = {
 
 export const cardsAPI = {
     getCards(packId: string | null, pageCount: number) {
-        const promise = instance.get<GetCardsResponseType>(`/cards/card?cardsPack_id=${packId}&pageCount=${pageCount}`).then(res =>res.data.cards)
-        return promise
+
+        return  instance.get<GetCardsResponseType>(`/cards/card?cardsPack_id=${packId}&pageCount=${pageCount}`).then(res =>res.data.cards)
     },
     addCard(card: CardDataType) {
         const promise = instance.post(`/cards/card`, {card})

@@ -5,6 +5,7 @@ import {CardsType} from "../../Cards-API/Cards-API";
 import {GameCard} from "./Game-card/GameCard";
 import {getCardsTC, updateCardGrade} from "../../Cards-reducer/Cards-reducer";
 import {useParams} from "react-router-dom";
+import style from './Card-game.module.css'
 
 const getCard = (cards: CardsType[]) => {
     const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
@@ -44,41 +45,25 @@ export const CardGame = () => {
         setCurrentCard(getCard(cards))
     }
 
-    const change1GradeHandler = () => {
-       dispatch( updateCardGrade(1, currentCard._id, params.packId))
-        setCurrentCard(getCard(cards))
-    }
-    const change2GradeHandler = () => {
-        dispatch(updateCardGrade(2, currentCard._id, params.packId))
-        setCurrentCard(getCard(cards))
-    }
-    const change3GradeHandler = () => {
-        dispatch(updateCardGrade(3, currentCard._id, params.packId))
-        setCurrentCard(getCard(cards))
-    }
-    const change4GradeHandler = () => {
-        dispatch(updateCardGrade(4, currentCard._id, params.packId))
-        setCurrentCard(getCard(cards))
-    }
-    const change5GradeHandler = () => {
-        dispatch(updateCardGrade(5, currentCard._id, params.packId))
+    const pickGradeHandler = (grade:number)=>{
+        dispatch(updateCardGrade(grade, currentCard._id, params.packId))
         setCurrentCard(getCard(cards))
     }
 
 
     return (
-        <div>
+        <div className={style.container}>
                 <GameCard question={currentCard.question}
                       answer={currentCard.answer}
                       grade={currentCard.grade}
                       id={currentCard._id}/>
 
-            <button onClick={nextCardHandler}>Next</button>
-            <button onClick={change1GradeHandler}>1</button>
-            <button onClick={change2GradeHandler}>2</button>
-            <button onClick={change3GradeHandler}>3</button>
-            <button onClick={change4GradeHandler}>4</button>
-            <button onClick={change5GradeHandler}>5</button>
+            {/*<button onClick={nextCardHandler}>Next</button>*/}
+            <button onClick={()=>pickGradeHandler(1)}>Не знал</button>
+            <button onClick={()=>pickGradeHandler(2)}>Плохо знал</button>
+            <button onClick={()=>pickGradeHandler(3)}>Затруднялся</button>
+            <button onClick={()=>pickGradeHandler(4)}>Знал</button>
+            <button onClick={()=>pickGradeHandler(5)}>Отлично знал</button>
         </div>
     )
 }

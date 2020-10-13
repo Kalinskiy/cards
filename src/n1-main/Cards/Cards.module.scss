@@ -1,7 +1,16 @@
-.container{
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.container {
+  margin:100px;
+  display: block;
+
+
+  .link{
+    text-decoration: none;
+    color: #68cff5;
+    font-weight: 500;
+    font-size: 1.2em;
+    .icon {
+      width: 25px;
+
+    }
+  }
 }
