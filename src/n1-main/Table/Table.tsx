@@ -2,7 +2,7 @@ import React, {ChangeEvent, useEffect, useState} from "react";
 import style from "./Table.module.scss"
 import {Pack} from "./Inner-Components/Pack/Pack";
 import {useDispatch, useSelector} from "react-redux";
-import {addPackTC, changePackNameTC, deletePackTC, getPacksTC} from "./Table-Reducer/TableReducer";
+import {addPackTC, changePackNameTC, deletePackTC, getPacksAllTC, getPacksTC} from "./Table-Reducer/TableReducer";
 import {AppStateType} from "../m2-bll/store";
 import {PackType, RenamePackDataType} from "./Table-API/API-Table";
 import Search from "./Inner-Components/Search/Search";
@@ -28,10 +28,10 @@ export const Table = () => {
     const triggerRename = useSelector<AppStateType, boolean>(state => state.rename.trigger)
     const triggerPreloader = useSelector<AppStateType, boolean>(state => state.preloader.trigger)
     const userId = useSelector<AppStateType, string | null>(state => state.login.auth._id)
-    const totalCards = useSelector<AppStateType, number | null>(state => state.table.packsCount)
+    const totalPacks = useSelector<AppStateType, number | null>(state => state.table.packsCount)
     const isLogged = useSelector<AppStateType, boolean>(state => state.login.isLogged)
     const initialized = useSelector<AppStateType, boolean>(state => state.app.initialized)
-
+    console.log(packs)
     useEffect(() => {
         userId && dispatch(getPacksTC(userId))
     }, [userId])
@@ -87,17 +87,20 @@ export const Table = () => {
                 <Search/>
                 <div className={style.add}>
                     <button className={style.buttonPlus} onClick={() => isAddSetModalActive(true)}>+</button>
+                    <button onClick={() => dispatch(getPacksAllTC(7, 1))}>show all packs</button>
                 </div>
+
 
                 <table>
                     <thead className={style.header}>
                     <tr>
+                        <th>Picture</th>
                         <th>Name</th>
                         <th>Cards Count</th>
                         <th>Last update</th>
                         <th></th>
                         <th></th>
-                        <th></th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -127,7 +130,7 @@ export const Table = () => {
                 {page
                     ? <ReactSimplePagination
                         page={page}
-                        maxPage={totalCards ? Math.ceil(totalCards / 7) : 0}
+                        maxPage={totalPacks ? Math.ceil(totalPacks / 7) : 0}
                         onClickAction={handleChangePage}
                     />
                     : null

@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const instance = axios.create({
     // baseURL: 'https://cards-nya-back.herokuapp.com/1.0/',
-     // baseURL: 'https://neko-back.herokuapp.com/2.0/',
+    // baseURL: 'https://neko-back.herokuapp.com/2.0/',
     baseURL: "http://localhost:7542/2.0/",
     withCredentials: true
 })
@@ -28,7 +28,7 @@ export type PackType = {
 }
 
 export type GetPacksResponseType = {
-    name:string
+    name: string
     cardPacks: PackType[]
     cardPacksTotalCount: number
     maxCardsCount: number
@@ -60,8 +60,12 @@ export type RenamePackDataType = {
 
 export const packsAPI = {
     getPacks(userId?: string | null, pageCount = 7, page = 1, name?: string) {
-        const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userId}&packName=${name ? name : ''}`).then(res => res.data)
-        console.log(promise)
+        const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userId ? userId : ''}&packName=${name ? name : ''}`).then(res => res.data)
+        return promise
+
+    },
+    getPacksAll( pageCount = 7, page = 1, name?: string) {
+        const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=&packName=${name ? name : ''}`).then(res => res.data)
         return promise
 
     },
@@ -76,6 +80,15 @@ export const packsAPI = {
     renamePack(cardsPack: RenamePackDataType) {
         const promise = instance.put(`/cards/pack`, {cardsPack})
         return promise
+    },
+    savePhoto(photo: any) {
+        const formData = new FormData()
+        formData.append('image', photo)
+        return instance.put(`/file`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
     }
 }
 

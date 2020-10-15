@@ -33,6 +33,7 @@ export const Pack = (props: PackType) => {
     const date = parseISO(props.lastUpdate).toString().slice(0,24)
 
 
+
     //delete pack functions
     const onClickDeleteHandler = () => {
         props.onClickDeleteHandler(props.packId, props.userId)
@@ -84,6 +85,7 @@ export const Pack = (props: PackType) => {
             </ModalInput>
 
             <tr className={style.body}>
+                <td></td>
                 <td>{props.name}</td>
                 <td>{props.cardsCount}</td>
                 <td>{date}</td>

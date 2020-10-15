@@ -15,11 +15,13 @@ import {CardsType} from "../../Cards/Cards-API/Cards-API";
 type SavePackType = ReturnType<typeof savePack>
 type GetPageType = ReturnType<typeof getPage>
 type TotalPackType = ReturnType<typeof setTotalCadrds>
+type SetPhotoType = ReturnType<typeof setPhotoSuccess>
 
 type ActionType = SavePackType
     | TotalPackType | GetPageType
     | changeTriggerRenameType
     | changeTriggerPreloaderActionType
+    | SetPhotoType
 
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 
@@ -74,6 +76,7 @@ const tableReducer = (state: InitialStateType = initialState, action: ActionType
 export const savePack = (packs: PackType[]) => ({type: "table/SAVE_PACK", packs} as const)
 export const getPage = (page: number) => ({type: "table/GET_PAGE", page} as const)
 export const setTotalCadrds = (packsCount: number) => ({type: "table/SET_TOTAL_CARDS", packsCount} as const)
+export const setPhotoSuccess = (photos: any) => ({type: 'table/SAVE_PHOTO_SUCCESS', photos} as const);
 
 //______________________________________________________________________________________________________________________
 
@@ -92,7 +95,19 @@ export const getPacksTC = (userId: string | null, pageCount = 7, page = 0, name?
     }
     dispatch(changePreloaderTrigger(false))
 }
+export const getPacksAllTC = (  pageCount = 7, page = 0, name?: string): ThunkActionType => async (dispatch) => {
+    dispatch(changePreloaderTrigger(true))
+    try {
+        const data = await packsAPI.getPacksAll(pageCount, page, name)
+        dispatch(savePack(data.cardPacks))
+        dispatch(setTotalCadrds(data.cardPacksTotalCount))
+        dispatch(getPage(data.page))
 
+    } catch (error) {
+        console.log(error)
+    }
+    dispatch(changePreloaderTrigger(false))
+}
 
 
 export const addPackTC = (userId: string | null, addPackData?: string): ThunkActionType => async (dispatch) => {
@@ -100,8 +115,8 @@ export const addPackTC = (userId: string | null, addPackData?: string): ThunkAct
     try {
         const cardsPack = addPackData ? {name: addPackData} : {}
         const response = await packsAPI.addPack(cardsPack)
-        console.log( response )
-        if( response.status === 201 ) {
+        console.log(response)
+        if (response.status === 201) {
             dispatch(getPacksTC(userId))
         }
 
@@ -129,8 +144,8 @@ export const changePackNameTC = (data: any, userId: string | null): ThunkActionT
         debugger
         const response = await packsAPI.renamePack(data)
         console.log()
-       dispatch(changeTrigger(false))
-       dispatch(getPacksTC(userId))
+        dispatch(changeTrigger(false))
+        dispatch(getPacksTC(userId))
     } catch (error) {
 
     }
