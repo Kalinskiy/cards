@@ -45,6 +45,7 @@ export const Cards = () => {
                     <ModalWithChildren
                         modalActive={addCardState}
                         setModalActive={setAddCardState}
+                         onCancel={()=>setAddCardState(false)}
                     >
                         <AddCard hideModalAddCard={hideModalAddCard}/>
 

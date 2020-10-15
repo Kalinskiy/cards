@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import style from "./Table.module.scss"
+import style from "./Table.module.css"
 import {Pack} from "./Inner-Components/Pack/Pack";
 import {useDispatch, useSelector} from "react-redux";
 import {addPackTC, changePackNameTC, deletePackTC, getPacksAllTC, getPacksTC} from "./Table-Reducer/TableReducer";
@@ -22,6 +22,7 @@ export const Table = () => {
     const [isAddModalActive, isAddSetModalActive] = useState(false)
     const [isDeleteModalActive, isDeleteSetModalActive] = useState(false)
     const [addPackValue, setAddPackValue] = useState('')
+    const [isAllPacks, setIsAllPacks] = useState(false)
 
 
     const page = useSelector<AppStateType, number | null>(state => state.table.page)
@@ -48,7 +49,14 @@ export const Table = () => {
     const addPackOnClick = () => {
         dispatch(addPackTC(userId, addPackValue))
         isAddSetModalActive(!isAddSetModalActive)
-
+    }
+    const onClickAllPacks = () => {
+        dispatch(getPacksAllTC(7, 20))
+        setIsAllPacks(true)
+    }
+    const onClickPacks = () => {
+        dispatch(getPacksTC(userId))
+        setIsAllPacks(false)
     }
 
     const onClickUpdateHandler = (obj: RenamePackDataType) => {
@@ -68,6 +76,9 @@ export const Table = () => {
     const handleChangePage = (page: number) => {
         dispatch(getPacksTC(userId, 7, page))
     }
+    const handleChangePageAll = (page: number) => {
+        dispatch(getPacksAllTC(7, page))
+    }
 
 
     return (
@@ -84,47 +95,49 @@ export const Table = () => {
                 <p>Do you want to add this pack?</p>
             </ModalInput>
 
-            {triggerPreloader ? <Preloader/> : <div style={{padding: '100px'}}>
+            {triggerPreloader ? <Preloader/> : <div style={{padding: '100px 0', display:"flex",flexDirection:'column',width:'100%', alignItems:'center'}}>
                 <Search/>
                 <div className={style.add}>
                     <button className={style.buttonPlus} onClick={() => isAddSetModalActive(true)}>+</button>
-                    <button onClick={() => dispatch(getPacksAllTC(7, 1))}>show all packs</button>
+                    <button
+                        onClick={!isAllPacks ? onClickAllPacks : onClickPacks}>{!isAllPacks ? 'show all packs' : 'show my packs'}</button>
                 </div>
 
+                <div className={style.tableWrapper}>
+                    <table>
+                        <thead className={style.header}>
+                        <tr>
+                            <th>Picture</th>
+                            <th>Name</th>
+                            <th>Cards Count</th>
+                            <th>Last update</th>
+                            <th></th>
+                            <th></th>
 
-                <table>
-                    <thead className={style.header}>
-                    <tr>
-                        <th>Picture</th>
-                        <th>Name</th>
-                        <th>Cards Count</th>
-                        <th>Last update</th>
-                        <th></th>
-                        <th></th>
-
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        packs.map(e =>
-                            <Pack key={e._id}
-                                  packId={e._id}
-                                  name={e.name}
-                                  cardsCount={e.cardsCount}
-                                  lastUpdate={e.updated}
-                                  userId={userId}
-                                  onClickDeleteHandler={onClickDeleteHandler}
-                                  isDeleteModalActive={isDeleteModalActive}
-                                  isDeleteSetModalActive={isDeleteSetModalActive}
-                                  onClickUpdateHandler={onClickUpdateHandler}
-                                  onClickAddCardHandler={onClickAddCardHandler}
-                                  getCardsOnClick={getCardsOnClick}
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            packs.map(e =>
+                                <Pack key={e._id}
+                                      packId={e._id}
+                                      name={e.name}
+                                      cardsCount={e.cardsCount}
+                                      lastUpdate={e.updated}
+                                      userId={userId}
+                                      onClickDeleteHandler={onClickDeleteHandler}
+                                      isDeleteModalActive={isDeleteModalActive}
+                                      isDeleteSetModalActive={isDeleteSetModalActive}
+                                      onClickUpdateHandler={onClickUpdateHandler}
+                                      onClickAddCardHandler={onClickAddCardHandler}
+                                      getCardsOnClick={getCardsOnClick}
 
 
-                            />)
-                    }
-                    </tbody>
-                </table>
+                                />)
+                        }
+                        </tbody>
+                    </table>
+                </div>
 
 
                 {triggerRename && <div className={style.rename}><RenameWindow/></div>}
@@ -132,7 +145,7 @@ export const Table = () => {
                     ? <ReactSimplePagination
                         page={page}
                         maxPage={totalPacks ? Math.ceil(totalPacks / 7) : 0}
-                        onClickAction={handleChangePage}
+                        onClickAction={isAllPacks ? handleChangePageAll : handleChangePage}
                     />
                     : null
                 }

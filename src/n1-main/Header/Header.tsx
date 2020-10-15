@@ -5,6 +5,7 @@ import {useDispatch} from "react-redux";
 import {NavLink, useHistory} from "react-router-dom";
 import {logoutTC} from "../Login/Reducer/login-reducer";
 import icon from '../../n2-assets/images/react_icon.png'
+import commonStyle from '../../n3-common_components/CommonStyles/common.module.css'
 
 const Header = () => {
 
@@ -38,7 +39,7 @@ const Header = () => {
     return (
         <section id={s.header} className={windowScroll > 250 ? s.headerScrolled : ''}>
             {/*<Navigation/>*/}
-            <div className={`${s.container} ${s.header}`}>
+            <div className={`${commonStyle.container} ${s.header}`}>
                 <div className={s.navBar}>
                     <div className={s.brand}>
                         <NavLink to={'/table'}>
