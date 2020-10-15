@@ -6,6 +6,7 @@ import {Modal, ModalInput} from "../../../../n3-common_components/Modal/Modal";
 import {RenamePackDataType} from "../../Table-API/API-Table";
 import deleteIcon from '../../../../n2-assets/icons/delete.svg'
 import edit from '../../../../n2-assets/icons/edit.svg'
+import parseISO from "date-fns/parseISO";
 
 
 export type PackType = {
@@ -25,11 +26,11 @@ export type PackType = {
 }
 
 export const Pack = (props: PackType) => {
-    //  const packID = useSelector<AppStateType, string | null>(state => state.rename.packId)
     const [isDeletePackActive, setIsDeletePackActive] = useState(false)
-
     const [isUpdatePackActive, setIsUpdatePackActive] = useState(false)
     const [updatePackValue, setUpdatePackValue] = useState('')
+
+    const date = parseISO(props.lastUpdate).toString().slice(0,24)
 
 
     //delete pack functions
@@ -85,7 +86,7 @@ export const Pack = (props: PackType) => {
             <tr className={style.body}>
                 <td>{props.name}</td>
                 <td>{props.cardsCount}</td>
-                <td>{props.lastUpdate}</td>
+                <td>{date}</td>
                 <td>
 
                         <button onClick={showModalDelete}>

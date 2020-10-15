@@ -3,18 +3,18 @@ import {instance} from "../../Table/Table-API/API-Table";
 //types-----------------------------------------------------------------------------------------------------------------
 
 export type CardsType = {
-    answer: string |null
-    question: string |null
-    cardsPack_id: string |null
+    answer: string | null
+    question: string | null
+    cardsPack_id: string | null
     grade: number
-    rating: number |null
-    shots: number |null
-    type: string |null
-    user_id: string |null
-    created: string |null
-    updated: string |null
-    __v: number |null
-    _id: string |null
+    rating: number | null
+    shots: number | null
+    type: string | null
+    user_id: string | null
+    created: string | null
+    updated: string | null
+    __v: number | null
+    _id: string | null
 }
 
 export type GetCardsResponseType = {
@@ -54,8 +54,8 @@ export type UpdateCardDataType = {
 
 export const cardsAPI = {
     getCards(packId: string | null, pageCount: number) {
-
-        return  instance.get<GetCardsResponseType>(`/cards/card?cardsPack_id=${packId}&pageCount=${pageCount}`).then(res =>res.data.cards)
+        const promise = instance.get<GetCardsResponseType>(`/cards/card?cardsPack_id=${packId}&pageCount=${pageCount}`).then(res => res.data.cards)
+        return promise
     },
     addCard(card: CardDataType) {
         const promise = instance.post(`/cards/card`, {card})

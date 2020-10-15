@@ -61,7 +61,9 @@ export type RenamePackDataType = {
 export const packsAPI = {
     getPacks(userId?: string | null, pageCount = 7, page = 1, name?: string) {
         const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userId}&packName=${name ? name : ''}`).then(res => res.data)
+        console.log(promise)
         return promise
+
     },
     addPack(cardsPack: AddPackDataType) {
         const promise = instance.post(`/cards/pack`, {cardsPack})

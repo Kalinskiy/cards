@@ -67,7 +67,7 @@ export const Table = () => {
     const handleChangePage = (page: number) => {
         dispatch(getPacksTC(userId, 7, page))
     }
-    console.log(packs)
+
 
     return (
 
@@ -107,9 +107,7 @@ export const Table = () => {
                                   packId={e._id}
                                   name={e.name}
                                   cardsCount={e.cardsCount}
-                                  lastUpdate={e.updated
-                                      .replace('T','').replace('Z','')
-                                  }
+                                  lastUpdate={e.updated}
                                   userId={userId}
                                   onClickDeleteHandler={onClickDeleteHandler}
                                   isDeleteModalActive={isDeleteModalActive}
