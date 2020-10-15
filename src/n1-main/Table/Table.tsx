@@ -23,6 +23,7 @@ export const Table = () => {
     const [isDeleteModalActive, isDeleteSetModalActive] = useState(false)
     const [addPackValue, setAddPackValue] = useState('')
 
+
     const page = useSelector<AppStateType, number | null>(state => state.table.page)
     const packs = useSelector<AppStateType, PackType[]>(state => state.table.packs)
     const triggerRename = useSelector<AppStateType, boolean>(state => state.rename.trigger)
