@@ -27,6 +27,7 @@ type ModalWithChildrenType = {
     modalActive: boolean
     setModalActive: (active: boolean) => void
     children: any
+    onCancel: any
 
 
 
@@ -34,7 +35,8 @@ type ModalWithChildrenType = {
 
 export const ModalInput = (props: ModalAddPackType) => {
 
-    return <div className={props.modalActive ? `${style.modal} ${style.active}` : style.modal} onClick={props.onClick}>
+    return <div className={props.modalActive ? `${style.modal} ${style.active}` : style.modal}
+                onClick={props.onCancel}>
         <div className={props.modalActive ? `${style.modalContent} ${style.active} ` : style.modalContent}
              onClick={e => e.stopPropagation()}>
             {props.children}
@@ -55,7 +57,8 @@ export const ModalInput = (props: ModalAddPackType) => {
 }
 export const Modal = (props: ModalCardType) => {
 
-    return <div className={props.modalActive ? `${style.modal} ${style.active}` : style.modal} onClick={props.onClick}>
+    return <div className={props.modalActive ? `${style.modal} ${style.active}` : style.modal}
+                onClick={props.onCancel}>
         <div className={props.modalActive ? `${style.modalContent} ${style.active} ` : style.modalContent}
              onClick={e => e.stopPropagation()}>
             {props.children}
@@ -68,7 +71,8 @@ export const Modal = (props: ModalCardType) => {
 }
 export const ModalWithChildren = (props: ModalWithChildrenType) => {
 
-    return <div className={props.modalActive ? `${style.modal} ${style.active}` : style.modal}>
+    return <div className={props.modalActive ? `${style.modal} ${style.active}` : style.modal}
+                onClick={props.onCancel}>
         <div className={props.modalActive ? `${style.modalContent} ${style.active} ` : style.modalContent}
              onClick={e => e.stopPropagation()}>
             {props.children}

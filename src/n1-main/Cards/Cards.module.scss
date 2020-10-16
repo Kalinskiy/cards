@@ -1,13 +1,31 @@
 .container {
-  margin:100px;
+  margin: 150px;
   display: block;
+  position: relative;
 
+  .cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
 
-  .link{
+  .buttonsContainer {
+    position: fixed;
+    top: 36%;
+    left: 1%;
+    width: 100px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+
+  }
+
+  .link {
     text-decoration: none;
     color: #68cff5;
     font-weight: 500;
     font-size: 1.2em;
+
     .icon {
       width: 25px;
 
