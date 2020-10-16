@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import s from './Pagination.module.css';
+import s from './Pagination.module.scss';
 import {useSelector} from "react-redux";
 import {AppStateType} from "../../n1-main/m2-bll/store";
 

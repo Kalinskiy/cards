@@ -1,8 +1,5 @@
-import React, {ChangeEvent, useState} from "react";
-import style from './Modal.module.css'
-import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../n1-main/m2-bll/store";
-import {addPackTC} from "../../n1-main/Table/Table-Reducer/TableReducer";
+import React, {ChangeEvent} from "react";
+import style from './Modal.module.scss'
 
 type ModalAddPackType = {
     modalActive: boolean
@@ -21,16 +18,13 @@ type ModalCardType = {
     children: any
     onCancel: any
     onClick: any
-
 }
+
 type ModalWithChildrenType = {
     modalActive: boolean
     setModalActive: (active: boolean) => void
     children: any
     onCancel: any
-
-
-
 }
 
 export const ModalInput = (props: ModalAddPackType) => {

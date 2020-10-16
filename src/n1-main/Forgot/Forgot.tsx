@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './forgot.module.css'
+import s from './forgot.module.scss'
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {forgotTC} from "./Reducer/forgot-reducer"
@@ -31,7 +31,11 @@ const Forgot = () => {
             email: '',
         },
         onSubmit: values => {
-           dispatch(forgotTC({ email: values.email, from: 'test-front-admin <sasha.kalinskiy@yandex.ru', message: `<div> <a href="http://localhost:3000/#/reset/">Recover your password</a> </div>`} ))
+            dispatch(forgotTC({
+                email: values.email,
+                from: 'test-front-admin <sasha.kalinskiy@yandex.ru',
+                message: `<div> <a href="http://localhost:3000/#/reset/">Recover your password</a> </div>`
+            }))
 
         }
     })
@@ -40,32 +44,32 @@ const Forgot = () => {
     //______________________________________________________________________________________________________________________
 
 
-
     return (
         <div className={common.container}>
+            <div className={common.wrapper}>
+                {preloader ? <Preloader/> : null}
 
-            {preloader ? <Preloader/> : null}
+                <form onSubmit={formik.handleSubmit}>
+                    {error !== null ? <div style={{color: 'red'}}>{error}</div> : null}
+                    <h1>Forgot password</h1>
+                    <div className={s.input}>
+                        <div>Email</div>
+                        <input
+                            type="text"
+                            {...formik.getFieldProps('email')}
+                        />
+                        {formik.errors.email ? <div className={common.error}>{formik.errors.email}</div> : null}
+                    </div>
+                    <div>
+                        <button
 
-            <form onSubmit={formik.handleSubmit}>
-                {error !== null ? <div style={{color: 'red'}}>{error}</div> : null}
-                <h1>Forgot password</h1>
-                <div className={s.input}>
-                    <div>Email</div>
-                    <input
-                        type="text"
-                        {...formik.getFieldProps('email')}
-                    />
-                    {formik.errors.email ? <div className={common.error}>{formik.errors.email}</div> : null}
-                </div>
-                <div>
-                    <button
+                            type='submit'
+                        >Send
+                        </button>
+                    </div>
 
-                        type='submit'
-                    >Send
-                    </button>
-                </div>
-
-            </form>
+                </form>
+            </div>
         </div>
     );
 }

@@ -4,6 +4,10 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+
+}
+.wrapper {
+    margin-top: 100px;
 }
 
 .container2 {
@@ -12,6 +16,7 @@
     align-items: center;
     justify-content: center;
     overflow: auto;
+
 }
 
 .link {

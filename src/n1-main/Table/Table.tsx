@@ -13,6 +13,7 @@ import {addCardTC, getCardsTC} from "../Cards/Cards-reducer/Cards-reducer";
 import {CardDataType} from "../Cards/Cards-API/Cards-API";
 import common from '../../n3-common_components/CommonStyles/common.module.css'
 import {ModalInput} from "../../n3-common_components/Modal/Modal";
+import {Redirect} from "react-router-dom";
 
 
 export const Table = () => {
@@ -51,7 +52,7 @@ export const Table = () => {
         isAddSetModalActive(!isAddSetModalActive)
     }
     const onClickAllPacks = () => {
-        dispatch(getPacksAllTC(7, 20))
+        dispatch(getPacksAllTC(7, 1))
         setIsAllPacks(true)
     }
     const onClickPacks = () => {
@@ -84,6 +85,7 @@ export const Table = () => {
     return (
 
         <div className={common.container2}>
+            {!isLogged ? <Redirect to={"/log-in"}/> : null}
             {!initialized && <Preloader/>}
             <ModalInput modalActive={isAddModalActive}
                         onChange={onChangeValueHandler}
@@ -111,6 +113,7 @@ export const Table = () => {
                             <th>Name</th>
                             <th>Cards Count</th>
                             <th>Last update</th>
+                            <th></th>
                             <th></th>
                             <th></th>
 

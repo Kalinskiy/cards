@@ -1,6 +1,6 @@
 import React from "react";
 import img from '../../n2-assets/images/error-access.png'
-import s from './ErrorPage.module.css'
+import s from './ErrorPage.module.scss'
 import {NavLink} from "react-router-dom";
 import common from '../../n3-common_components/CommonStyles/common.module.css'
 

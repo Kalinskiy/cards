@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import Navigation from "../Navigation/Navigation";
-import s from './header.module.css'
+import s from './header.module.scss'
 import {useDispatch} from "react-redux";
 import {NavLink, useHistory} from "react-router-dom";
 import {logoutTC} from "../Login/Reducer/login-reducer";
@@ -37,7 +36,7 @@ const Header = () => {
     }
 
     return (
-        <section id={s.header} className={windowScroll > 250 ? s.headerScrolled : ''}>
+        <section id={s.header} className={windowScroll > 50 ? s.headerScrolled : ''}>
             {/*<Navigation/>*/}
             <div className={`${commonStyle.container} ${s.header}`}>
                 <div className={s.navBar}>

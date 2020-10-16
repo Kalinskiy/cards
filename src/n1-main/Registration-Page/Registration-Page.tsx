@@ -54,51 +54,53 @@ export const RegistrationPage = (props: any) => {
     const disabled = (formik.errors.email || formik.errors.password || preloader) ? true : false
 
 
-
     const successRegistration = useSelector<AppStateType, boolean>(state => state.register.success)
 
     return (
         <div className={common.container}>
-            {successRegistration ? <Redirect to={"/log-in"}/> : null}
-            {preloader ? <Preloader/> : null}
+            <div className={common.wrapper}>
+                {successRegistration ? <Redirect to={"/log-in"}/> : null}
+                {preloader ? <Preloader/> : null}
 
-            <form onSubmit={formik.handleSubmit}>
-                <div>   <h2>Registration</h2></div>
-                <div className={style.input}>
-                    <label htmlFor={"email"}>Email</label>
-                    <br/>
-                    <input
-                        type="text"
-                        {...formik.getFieldProps("email")}
-                    />
-                    {formik.errors.email ? <div style={{color: "red"}}>{formik.errors.email}</div> : null}
+                <form onSubmit={formik.handleSubmit}>
+                    <div><h2>Registration</h2></div>
+                    <div className={style.input}>
+                        <label htmlFor={"email"}>Email</label>
+                        <br/>
+                        <input
+                            type="text"
+                            {...formik.getFieldProps("email")}
+                        />
+                        {formik.errors.email ? <div style={{color: "red"}}>{formik.errors.email}</div> : null}
 
-                </div>
-                <div className={style.input}>
-                    <label htmlFor={"password"}>Password</label>
-                    <br/>
-                    <input
-                        type="password"
-                        {...formik.getFieldProps("password")}
-                    />
-                    {formik.errors.password ? <div style={{color: "red"}}>{formik.errors.password}</div> : null}
-                </div>
-                <div className={style.input}>
-                    <label htmlFor={"confirmPassword"}>Password Confirm</label>
-                    <br/>
-                    <input
-                        type="password"
-                        {...formik.getFieldProps("confirmPassword")}
-                    />
-                    {formik.errors.confirmPassword ? <div style={{color: "red"}}>{formik.errors.confirmPassword}</div> : null}
-                </div>
-                <div className={style.submit}>
-                    <button type="submit"
-                            disabled={disabled}
-                    >Submit
-                    </button>
-                </div>
-            </form>
+                    </div>
+                    <div className={style.input}>
+                        <label htmlFor={"password"}>Password</label>
+                        <br/>
+                        <input
+                            type="password"
+                            {...formik.getFieldProps("password")}
+                        />
+                        {formik.errors.password ? <div style={{color: "red"}}>{formik.errors.password}</div> : null}
+                    </div>
+                    <div className={style.input}>
+                        <label htmlFor={"confirmPassword"}>Password Confirm</label>
+                        <br/>
+                        <input
+                            type="password"
+                            {...formik.getFieldProps("confirmPassword")}
+                        />
+                        {formik.errors.confirmPassword ?
+                            <div style={{color: "red"}}>{formik.errors.confirmPassword}</div> : null}
+                    </div>
+                    <div className={style.submit}>
+                        <button type="submit"
+                                disabled={disabled}
+                        >Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     )
 }
