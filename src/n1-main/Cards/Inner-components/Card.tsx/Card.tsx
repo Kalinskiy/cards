@@ -3,7 +3,8 @@ import style from "./Card.module.scss"
 import {useDispatch, useSelector} from "react-redux";
 import {deleteCardTC} from "../../Cards-reducer/Cards-reducer";
 import {AppStateType} from "../../../m2-bll/store";
-import {Modal} from "../../../../n3-common_components/Modal/Modal";
+import {Modal, ModalWithChildren} from "../../../../n3-common_components/Modal/Modal";
+import star from '../../../../n2-assets/icons/star.png'
 
 export type CardType = {
     question: string | null
@@ -13,7 +14,9 @@ export type CardType = {
 }
 
 export const Card = (props: CardType) => {
+
     const [deleteCardState, setDeleteCardState] = useState(false)
+    const [answer, setAnswer] = useState(false)
 
     const showModalDeleteCard = () => {
         setDeleteCardState(true)
@@ -29,18 +32,39 @@ export const Card = (props: CardType) => {
 
     return (
         <div className={style.container}>
+
+            <div className={style.displayContainer}>
+                <div className={style.buttonsContainer}>
+                    <div className={style.deleteElement}
+                         onClick={showModalDeleteCard}></div>
+                    <div className={style.getAnswerElement}
+                         onClick={() => setAnswer(true)}></div>
+                    <div className={style.buttonElement}></div>
+                </div>
+            </div>
+
+            <div className={style.question}>{props.question}</div>
+
+            <div className={style.gradeContainer}>
+                <div className={style.grade}>{props.grade && props.grade.toFixed(1)}</div>
+                <div className={style.star}><img src={star}/></div>
+            </div>
+
+
+
             <Modal modalActive={deleteCardState}
                    setModalActive={setDeleteCardState}
                    onClick={deleteHandler}
                    onCancel={() => setDeleteCardState(false)}>
-                <p>Do you want to remove this card?</p>
+                <p className={style.answer}>Do you want to remove this card?</p>
             </Modal>
-
-            <button onClick={showModalDeleteCard}>Del</button>
-            <div className={style.card}>{props.question}</div>
-            <br/>
-            <div>{props.answer}</div>
-            <div>Grade is: {props.grade}</div>
+            <ModalWithChildren modalActive={answer}
+                               setModalActive={setAnswer}
+                               onCancel={() => setAnswer(false)}
+            >
+                <p className={style.answer}> {props.answer}</p>
+                <button onClick={() => setAnswer(false)}>X</button>
+            </ModalWithChildren>
         </div>
     )
 }

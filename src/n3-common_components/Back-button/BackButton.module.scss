@@ -1,0 +1,26 @@
+.backButton {
+  width: 100px;
+  height: 100px;
+
+  &:hover {
+    .image > img {
+      height: 60px;
+      top: 17px;
+      left: 25px;
+      transition: all 0.1s ease-out;
+    }
+
+  }
+
+  .image {
+    width: 100px;
+    height: 100px;
+
+    > img {
+      height: 50px;
+      position: absolute;
+      top: 22px;
+      left: 27px;
+    }
+  }
+}
