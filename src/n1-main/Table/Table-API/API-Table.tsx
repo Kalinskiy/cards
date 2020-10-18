@@ -59,12 +59,12 @@ export type RenamePackDataType = {
 
 
 export const packsAPI = {
-    getPacks(userId?: string | null, pageCount = 7, page = 1, name?: string) {
+    getPacks(userId?: string | null, pageCount = 8, page = 1, name?: string) {
         const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=${userId ? userId : ''}&packName=${name ? name : ''}`).then(res => res.data)
         return promise
 
     },
-    getPacksAll(pageCount = 7, page = 1, name?: string) {
+    getPacksAll(pageCount = 8, page = 1, name?: string) {
         const promise = instance.get<GetPacksResponseType>(`/cards/pack?pageCount=${pageCount}&page=${page}&user_id=&packName=${name ? name : ''}`).then(res => res.data)
         return promise
 

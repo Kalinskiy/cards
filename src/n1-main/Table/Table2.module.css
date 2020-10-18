@@ -1,0 +1,49 @@
+.container2 {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tableWrapper {
+  width: 90%;
+  display: flex;
+  overflow: auto;
+  justify-content: flex-start;
+}
+
+table {
+  border-collapse: collapse;
+  overflow: auto;
+  font-family: 'Poppins', sans-serif;
+}
+
+.header {
+  color: white;
+  background: steelblue;
+}
+
+th {
+  padding: 0 40px 0 40px;
+
+
+}
+
+.rename {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.add {
+  display: flex;
+}
+@media only screen and (min-width: 1200px) {
+  .tableWrapper {
+
+    justify-content: center;
+  }
+
+}

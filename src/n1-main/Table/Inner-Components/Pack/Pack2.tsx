@@ -1,9 +1,11 @@
 import React, {ChangeEvent, useState} from "react";
-import style from "./Pack.module.scss"
+import style from "./Pack2.module.scss"
 import {CardDataType} from "../../../Cards/Cards-API/Cards-API";
 import {NavLink} from "react-router-dom";
 import {Modal, ModalInput} from "../../../../n3-common_components/Modal/Modal";
 import {RenamePackDataType} from "../../Table-API/API-Table";
+import deleteIcon from '../../../../n2-assets/icons/delete.svg'
+import edit from '../../../../n2-assets/icons/edit.svg'
 import parseISO from "date-fns/parseISO";
 
 
@@ -28,7 +30,8 @@ export const Pack2 = (props: PackType) => {
     const [isUpdatePackActive, setIsUpdatePackActive] = useState(false)
     const [updatePackValue, setUpdatePackValue] = useState('')
 
-    const date = parseISO(props.lastUpdate).toString().slice(0, 24)
+    const date = parseISO(props.lastUpdate).toString().slice(0,24)
+
 
 
     //delete pack functions
@@ -54,7 +57,6 @@ export const Pack2 = (props: PackType) => {
     }
 
     const getCardsOnClick = () => {
-
         props.getCardsOnClick(props.packId, 10)
     }
     const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -82,39 +84,33 @@ export const Pack2 = (props: PackType) => {
                 <p>Do you want to rename this pack?</p>
             </ModalInput>
 
-            <div className={style.container}>
+            <tr className={style.body}>
+                <td></td>
+                <td>{props.name}</td>
+                <td>{props.cardsCount}</td>
+                <td>{date}</td>
+                <td>
 
-                {/*<button onClick={showModalDelete}><img src={deleteIcon} className={style.delete}/></button>*/}
-                {/*<button onClick={showModalUpdate}><img src={edit} className={style.edit}/></button>*/}
-                {/*<NavLink onClick={getCardsOnClick}*/}
-                {/*         className={style.card}*/}
-                {/*         to={`cards/${props.packId}`}*/}
-                {/*>*/}
-                {/*    Cards*/}
-                {/*</NavLink>*/}
+                        <button onClick={showModalDelete}>
+                            <img src={deleteIcon} className={style.delete}/>
+                        </button>
 
-                <div className={style.displayContainer}>
 
-                    <div className={style.buttonsContainer}>
-                        <div className={style.deleteElement}
-                             onClick={showModalDelete}></div>
-                        <div className={style.getAnswerElement}
-                             onClick={showModalUpdate}></div>
-                        <div className={style.buttonElement} onClick={getCardsOnClick}>
-                            <NavLink to={`cards/${props.packId}`} className={style.navLink}>
+                </td>
+                <td>
+                    <button onClick={showModalUpdate}>
+                        <img src={edit} className={style.edit}/>
+                    </button>
 
-                            </NavLink>
-                        </div>
-                    </div>
-                </div>
-
-                <div className={style.packName}>{props.name}</div>
-
-                <div className={style.gradeContainer}>
-                    <div className={style.grade}><span>cards: {props.cardsCount}</span></div>
-
-                </div>
-            </div>
+                </td>
+                <td>
+                    <NavLink onClick={getCardsOnClick}
+                             className={style.card}
+                             to={`cards/${props.packId}`}
+                    >
+                    </NavLink>
+                </td>
+            </tr>
         </>
 
     )

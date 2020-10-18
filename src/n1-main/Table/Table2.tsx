@@ -14,10 +14,6 @@ import {CardDataType} from "../Cards/Cards-API/Cards-API";
 import common from '../../n3-common_components/CommonStyles/common.module.css'
 import {ModalInput} from "../../n3-common_components/Modal/Modal";
 import {Redirect} from "react-router-dom";
-import {AddButton} from '../../n3-common_components/Add-button/AddButton';
-import {AllButton} from '../../n3-common_components/All-button/AllButton';
-import onePack from '../../n2-assets/icons/one.png';
-import all from '../../n2-assets/icons/all.png'
 
 
 export const Table = () => {
@@ -56,7 +52,7 @@ export const Table = () => {
         isAddSetModalActive(!isAddSetModalActive)
     }
     const onClickAllPacks = () => {
-        dispatch(getPacksAllTC(8, 1))
+        dispatch(getPacksAllTC(7, 1))
         setIsAllPacks(true)
     }
     const onClickPacks = () => {
@@ -79,10 +75,10 @@ export const Table = () => {
     }
 
     const handleChangePage = (page: number) => {
-        dispatch(getPacksTC(userId, 8, page))
+        dispatch(getPacksTC(userId, 7, page))
     }
     const handleChangePageAll = (page: number) => {
-        dispatch(getPacksAllTC(8, page))
+        dispatch(getPacksAllTC(7, page))
     }
 
 
@@ -101,36 +97,49 @@ export const Table = () => {
                 <p>Do you want to add this pack?</p>
             </ModalInput>
 
-            {triggerPreloader ? <Preloader/> : <div className={style.wrapper}>
+            {triggerPreloader ? <Preloader/> : <div style={{padding: '100px 0', display:"flex",flexDirection:'column',width:'100%', alignItems:'center'}}>
                 <Search/>
-
-                <div className={style.buttonsContainer}>
-                    <AllButton onClick={!isAllPacks ? onClickAllPacks : onClickPacks}
-                               icon={!isAllPacks ? all : onePack}
-                    />
-                    <AddButton onClick={() => isAddSetModalActive(true)}/>
+                <div className={style.add}>
+                    <button className={style.buttonPlus} onClick={() => isAddSetModalActive(true)}>+</button>
+                    <button
+                        onClick={!isAllPacks ? onClickAllPacks : onClickPacks}>{!isAllPacks ? 'show all packs' : 'show my packs'}</button>
                 </div>
 
-                <div className={style.packs}>
-                    {
-                        packs.map(e =>
-                            <Pack2 key={e._id}
-                                   packId={e._id}
-                                   name={e.name}
-                                   cardsCount={e.cardsCount}
-                                   lastUpdate={e.updated}
-                                   userId={userId}
-                                   onClickDeleteHandler={onClickDeleteHandler}
-                                   isDeleteModalActive={isDeleteModalActive}
-                                   isDeleteSetModalActive={isDeleteSetModalActive}
-                                   onClickUpdateHandler={onClickUpdateHandler}
-                                   onClickAddCardHandler={onClickAddCardHandler}
-                                   getCardsOnClick={getCardsOnClick}
+                <div className={style.tableWrapper}>
+                    <table>
+                        <thead className={style.header}>
+                        <tr>
+                            <th>Picture</th>
+                            <th>Name</th>
+                            <th>Cards Count</th>
+                            <th>Last update</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {
+                            packs.map(e =>
+                                <Pack2 key={e._id}
+                                       packId={e._id}
+                                       name={e.name}
+                                       cardsCount={e.cardsCount}
+                                       lastUpdate={e.updated}
+                                       userId={userId}
+                                       onClickDeleteHandler={onClickDeleteHandler}
+                                       isDeleteModalActive={isDeleteModalActive}
+                                       isDeleteSetModalActive={isDeleteSetModalActive}
+                                       onClickUpdateHandler={onClickUpdateHandler}
+                                       onClickAddCardHandler={onClickAddCardHandler}
+                                       getCardsOnClick={getCardsOnClick}
 
 
-                            />)
-                    }
-
+                                />)
+                        }
+                        </tbody>
+                    </table>
                 </div>
 
 
@@ -143,7 +152,6 @@ export const Table = () => {
                     />
                     : null
                 }
-
             </div>}
         </div>
 

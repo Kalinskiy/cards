@@ -6,6 +6,7 @@
   align-content: flex-end;
   font-family: 'Poppins', sans-serif;
 
+
   li {
     font-weight: bold;
     list-style: none;
@@ -20,7 +21,7 @@
     display: -ms-inline-flexbox;
     padding: 9px 8px;
     display: flex;
-    margin: 100px 0;
+    margin: 200px 0 0 0;
 
     & li {
       background: #fff;

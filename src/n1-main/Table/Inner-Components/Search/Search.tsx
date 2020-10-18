@@ -17,7 +17,7 @@ const Search = () => {
     }
 
     const search = () => {
-        dispatch(getPacksTC(userId, 7, page, searchName))
+        dispatch(getPacksTC(userId, 8, page, searchName))
     }
 
     return <div className={style.search}>

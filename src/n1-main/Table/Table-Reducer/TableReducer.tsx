@@ -82,7 +82,7 @@ export const setPhotoSuccess = (photos: any) => ({type: 'table/SAVE_PHOTO_SUCCES
 
 //Thunks
 
-export const getPacksTC = (userId: string | null, pageCount = 7, page = 0, name?: string): ThunkActionType => async (dispatch) => {
+export const getPacksTC = (userId: string | null, pageCount = 8, page = 0, name?: string): ThunkActionType => async (dispatch) => {
     dispatch(changePreloaderTrigger(true))
     try {
         const data = await packsAPI.getPacks(userId, pageCount, page, name)
@@ -95,7 +95,7 @@ export const getPacksTC = (userId: string | null, pageCount = 7, page = 0, name?
     }
     dispatch(changePreloaderTrigger(false))
 }
-export const getPacksAllTC = (  pageCount = 7, page = 0, name?: string): ThunkActionType => async (dispatch) => {
+export const getPacksAllTC = (  pageCount = 8, page = 0, name?: string): ThunkActionType => async (dispatch) => {
     dispatch(changePreloaderTrigger(true))
     try {
         const data = await packsAPI.getPacksAll(pageCount, page, name)

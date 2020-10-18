@@ -1,0 +1,26 @@
+.container {
+  width: 100px;
+  height: 100px;
+  text-align: center;
+  position: relative;
+  &:hover {
+    > img {
+      height: 85px;
+      top: 8%;
+      left: 8%;
+
+
+
+    }
+
+  }
+  img {
+    height: 70px;
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    transition: all 0.1s ease-out;
+
+
+  }
+}
