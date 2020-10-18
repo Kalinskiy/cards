@@ -5,7 +5,7 @@ import {CardsType} from "../../Cards-API/Cards-API";
 import {GameCard} from "./Game-card/GameCard";
 import {getCardsTC, updateCardGrade} from "../../Cards-reducer/Cards-reducer";
 import {useParams} from "react-router-dom";
-import style from './Card-game.module.css'
+import style from './Card-game.module.scss'
 
 const getCard = (cards: CardsType[]) => {
     const sum = cards.reduce((acc, card) => acc + (6 - card.grade) * (6 - card.grade), 0);
@@ -15,7 +15,6 @@ const getCard = (cards: CardsType[]) => {
             return {sum: newSum, id: newSum < rand ? i : acc.id}
         }
         , {sum: 0, id: -1});
-
     return cards[res.id + 1];
 }
 
@@ -27,15 +26,14 @@ export const CardGame = () => {
 
     const [currentCard, setCurrentCard] = useState<CardsType>(getCard(cards))
 
+
+
     useEffect(() => {
-
         dispatch(getCardsTC(params.packId))
-
     }, [params.packId])
 
 
     useEffect( ()=> {
-
         setCurrentCard(getCard(cards))
     }, [cards] )
 

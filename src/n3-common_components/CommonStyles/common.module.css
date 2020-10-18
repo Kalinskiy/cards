@@ -64,6 +64,7 @@ button:active {
 
 input {
     border: none;
+
     border-bottom: 2px solid rgb(7, 36, 47);
     background-color: rgb(245, 245, 245);
     font-size:1.1em;
@@ -73,6 +74,7 @@ input {
 input:focus {
     border: none;
     border-bottom: 2px solid rgb(7, 36, 47);
+    outline: none;
     background-color: rgb(245, 245, 245);
 }
 /*h2*/
