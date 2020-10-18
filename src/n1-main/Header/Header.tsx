@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import s from './header.module.scss'
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {NavLink, useHistory} from "react-router-dom";
 import {logoutTC} from "../Login/Reducer/login-reducer";
 import icon from '../../n2-assets/images/react_icon.png'
 import commonStyle from '../../n3-common_components/CommonStyles/common.module.css'
+import {AppStateType} from "../m2-bll/store";
 
 const Header = () => {
 
@@ -17,6 +18,9 @@ const Header = () => {
     }
 
     const [windowScroll, setWindowScroll] = useState(window.scrollY)
+
+    const avatar = useSelector<AppStateType, any>(state => state.login.auth.avatar)
+    const isLogged = useSelector<AppStateType, any>(state => state.login.isLogged)
 
     const scrollDown = () => {
         setWindowScroll(window.scrollY)
@@ -39,6 +43,9 @@ const Header = () => {
         <section id={s.header} className={windowScroll > 50 ? s.headerScrolled : ''}>
             {/*<Navigation/>*/}
             <div className={`${commonStyle.container} ${s.header}`}>
+                {
+                    isLogged && <div className={s.avatar}><img src={avatar} /></div>
+                }
                 <div className={s.navBar}>
                     <div className={s.brand}>
                         <NavLink to={'/table'}>
@@ -57,6 +64,7 @@ const Header = () => {
                             <NavLink onClick={logOutClick} className={s.link} to={'/log-out'}>log-out</NavLink>
                             <NavLink className={s.link} to={'/forgot'}>forgot password?</NavLink>
                             <NavLink className={s.link} to={'/table'}>Table</NavLink>
+                            <NavLink className={s.link} to={'/profile'}>Profile</NavLink>
                         </ul>
                     </div>
                 </div>
