@@ -15,6 +15,11 @@
   .header {
     background-color: rgba(10, 22, 26, 0.44);
 
+    .avatar > img {
+      width: 100px;
+      height: 100px;
+    }
+
     .navBar {
       display: flex;
       align-items: center;
