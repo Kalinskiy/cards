@@ -2,7 +2,7 @@
     width: 80%;
     display: flex;
     overflow: auto;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
