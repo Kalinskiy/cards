@@ -1,0 +1,42 @@
+.container {
+    display: flex;
+    animation: hint 3s ease-in-out infinite;
+    position: absolute;
+    width: 300px;
+    height: 100px;
+    left: 60px;
+    justify-content: space-between;
+    align-items: center;
+}
+.arrow {
+    width:100%;
+    display: block;
+}
+.arrow img {
+    width: 100px;
+}
+.container span {
+    display: block;
+    vertical-align: middle;
+    width: 100%;
+}
+
+@keyframes hint {
+    0% {
+        transform: scale(0.9)
+    }
+    25% {
+        transform: scale(1)
+    }
+    50% {
+        transform: scale(0.9)
+    }
+    75% {
+        transform: scale(1)
+    }
+
+    100% {
+        transform: scale(0.9);
+    }
+}
+

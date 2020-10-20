@@ -15,6 +15,8 @@ export type CardsType = {
     updated: string | null
     __v: number | null
     _id: string | null
+    page:number
+    cardsTotalCount:number | null
 }
 
 export type GetCardsResponseType = {
@@ -24,6 +26,8 @@ export type GetCardsResponseType = {
     minGrade: number
     page: number
     pageCount: number
+
+
 }
 
 export type CardDataType = {
@@ -38,6 +42,8 @@ export type CardDataType = {
     questionVideo?: string | null
     answerVideo?: string | null
     type?: string | null
+
+
 }
 
 export type AddCardDataType = {
@@ -53,8 +59,8 @@ export type UpdateCardDataType = {
 //Object-----------------------------------------------------------------------------------------------------------------
 
 export const cardsAPI = {
-    getCards(packId: string | null, pageCount: number) {
-        const promise = instance.get<GetCardsResponseType>(`/cards/card?cardsPack_id=${packId}&pageCount=${pageCount}`).then(res => res.data.cards)
+    getCards(packId: string | null,isMycards:boolean, pageCount: number,page=1) {
+        const promise = instance.get<GetCardsResponseType>(`/cards/card?cardsPack_id=${packId}&page=${page}&pageCount=${pageCount}`).then(res => res.data.cards)
         return promise
     },
     addCard(card: CardDataType) {

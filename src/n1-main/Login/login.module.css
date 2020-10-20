@@ -1,0 +1,14 @@
+.login{
+    border:3px solid rgba(1, 12, 12, 0.53);
+    padding: 80px;
+
+}
+.link  {
+    font-weight: 500;
+    letter-spacing: .05rem;
+    text-decoration: none;
+    color: #07242F;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(7, 3, 3, 0.13);
+    line-height: 3em;
+}

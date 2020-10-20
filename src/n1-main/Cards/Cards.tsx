@@ -13,6 +13,9 @@ import {LoginAuthStateType} from "../Login/Reducer/login-reducer";
 import {BackButton} from "../../n3-common_components/Back-button/BackButton";
 import {AddButton} from "../../n3-common_components/Add-button/AddButton";
 import {PlayButton} from "../../n3-common_components/Play-button/PlayButton";
+import {getPacksTC} from "../Table/Table-Reducer/TableReducer";
+import ReactSimplePagination from "../../n3-common_components/Pagination/Pagination";
+
 
 export const Cards = () => {
     const [addCardState, setAddCardState] = useState(false)
@@ -21,6 +24,10 @@ export const Cards = () => {
     const params = useParams<{ packId: string }>()
 
     const dispatch = useDispatch()
+
+    const userId = useSelector<AppStateType, string | null>(state => state.login.auth._id)
+    const page = useSelector<AppStateType, number | null>(state => state.cards.page)
+    const totalCards = useSelector<AppStateType, number | null>(state => state.cards.cardsTotalCount)
 
     const cards = useSelector<AppStateType, CardsType[]>(state => state.cards.cards)
     const auth = useSelector<AppStateType, LoginAuthStateType>(state => state.login.auth)
@@ -39,6 +46,9 @@ export const Cards = () => {
     const hideModalAddCard = () => {
         setAddCardState(false)
     }
+    const handleChangePage = (page: number) => {
+      //  dispatch(getCardsTC(userId, 8, page))
+    }
 
     return (
         <>  {!auth && <Preloader/>}
@@ -48,8 +58,9 @@ export const Cards = () => {
 
                     <div className={style.buttonsContainer}>
                         <BackButton to={'/table'}/>
-                        <AddButton onClick={showModalAddCard}/>
+                        <AddButton onClick={showModalAddCard} length={cards.length} message={'Add Card here'}/>
                         <PlayButton to={`/card-game/${params.packId}`}/>
+
                     </div>
 
                     <ModalWithChildren
@@ -61,17 +72,25 @@ export const Cards = () => {
                     >
                         <AddCard hideModalAddCard={hideModalAddCard}/>
                     </ModalWithChildren>
-
                     <div className={style.cards}>
                         {
-                            cards.length && cards.map(e => <Card question={e.question}
-                                                                 answer={e.answer}
-                                                                 id={e._id}
-                                                                 key={e._id}
-                                                                 grade={e.grade}
+                            !!cards.length && cards.map(e => <Card question={e.question}
+                                                                   answer={e.answer}
+                                                                   id={e._id}
+                                                                   key={e._id}
+                                                                   grade={e.grade}
                             />)
                         }
                     </div>
+                    {page
+                        ? <ReactSimplePagination
+                            page={page}
+                            maxPage={totalCards ? Math.ceil(totalCards / 7) : 0}
+                            onClickAction={handleChangePage}
+                        />
+                        : null
+                    }
+
                 </div>}
 
         </>

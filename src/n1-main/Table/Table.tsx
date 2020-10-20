@@ -18,6 +18,7 @@ import {AddButton} from '../../n3-common_components/Add-button/AddButton';
 import {AllButton} from '../../n3-common_components/All-button/AllButton';
 import onePack from '../../n2-assets/icons/one.png';
 import all from '../../n2-assets/icons/all.png'
+import {Hint} from "../../n3-common_components/Hint/Hint";
 
 
 export const Table = () => {
@@ -29,7 +30,8 @@ export const Table = () => {
     const [addPackValue, setAddPackValue] = useState('')
     const [isAllPacks, setIsAllPacks] = useState(false)
 
-
+    const isMyCards = useSelector<AppStateType, boolean>(state => state.cards.isMycards)
+    const isMyPacks = useSelector<AppStateType, boolean>(state => state.table.isMyPacks)
     const page = useSelector<AppStateType, number | null>(state => state.table.page)
     const packs = useSelector<AppStateType, PackType[]>(state => state.table.packs)
     const triggerRename = useSelector<AppStateType, boolean>(state => state.rename.trigger)
@@ -38,7 +40,7 @@ export const Table = () => {
     const totalPacks = useSelector<AppStateType, number | null>(state => state.table.packsCount)
     const isLogged = useSelector<AppStateType, boolean>(state => state.login.isLogged)
     const initialized = useSelector<AppStateType, boolean>(state => state.app.initialized)
-    console.log(packs)
+    console.log(page)
     useEffect(() => {
         userId && dispatch(getPacksTC(userId))
     }, [userId])
@@ -69,7 +71,7 @@ export const Table = () => {
     }
 
     const getCardsOnClick = (packId: string, pageCount: number) => {
-        dispatch(getCardsTC(packId, pageCount))
+        dispatch(getCardsTC(packId, isMyCards, pageCount))
 
     }
 
@@ -79,7 +81,7 @@ export const Table = () => {
     }
 
     const handleChangePage = (page: number) => {
-        dispatch(getPacksTC(userId, 8, page))
+        dispatch(getPacksTC(userId, 8, page, isMyPacks))
     }
     const handleChangePageAll = (page: number) => {
         dispatch(getPacksAllTC(8, page))
@@ -89,7 +91,7 @@ export const Table = () => {
     return (
 
         <div className={common.container2}>
-            {!isLogged ? <Redirect to={"/log-in"}/> : null}
+
             {!initialized && <Preloader/>}
             <ModalInput modalActive={isAddModalActive}
                         onChange={onChangeValueHandler}
@@ -102,16 +104,23 @@ export const Table = () => {
             </ModalInput>
 
             {triggerPreloader ? <Preloader/> : <div className={style.wrapper}>
-                <Search/>
+                {!!packs.length && <Search/>}
 
                 <div className={style.buttonsContainer}>
                     <AllButton onClick={!isAllPacks ? onClickAllPacks : onClickPacks}
                                icon={!isAllPacks ? all : onePack}
                     />
-                    <AddButton onClick={() => isAddSetModalActive(true)}/>
+                    <div className={!isMyPacks?style.addButton:''}><AddButton onClick={() => isAddSetModalActive(true)}
+                                    message={'Add card here'}
+                                    length={packs.length}
+
+                    />
+                    </div>
+
                 </div>
 
                 <div className={style.packs}>
+                    {/*{!packs.length && <Hint message='ADD PACK HERE!'/>}*/}
                     {
                         packs.map(e =>
                             <Pack2 key={e._id}
@@ -135,9 +144,10 @@ export const Table = () => {
 
 
                 {triggerRename && <div className={style.rename}><RenameWindow/></div>}
-                {page
+                {packs.length
+
                     ? <ReactSimplePagination
-                        page={page}
+                        page={page ? page : 0}
                         maxPage={totalPacks ? Math.ceil(totalPacks / 7) : 0}
                         onClickAction={isAllPacks ? handleChangePageAll : handleChangePage}
                     />

@@ -43,7 +43,7 @@ const ReactSimplePagination: FC<PaginateProps> = (props: PaginateProps) => {
 
             <div className={s.paginateArea}>
                 <ul className={s.paginate}>
-                    {(props.page > 1) && (
+                    {(props.page < 1) && (
                         <li onClick={() => props.onClickAction(props.page - 1)}>
                             &lt;
                         </li>

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.css';
 import Header from "../Header/Header";
-import {HashRouter, Route} from "react-router-dom";
+import {HashRouter, Route, Redirect} from "react-router-dom";
 import LogIn from "../Login/LogIn";
 import Profile from "../Profile/Profile";
 import {RegistrationPage} from "../Registration-Page/Registration-Page";
@@ -14,30 +14,29 @@ import {CardGame} from "../Cards/Inner-components/Card-game/Card-game";
 import {AppStateType} from "../m2-bll/store";
 import {Preloader} from "../../n3-common_components/Preloader/Preloader";
 import {initializeApp} from "./app-reducer";
-import ErrorPage from "../../n3-common_components/ErrorPage/ErrorPage";
 
 
 const App = () => {
     const initialized = useSelector<AppStateType, boolean>(state => state.app.initialized)
     const isLogged = useSelector<AppStateType, boolean>(state => state.login.isLogged)
-    const triggerPreloader = useSelector<AppStateType, boolean>(state => state.preloader.trigger)
-    const IsTableAccess = initialized?<Table/> : <ErrorPage errorText={'Sorry, you don`t have access to see this page. Please Log-in'}/>
-
     const dispatch = useDispatch()
-    useEffect(() => {
 
+    useEffect(() => {
         dispatch(initializeApp())
     }, [])
     if (!initialized) {
         return <Preloader/>
     }
+    debugger
     return (
+
         <div className="App">
             {!initialized && <Preloader/>}
 
-            <HashRouter>
-                <Header/>
 
+            <HashRouter>
+                {!isLogged && <Redirect to={'/log-in'}/>}
+                <Header/>
                 <Route path='/log-in' render={() => <LogIn/>}/>
                 <Route path='/register' render={() => <RegistrationPage/>}/>
                 <Route path='/forgot' render={() => <Forgot/>}/>

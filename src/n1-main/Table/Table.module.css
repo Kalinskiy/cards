@@ -6,9 +6,6 @@
     align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
-
-
-
 }
 .wrapper {
     padding: 80px 0;
@@ -25,6 +22,9 @@
     display: flex;
     justify-content: space-around;
     flex-direction: column;
+}
+.addButton{
+    display: none;
 }
 .header {
     color: white;

@@ -14,6 +14,7 @@ const LogIn = () => {
     //Hooks
     const error = useSelector<AppStateType, string | null>(state => state.login.error)
     const preloader = useSelector<AppStateType, boolean>(state => state.register.preloader)
+
     const isLogged = useSelector<AppStateType, boolean>(state => state.login.isLogged)
     const dispatch = useDispatch()
     const formik = useFormik({
@@ -53,50 +54,54 @@ const LogIn = () => {
     return (
         <div className={common.container}>
             <div className={common.wrapper}>
-                {isLogged ? <Redirect to={"/table"}/> : null}
-                {preloader ? <Preloader/> : null}
-
-                <form onSubmit={formik.handleSubmit}>
-
-                    {error !== null ? <div style={{color: 'red'}}>{error}</div> : null}
-                    <div className={s.input}>
-                        <div><h2>Login</h2></div>
-                        <div>email</div>
-                        <input
-                            type="text"
-                            {...formik.getFieldProps('email')}
-                        />
-                        {formik.errors.email ? <div className={common.error}>{formik.errors.email}</div> : null}
-
-                    </div>
-                    <div className={s.input}>
-                        <div>password</div>
-                        <input
-                            type="password"
-                            {...formik.getFieldProps('password')}
-                            checked={formik.values.rememberMe}
-                        />
-                        {formik.errors.password ? <div className={common.error}>{formik.errors.password}</div> : null}
-                    </div>
-                    <div>
-                        <input type="checkbox"
-                               {...formik.getFieldProps('rememberMe')}
-                        />
-                        <span>remember me</span>
-                    </div>
-
-                    <div>
-                        <button
-                            disabled={disabled}
-                            type='submit'
-                        >login
-                        </button>
-                    </div>
-                    <div><NavLink className={common.link} to={'/forgot'}>forgot password?</NavLink></div>
-                    <div><NavLink className={common.link} to={'/register'}>Don`t have an account?</NavLink></div>
+                <div className={s.login}>
+                    {isLogged ? <Redirect to={"/table"}/> : null}
+                    {preloader ? <Preloader/> : null}
 
 
-                </form>
+                    <form onSubmit={formik.handleSubmit}>
+
+                        {error !== null ? <div style={{color: 'red'}}>{error}</div> : null}
+                        <div className={s.input}>
+                            <div><h2>Login</h2></div>
+                            <div>email</div>
+                            <input
+                                type="text"
+                                {...formik.getFieldProps('email')}
+                            />
+                            {formik.errors.email ? <div className={common.error}>{formik.errors.email}</div> : null}
+
+                        </div>
+                        <div className={s.input}>
+                            <div>password</div>
+                            <input
+                                type="password"
+                                {...formik.getFieldProps('password')}
+                                checked={formik.values.rememberMe}
+                            />
+                            {formik.errors.password ?
+                                <div className={common.error}>{formik.errors.password}</div> : null}
+                        </div>
+                        <div>
+                            <input type="checkbox"
+                                   {...formik.getFieldProps('rememberMe')}
+                            />
+                            <span>remember me</span>
+                        </div>
+
+                        <div>
+                            <button
+                                disabled={disabled}
+                                type='submit'
+                            >login
+                            </button>
+                        </div>
+                        <div><NavLink className={s.link} to={'/forgot'}>forgot password?</NavLink></div>
+                        <div><NavLink className={s.link} to={'/register'}>Don`t have an account?</NavLink></div>
+
+
+                    </form>
+                </div>
             </div>
         </div>
     );

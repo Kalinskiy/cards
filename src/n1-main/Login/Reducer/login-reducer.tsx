@@ -131,8 +131,6 @@ export const logoutTC = (): ThunkActionType => async (dispatch) => {
 }
 export const authTC = (): ThunkActionType => async (dispatch) => {
     try {
-
-        dispatch(initializedSuccess(true))
         dispatch(setPreloader(true))
         const res = await loginAPI.auth()
         if (res.data.email && res.data.name) {
