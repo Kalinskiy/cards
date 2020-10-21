@@ -34,7 +34,7 @@ export const Cards = () => {
     const packs = useSelector<AppStateType, PackType[]>(state => state.table.packs)
     const page = useSelector<AppStateType, number | null>(state => state.cards.page)
     const totalCards = useSelector<AppStateType, number | null>(state => state.cards.cardsTotalCount)
-    const isMyCards = useSelector<AppStateType, boolean>(state => state.cards.isMyСards)
+    const isMyCards = useSelector<AppStateType, boolean>(state => state.cards.isMyCards)
 
     const cards = useSelector<AppStateType, CardsType[]>(state => state.cards.cards)
     const auth = useSelector<AppStateType, LoginAuthStateType>(state => state.login.auth)

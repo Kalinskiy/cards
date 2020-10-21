@@ -93,7 +93,7 @@ export const changeCurrentCard = (value: number) => ({type: "cards/SET_CURRENT_C
 
 export const getCardPage = (page: number) => ({type: "cards/GET_PAGE", page} as const)
 export const setTotalCards = (cardsTotalCount: number) => ({type: "cards/SET_TOTAL_CARDS", cardsTotalCount} as const)
-export const setIsMyCards = (isMyСards: boolean) => ({type: 'cards/SET_IS_MY_CARDS', isMyCards} as const)
+export const setIsMyCards = (isMyСards: boolean) => ({type: 'cards/SET_IS_MY_CARDS', isMyСards} as const)
 
 //thunks-----------------------------------------------------------------------------------------------------------------
 
