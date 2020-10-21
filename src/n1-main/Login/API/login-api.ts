@@ -26,7 +26,7 @@ export type ProfileDataType = {
 }
 
 type SetProfileDataType = {
-    name: string
+    name: string | null
     avatar: string
 }
 

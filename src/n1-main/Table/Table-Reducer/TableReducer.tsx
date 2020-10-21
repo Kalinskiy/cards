@@ -10,20 +10,26 @@ import {
     changeTriggerPreloaderActionType
 } from "../../../n3-common_components/Preloader/Reducer/PreloaderReducer";
 import {CardsType} from "../../Cards/Cards-API/Cards-API";
+import {setIsMyCards, SetIsMyCardsType} from "../../Cards/Cards-reducer/Cards-reducer";
 
 
 type SavePackType = ReturnType<typeof savePack>
 type GetPageType = ReturnType<typeof getPackPage>
 type TotalPackType = ReturnType<typeof setTotalPacks>
 type SetPhotoType = ReturnType<typeof setPhotoSuccess>
-type SetIsMyPacks = ReturnType<typeof setIsMyPacks>
+type SetIsMyPacksType = ReturnType<typeof setIsMyPacks>
+type setErrorSearchType = ReturnType<typeof setErrorSearch>
+type setIsSearchType = ReturnType<typeof setIsSearch>
 
 type ActionType = SavePackType
     | TotalPackType | GetPageType
     | changeTriggerRenameType
     | changeTriggerPreloaderActionType
     | SetPhotoType
-    | SetIsMyPacks
+    | SetIsMyPacksType
+    | SetIsMyCardsType
+    | setErrorSearchType
+    | setIsSearchType
 
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionType>
 
@@ -37,6 +43,8 @@ type InitialStateType = {
     pageCount: number | null
     packsCount: null | number
     isMyPacks: boolean
+    search: string | null
+    isSearch: boolean
 }
 //______________________________________________________________________________________________________________________
 
@@ -50,7 +58,9 @@ const initialState = {
     page: 0,
     pageCount: null,
     packsCount: null,
-    isMyPacks: true
+    isMyPacks: true,
+    search: null,
+    isSearch: false
 }
 
 const tableReducer = (state: InitialStateType = initialState, action: ActionType) => {
@@ -75,6 +85,16 @@ const tableReducer = (state: InitialStateType = initialState, action: ActionType
                 ...state,
                 value: action.value
             }
+        case "table/SET_ERROR_SEARCH" :
+            return {
+                ...state,
+                search: action.search
+            }
+        case "table/SET_ISE_SEARCH": {
+            return {
+                ...state, isSearch: action.value
+            }
+        }
         default:
             return state;
     }
@@ -87,6 +107,8 @@ export const getPackPage = (page: number) => ({type: "table/GET_PAGE", page} as 
 export const setTotalPacks = (packsCount: number) => ({type: "table/SET_TOTAL_PACKS", packsCount} as const)
 export const setPhotoSuccess = (photos: any) => ({type: 'table/SAVE_PHOTO_SUCCESS', photos} as const);
 export const setIsMyPacks = (value: boolean) => ({type: 'table/SET_IS_MY_PACKS', value} as const)
+export const setErrorSearch = (search: string | null) => ({type: 'table/SET_ERROR_SEARCH', search} as const)
+export const setIsSearch = (value: boolean) => ({type: 'table/SET_ISE_SEARCH', value} as const)
 
 //______________________________________________________________________________________________________________________
 
@@ -99,11 +121,14 @@ export const getPacksTC = (userId: string | null, pageCount = 8, page = 0, isMyP
         dispatch(savePack(data.cardPacks))
         dispatch(setTotalPacks(data.cardPacksTotalCount))
         dispatch(getPackPage(data.page))
+        dispatch(setIsMyCards(true))
+
         if (isMyPacks)
             dispatch(setIsMyPacks(false))
         else {
             dispatch(setIsMyPacks(true))
         }
+
 
     } catch (error) {
         console.log(error)
@@ -117,6 +142,8 @@ export const getPacksAllTC = (pageCount = 8, page = 0, name?: string): ThunkActi
         dispatch(savePack(data.cardPacks))
         dispatch(setTotalPacks(data.cardPacksTotalCount))
         dispatch(getPackPage(data.page))
+        dispatch(setIsMyPacks(false))
+        dispatch(setIsMyCards(false))
 
     } catch (error) {
         console.log(error)
@@ -130,7 +157,7 @@ export const addPackTC = (userId: string | null, addPackData?: string): ThunkAct
     try {
         const cardsPack = addPackData ? {name: addPackData} : {}
         const response = await packsAPI.addPack(cardsPack)
-        console.log(response)
+
         if (response.status === 201) {
             dispatch(getPacksTC(userId))
         }

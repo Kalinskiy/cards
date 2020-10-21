@@ -4,15 +4,27 @@ import {Redirect} from "react-router-dom";
 import {AppStateType} from "../m2-bll/store";
 import {authTC} from "../Login/Reducer/login-reducer";
 import style from './profile.module.scss'
-import {instance} from "../Table/Table-API/API-Table";
 import {loginAPI} from "../Login/API/login-api";
 import defaultImage from '../../n2-assets/images/user.png'
+import {SettingsAnimation} from "../../n3-common_components/SettingsAnimation/SettingsAnimation";
+import {ModalWithChildren} from "../../n3-common_components/Modal/Modal";
+import {setProfile} from "./Reducer/profile-reducer";
 
 
 const Profile = () => {
 
+
     const isLogged = useSelector<AppStateType, boolean>(state => state.login.isLogged)
     const avatar = useSelector<AppStateType, any>(state => state.login.auth.avatar)
+    const userName = useSelector<AppStateType, string | null>(state => state.login.auth.name)
+
+
+
+    let dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(authTC())
+    }, [avatar])
+
     /*   const dispatch = useDispatch()
        const [value, setValue] = useState(false)
 
@@ -31,6 +43,8 @@ const Profile = () => {
     const [file, setFile] = useState();
     const [file64, setFile64] = useState();
     const [showDetailsInput, setShowInputDetails] = useState(false)
+    const [isShowSettings, setIsShowSettings] = useState(false)
+    const [nameValue, setNameValue] = useState<any>(userName)
 
 
     const upload = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -59,28 +73,34 @@ const Profile = () => {
         }
     };
 
-    const send = () => {
+    const send = async () => {
         //const response = instance.post('/file', fileData);
-        const response = loginAPI.setProfile({avatar: file64, name: 'Sasha'})
+        const response = await loginAPI.setProfile({avatar: file64, name:nameValue})
         setShowInputDetails(false)
+        setIsShowSettings(false)
 
+
+
+        dispatch(setProfile('', response.data.name))
+        setIsShowSettings(false)
+
+        dispatch(authTC())
     };
-
+    const showSettingsModal = () => {
+        setIsShowSettings(true)
+    }
+    const onChangeNameValue = (e:ChangeEvent<HTMLInputElement>)=>{
+        setNameValue(e.currentTarget.value)
+    }
 
     return (
 
         <div className={style.container}>
             {!isLogged && <Redirect to='/log-in'/>}
             <div>
-
+            <h1>{`Welcome to Cards Game, ${nameValue || 'User'}!`}</h1>
                 <img className={style.image} src={avatar || defaultImage} alt={'file'} width={'300px'}/>
-                {showDetailsInput && <div>
-                    <div>name: {file && file.name}</div>
-                    <div>lastModified: {file && file.lastModified}</div>
-                    <div>size: {file && returnFileSize(file.size)}</div>
-                    <div>type: {file && file.type}</div>
-                </div>
-                }
+
 
                 <input
                     ref={inRef}
@@ -88,12 +108,35 @@ const Profile = () => {
                     style={{display: 'none'}}
                     onChange={upload}
                 />
-                <button onClick={() => inRef && inRef.current && inRef.current.click()}>add</button>
-                <button onClick={send}>send</button>
+                <ModalWithChildren modalActive={isShowSettings}
+                                   setModalActive={setIsShowSettings}
+                                   onCancel={() => setIsShowSettings(false)}>
+
+                    <span>Choose your picture from files:</span>
+                    <button onClick={() => inRef && inRef.current && inRef.current.click()}>choose</button>
+
+                    {showDetailsInput &&
+                    <div>
+                        {/*<div>name: {file && file.name}</div>*/}
+                        {/*<div>lastModified: {file && file.lastModified}</div>*/}
+                        <div>size: {file && returnFileSize(file.size)}</div>
+                        {/*<div>type: {file && file.type}</div>*/}
+                    </div>
+                    }
+                    <div><span>Change your name:</span><input
+                        type="text"
+                        value={nameValue}
+                        onChange={onChangeNameValue}
+                    /></div>
+                    <div>
+                        <button onClick={send}>save</button>
+                    </div>
+                </ModalWithChildren>
+
 
                 {/*<div className={style.notification}>Фотография успешно загружена!</div>*/}
             </div>
-
+            <SettingsAnimation showSettingsModal={showSettingsModal}/>
         </div>
     );
 }

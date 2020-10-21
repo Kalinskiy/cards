@@ -9,13 +9,13 @@ import {setIsMyPacks, setTotalPacks} from "../../Table/Table-Reducer/TableReduce
 
 //types-----------------------------------------------------------------------------------------------------------------
 
-type SaveCardsActionType = ReturnType<typeof saveCards>
-type SavePackIdActionType = ReturnType<typeof savePackId>
-type AddCardActionType = ReturnType<typeof addCard>
-type ChangeCurrentCardActionType = ReturnType<typeof changeCurrentCard>
-type GetPageType = ReturnType<typeof getCardPage>
-type TotalCardsType = ReturnType<typeof setTotalCards>
-type SetIsMyCardsType = ReturnType<typeof setIsMyCards>
+export type SaveCardsActionType = ReturnType<typeof saveCards>
+export type SavePackIdActionType = ReturnType<typeof savePackId>
+export type AddCardActionType = ReturnType<typeof addCard>
+export type ChangeCurrentCardActionType = ReturnType<typeof changeCurrentCard>
+export type GetPageType = ReturnType<typeof getCardPage>
+export type TotalCardsType = ReturnType<typeof setTotalCards>
+export type SetIsMyCardsType = ReturnType<typeof setIsMyCards>
 
 type ActionsType = SaveCardsActionType
     | SavePackIdActionType
@@ -48,7 +48,7 @@ const initialState = {
     addCard: false,
     page: 1,
     cardsTotalCount: 0,
-    isMycards: false
+    isMycards: true
 
 }
 
@@ -77,7 +77,7 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
         case "cards/SET_IS_MY_CARDS" :
             return {
                 ...state,
-                value: action.value
+                isMycards: action.isMycards
             }
         default:
             return state;
@@ -93,26 +93,27 @@ export const changeCurrentCard = (value: number) => ({type: "cards/SET_CURRENT_C
 
 export const getCardPage = (page: number) => ({type: "cards/GET_PAGE", page} as const)
 export const setTotalCards = (cardsTotalCount: number) => ({type: "cards/SET_TOTAL_CARDS", cardsTotalCount} as const)
-export const setIsMyCards = (value: boolean) => ({type: 'cards/SET_IS_MY_CARDS', value} as const)
+export const setIsMyCards = (isMycards: boolean) => ({type: 'cards/SET_IS_MY_CARDS', isMycards} as const)
 
 //thunks-----------------------------------------------------------------------------------------------------------------
 
-export const getCardsTC = (packId: string | null,isMycards:boolean =false, pageCount: number = 10, page = 1,): ThunkActionType => async (dispatch) => {
+export const getCardsTC = (packId: string | null,isMycards:boolean =false, pageCount: number = 10, page = 1): ThunkActionType => async (dispatch) => {
     dispatch(changePreloaderTrigger(true))
     try {
         const data = await cardsAPI.getCards(packId,isMycards, pageCount, page)
         dispatch(savePackId(packId))
         dispatch(saveCards(data))
-        if (isMycards)
-            dispatch(setIsMyCards(false))
-        else {
-            dispatch(setIsMyCards(true))
-        }
+
+        // if (isMycards)
+        //     dispatch(setIsMyCards(false))
+        // else {
+        //     dispatch(setIsMyCards(true))
+        // }
 
         //  dispatch(getCardPage(data.cardsTotalCount))
-        console.log(data)
+
     } catch (error) {
-        console.log('catch')
+        console.log(error)
     }
     dispatch(changePreloaderTrigger(false))
 

@@ -27,7 +27,7 @@ const App = () => {
     if (!initialized) {
         return <Preloader/>
     }
-    debugger
+
     return (
 
         <div className="App">

@@ -13,7 +13,6 @@ import {LoginAuthStateType} from "../Login/Reducer/login-reducer";
 import {BackButton} from "../../n3-common_components/Back-button/BackButton";
 import {AddButton} from "../../n3-common_components/Add-button/AddButton";
 import {PlayButton} from "../../n3-common_components/Play-button/PlayButton";
-import {getPacksTC} from "../Table/Table-Reducer/TableReducer";
 import ReactSimplePagination from "../../n3-common_components/Pagination/Pagination";
 
 
@@ -28,6 +27,7 @@ export const Cards = () => {
     const userId = useSelector<AppStateType, string | null>(state => state.login.auth._id)
     const page = useSelector<AppStateType, number | null>(state => state.cards.page)
     const totalCards = useSelector<AppStateType, number | null>(state => state.cards.cardsTotalCount)
+    const isMyCards = useSelector<AppStateType, boolean>(state => state.cards.isMycards)
 
     const cards = useSelector<AppStateType, CardsType[]>(state => state.cards.cards)
     const auth = useSelector<AppStateType, LoginAuthStateType>(state => state.login.auth)
@@ -47,7 +47,7 @@ export const Cards = () => {
         setAddCardState(false)
     }
     const handleChangePage = (page: number) => {
-      //  dispatch(getCardsTC(userId, 8, page))
+        //  dispatch(getCardsTC(userId, 8, page))
     }
 
     return (
@@ -58,7 +58,11 @@ export const Cards = () => {
 
                     <div className={style.buttonsContainer}>
                         <BackButton to={'/table'}/>
-                        <AddButton onClick={showModalAddCard} length={cards.length} message={'Add Card here'}/>
+                        <div className={!isMyCards ? style.addButton : ''}>
+                            <AddButton onClick={showModalAddCard}
+                                       length={cards.length}
+                                       message={'Add Card here'}/>
+                        </div>
                         <PlayButton to={`/card-game/${params.packId}`}/>
 
                     </div>
@@ -98,4 +102,3 @@ export const Cards = () => {
 
 
 }
-

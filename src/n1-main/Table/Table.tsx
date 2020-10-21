@@ -13,12 +13,11 @@ import {addCardTC, getCardsTC} from "../Cards/Cards-reducer/Cards-reducer";
 import {CardDataType} from "../Cards/Cards-API/Cards-API";
 import common from '../../n3-common_components/CommonStyles/common.module.css'
 import {ModalInput} from "../../n3-common_components/Modal/Modal";
-import {Redirect} from "react-router-dom";
+
 import {AddButton} from '../../n3-common_components/Add-button/AddButton';
 import {AllButton} from '../../n3-common_components/All-button/AllButton';
 import onePack from '../../n2-assets/icons/one.png';
 import all from '../../n2-assets/icons/all.png'
-import {Hint} from "../../n3-common_components/Hint/Hint";
 
 
 export const Table = () => {
@@ -29,9 +28,11 @@ export const Table = () => {
     const [isDeleteModalActive, isDeleteSetModalActive] = useState(false)
     const [addPackValue, setAddPackValue] = useState('')
     const [isAllPacks, setIsAllPacks] = useState(false)
+    const [searchName, setSearchName] = useState('')
 
     const isMyCards = useSelector<AppStateType, boolean>(state => state.cards.isMycards)
     const isMyPacks = useSelector<AppStateType, boolean>(state => state.table.isMyPacks)
+    const search = useSelector<AppStateType, string | null>(state => state.table.search)
     const page = useSelector<AppStateType, number | null>(state => state.table.page)
     const packs = useSelector<AppStateType, PackType[]>(state => state.table.packs)
     const triggerRename = useSelector<AppStateType, boolean>(state => state.rename.trigger)
@@ -40,7 +41,8 @@ export const Table = () => {
     const totalPacks = useSelector<AppStateType, number | null>(state => state.table.packsCount)
     const isLogged = useSelector<AppStateType, boolean>(state => state.login.isLogged)
     const initialized = useSelector<AppStateType, boolean>(state => state.app.initialized)
-    console.log(page)
+
+
     useEffect(() => {
         userId && dispatch(getPacksTC(userId))
     }, [userId])
@@ -81,10 +83,10 @@ export const Table = () => {
     }
 
     const handleChangePage = (page: number) => {
-        dispatch(getPacksTC(userId, 8, page, isMyPacks))
+        dispatch(getPacksTC(userId, 8, page, isMyPacks, searchName))
     }
     const handleChangePageAll = (page: number) => {
-        dispatch(getPacksAllTC(8, page))
+        dispatch(getPacksAllTC(8, page,searchName))
     }
 
 
@@ -104,17 +106,23 @@ export const Table = () => {
             </ModalInput>
 
             {triggerPreloader ? <Preloader/> : <div className={style.wrapper}>
-                {!!packs.length && <Search/>}
+                <Search setIsAllPacks={setIsAllPacks} isAllPacks={isAllPacks} searchName={searchName}
+                        setSearchName={setSearchName}/>
+                {search?search: ''}
 
                 <div className={style.buttonsContainer}>
                     <AllButton onClick={!isAllPacks ? onClickAllPacks : onClickPacks}
                                icon={!isAllPacks ? all : onePack}
                     />
-                    <div className={!isMyPacks?style.addButton:''}><AddButton onClick={() => isAddSetModalActive(true)}
-                                    message={'Add card here'}
-                                    length={packs.length}
-
-                    />
+                    <div className={!isMyPacks ? style.addButton : ''}>
+                        {
+                            !isAllPacks && <AddButton
+                                onClick={() => isAddSetModalActive(true)}
+                                message={'Add card here'}
+                                length={packs.length}
+                                searchName={searchName}
+                            />
+                        }
                     </div>
 
                 </div>
@@ -148,7 +156,7 @@ export const Table = () => {
 
                     ? <ReactSimplePagination
                         page={page ? page : 0}
-                        maxPage={totalPacks ? Math.ceil(totalPacks / 7) : 0}
+                        maxPage={totalPacks ? Math.floor(totalPacks / 7) : 0}
                         onClickAction={isAllPacks ? handleChangePageAll : handleChangePage}
                     />
                     : null
