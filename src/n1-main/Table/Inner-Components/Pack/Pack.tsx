@@ -5,6 +5,7 @@ import {NavLink} from "react-router-dom";
 import {Modal, ModalInput} from "../../../../n3-common_components/Modal/Modal";
 import {RenamePackDataType} from "../../Table-API/API-Table";
 import parseISO from "date-fns/parseISO";
+import {Tip} from "../../../../n3-common_components/Tip/Tip";
 
 
 export type PackType = {
@@ -84,23 +85,26 @@ export const Pack2 = (props: PackType) => {
 
             <div className={style.container}>
 
-                {/*<button onClick={showModalDelete}><img src={deleteIcon} className={style.delete}/></button>*/}
-                {/*<button onClick={showModalUpdate}><img src={edit} className={style.edit}/></button>*/}
-                {/*<NavLink onClick={getCardsOnClick}*/}
-                {/*         className={style.card}*/}
-                {/*         to={`cards/${props.packId}`}*/}
-                {/*>*/}
-                {/*    Cards*/}
-                {/*</NavLink>*/}
-
                 <div className={style.displayContainer}>
 
                     <div className={style.buttonsContainer}>
                         <div className={style.deleteElement}
-                             onClick={showModalDelete}></div>
-                        <div className={style.getAnswerElement}
-                             onClick={showModalUpdate}></div>
-                        <div className={style.buttonElement} onClick={getCardsOnClick}>
+                             onClick={showModalDelete}>
+                            <div className={style.tipDelete}>
+                                <Tip tipText={'Delete'}/>
+                            </div>
+                        </div>
+                        <div className={style.updateElement}
+                             onClick={showModalUpdate}>
+                            <div className={style.tipUpdate}>
+                                <Tip tipText={'Update'}/>
+                            </div>
+                        </div>
+                        <div className={style.cardsElement}
+                             onClick={getCardsOnClick}>
+                            <div className={style.cards}>
+                                <Tip tipText={'Cards'}/>
+                            </div>
                             <NavLink to={`cards/${props.packId}`} className={style.navLink}>
 
                             </NavLink>

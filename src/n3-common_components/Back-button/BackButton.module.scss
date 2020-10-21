@@ -7,10 +7,10 @@
       height: 60px;
       top: 17px;
       left: 25px;
-
-
     }
-
+    .tip {
+      display: block;
+    }
   }
 
   .image {
@@ -27,4 +27,14 @@
 
     }
   }
+
+  .tip {
+    position: absolute;
+    top: -11px;
+    left: 69px;
+    color: tomato;
+    display: none;
+
+  }
+
 }

@@ -16,7 +16,7 @@
 
   .header {
     background-color: rgba(10, 22, 26, 0.44);
-    position: relative;
+
 
 
 
@@ -24,11 +24,11 @@
     .avatar img {
       border-radius: 50%;
       box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
-      width: 100px;
-      height: 100px;
-      position: absolute;
-      top:15%;
-      left:1%;
+      width: 160px;
+      height: 160px;
+      position: fixed;
+      top: 1.1%;
+      left: 0.4%;
 
     }
 

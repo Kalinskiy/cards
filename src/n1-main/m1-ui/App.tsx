@@ -14,6 +14,8 @@ import {CardGame} from "../Cards/Inner-components/Card-game/Card-game";
 import {AppStateType} from "../m2-bll/store";
 import {Preloader} from "../../n3-common_components/Preloader/Preloader";
 import {initializeApp} from "./app-reducer";
+import style from "../Table/Table.module.scss";
+import {log} from "util";
 
 
 const App = () => {
@@ -25,13 +27,17 @@ const App = () => {
         dispatch(initializeApp())
     }, [])
     if (!initialized) {
-        return <Preloader/>
+        return <div className={style.preloader}><Preloader/></div>
     }
 
     return (
 
         <div className="App">
-            {!initialized && <Preloader/>}
+
+
+           {/* {!initialized && <div className={style.preloader}><Preloader/></div>}*/}
+
+
 
 
             <HashRouter>

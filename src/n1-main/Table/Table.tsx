@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
-import style from "./Table.module.css"
+import style from "./Table.module.scss"
 import {Pack2} from "./Inner-Components/Pack/Pack";
 import {useDispatch, useSelector} from "react-redux";
 import {addPackTC, changePackNameTC, deletePackTC, getPacksAllTC, getPacksTC} from "./Table-Reducer/TableReducer";
@@ -13,7 +13,6 @@ import {addCardTC, getCardsTC} from "../Cards/Cards-reducer/Cards-reducer";
 import {CardDataType} from "../Cards/Cards-API/Cards-API";
 import common from '../../n3-common_components/CommonStyles/common.module.css'
 import {ModalInput} from "../../n3-common_components/Modal/Modal";
-
 import {AddButton} from '../../n3-common_components/Add-button/AddButton';
 import {AllButton} from '../../n3-common_components/All-button/AllButton';
 import onePack from '../../n2-assets/icons/one.png';
@@ -30,7 +29,7 @@ export const Table = () => {
     const [isAllPacks, setIsAllPacks] = useState(false)
     const [searchName, setSearchName] = useState('')
 
-    const isMyCards = useSelector<AppStateType, boolean>(state => state.cards.isMycards)
+    const isMyCards = useSelector<AppStateType, boolean>(state => state.cards.isMyCards)
     const isMyPacks = useSelector<AppStateType, boolean>(state => state.table.isMyPacks)
     const search = useSelector<AppStateType, string | null>(state => state.table.search)
     const page = useSelector<AppStateType, number | null>(state => state.table.page)
@@ -41,8 +40,7 @@ export const Table = () => {
     const totalPacks = useSelector<AppStateType, number | null>(state => state.table.packsCount)
     const isLogged = useSelector<AppStateType, boolean>(state => state.login.isLogged)
     const initialized = useSelector<AppStateType, boolean>(state => state.app.initialized)
-
-
+    console.log(page)
     useEffect(() => {
         userId && dispatch(getPacksTC(userId))
     }, [userId])
@@ -92,9 +90,11 @@ export const Table = () => {
 
     return (
 
-        <div className={common.container2}>
+        <div className={common.container}>
 
-            {!initialized && <Preloader/>}
+            {!initialized && <div className={style.preloader}><Preloader/></div>}
+
+
             <ModalInput modalActive={isAddModalActive}
                         onChange={onChangeValueHandler}
                         setModalActive={isAddSetModalActive}
@@ -125,34 +125,34 @@ export const Table = () => {
                         }
                     </div>
 
-                </div>
+                        </div>
 
-                <div className={style.packs}>
-                    {/*{!packs.length && <Hint message='ADD PACK HERE!'/>}*/}
-                    {
-                        packs.map(e =>
-                            <Pack2 key={e._id}
-                                   packId={e._id}
-                                   name={e.name}
-                                   cardsCount={e.cardsCount}
-                                   lastUpdate={e.updated}
-                                   userId={userId}
-                                   onClickDeleteHandler={onClickDeleteHandler}
-                                   isDeleteModalActive={isDeleteModalActive}
-                                   isDeleteSetModalActive={isDeleteSetModalActive}
-                                   onClickUpdateHandler={onClickUpdateHandler}
-                                   onClickAddCardHandler={onClickAddCardHandler}
-                                   getCardsOnClick={getCardsOnClick}
-
-
-                            />)
-                    }
-
-                </div>
+                        <div className={style.packs}>
+                            {/*{!packs.length && <Hint message='ADD PACK HERE!'/>}*/}
+                            {
+                                packs.map(e =>
+                                    <Pack2 key={e._id}
+                                           packId={e._id}
+                                           name={e.name}
+                                           cardsCount={e.cardsCount}
+                                           lastUpdate={e.updated}
+                                           userId={userId}
+                                           onClickDeleteHandler={onClickDeleteHandler}
+                                           isDeleteModalActive={isDeleteModalActive}
+                                           isDeleteSetModalActive={isDeleteSetModalActive}
+                                           onClickUpdateHandler={onClickUpdateHandler}
+                                           onClickAddCardHandler={onClickAddCardHandler}
+                                           getCardsOnClick={getCardsOnClick}
 
 
-                {triggerRename && <div className={style.rename}><RenameWindow/></div>}
-                {packs.length
+                                    />)
+                            }
+
+                        </div>
+
+
+                        {triggerRename && <div className={style.rename}><RenameWindow/></div>}
+                        {packs.length
 
                     ? <ReactSimplePagination
                         page={page ? page : 0}
@@ -162,7 +162,7 @@ export const Table = () => {
                     : null
                 }
 
-            </div>}
+                    </div>}
         </div>
 
 
