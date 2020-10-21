@@ -5,6 +5,7 @@ import {deleteCardTC} from "../../Cards-reducer/Cards-reducer";
 import {AppStateType} from "../../../m2-bll/store";
 import {Modal, ModalWithChildren} from "../../../../n3-common_components/Modal/Modal";
 import star from '../../../../n2-assets/icons/star.png'
+import {Tip} from "../../../../n3-common_components/Tip/Tip";
 
 export type CardType = {
     question: string | null
@@ -35,11 +36,27 @@ export const Card = (props: CardType) => {
 
             <div className={style.displayContainer}>
                 <div className={style.buttonsContainer}>
+
                     <div className={style.deleteElement}
-                         onClick={showModalDeleteCard}></div>
+                         onClick={showModalDeleteCard}>
+                        <div className={style.tipDelete}>
+                            <Tip tipText={'Delete'}/>
+                        </div>
+                    </div>
+
+                    <div className={style.updateCardElement}>
+                        <div className={style.tipUpdate}>
+                            <Tip tipText={'Update'}/>
+                        </div>
+                    </div>
+
                     <div className={style.getAnswerElement}
-                         onClick={() => setAnswer(true)}></div>
-                    <div className={style.buttonElement}></div>
+                         onClick={() => setAnswer(true)}>
+                        <div className={style.tipAnswer}>
+                            <Tip tipText={'Answer'}/>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -49,7 +66,6 @@ export const Card = (props: CardType) => {
                 <div className={style.grade}>{props.grade && props.grade.toFixed(1)}</div>
                 <div className={style.star}><img src={star}/></div>
             </div>
-
 
 
             <Modal modalActive={deleteCardState}

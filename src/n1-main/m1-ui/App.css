@@ -1,4 +1,7 @@
-
+::-webkit-scrollbar {
+  width: 0px;
+  background: rgba(255, 255, 255, 0.0);
+}
 
 .App-logo {
   height: 40vmin;
@@ -9,6 +12,13 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+
+.preloader {
+  position: fixed !important;
+  top: 30% !important;
+  right: 50% !important;
+  width: 100px;
 }
 
 .App-header {

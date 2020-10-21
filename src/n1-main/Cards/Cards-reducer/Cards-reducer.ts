@@ -36,7 +36,7 @@ type InitialStateType = {
     currentCard: number
     page: number
     cardsTotalCount: number | null
-    isMycards: boolean
+    isMyCards: boolean
 }
 
 //state-----------------------------------------------------------------------------------------------------------------
@@ -48,7 +48,7 @@ const initialState = {
     addCard: false,
     page: 1,
     cardsTotalCount: 0,
-    isMycards: false
+    isMyCards: false
 
 }
 
@@ -97,20 +97,20 @@ export const setIsMyCards = (value: boolean) => ({type: 'cards/SET_IS_MY_CARDS',
 
 //thunks-----------------------------------------------------------------------------------------------------------------
 
-export const getCardsTC = (packId: string | null,isMycards:boolean =false, pageCount: number = 10, page = 1,): ThunkActionType => async (dispatch) => {
+export const getCardsTC = (packId: string | null, isMyCards: boolean = false, pageCount: number = 10, page = 1,): ThunkActionType => async (dispatch) => {
     dispatch(changePreloaderTrigger(true))
     try {
-        const data = await cardsAPI.getCards(packId,isMycards, pageCount, page)
+        const data = await cardsAPI.getCards(packId, isMyCards, pageCount, page)
         dispatch(savePackId(packId))
         dispatch(saveCards(data))
-        if (isMycards)
+        if (isMyCards)
             dispatch(setIsMyCards(false))
         else {
             dispatch(setIsMyCards(true))
         }
 
         //  dispatch(getCardPage(data.cardsTotalCount))
-        console.log(data)
+        //console.log(data)
     } catch (error) {
         console.log('catch')
     }
@@ -143,7 +143,6 @@ export const deleteCardTC = (cardId: string | null, packId?: any, pageCount?: an
 
 export const updateCardGrade = (grade: number, card_id: string | null, packId: string | null): ThunkActionType => async (dispatch) => {
     try {
-
         const data = await cardsAPI.updateCardGrade(grade, card_id)
         // getCardsTC(packId)
     } catch (error) {

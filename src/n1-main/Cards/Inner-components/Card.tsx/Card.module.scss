@@ -13,16 +13,17 @@
   &:hover {
     transition: all 0.3s ease-out;
     background-color: rgba(10, 22, 26, 0.64);
+
     .displayContainer {
       display: block;
       transition: all 0.3s ease-out;
     }
   }
+
   .displayContainer {
     display: none;
     .buttonsContainer {
       width: 60px;
-      display: none;
       display: inline-flex;
       justify-content: space-between;
       position: absolute;
@@ -35,22 +36,63 @@
         background: tomato;
         border-radius: 50%;
 
+        &:hover {
+          .tipDelete {
+            display: block;
+          }
+        }
+
+        .tipDelete {
+          display: none;
+          position: absolute;
+          top: -27px;
+          left: 5px;
+          color: tomato;
+        }
       }
 
-      .getAnswerElement {
+      .updateCardElement {
         width: 13px;
         height: 13px;
         background: goldenrod;
         border-radius: 50%;
         opacity: 0.9;
+        color: goldenrod;
+
+        .tipUpdate {
+          display: none;
+          position: absolute;
+          top: -28px;
+          left: 29px;
+        }
+
+        &:hover {
+          .tipUpdate {
+            display: block;
+          }
+        }
       }
 
-      .buttonElement {
+      .getAnswerElement {
         width: 13px;
         height: 13px;
         background: limegreen;
         border-radius: 50%;
         opacity: 0.9;
+        color: limegreen;
+
+        .tipAnswer {
+          display: none;
+          position: absolute;
+          top: -28px;
+          left: 53px;
+        }
+
+        &:hover {
+          .tipAnswer {
+            display: block;
+          }
+        }
       }
 
     }
@@ -64,9 +106,11 @@
     position: absolute;
     bottom: 1%;
     right: 2%;
+
     .star > img {
       height: 20px;
     }
+
     .grade {
 
     }

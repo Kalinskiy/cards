@@ -68,7 +68,7 @@ const Header = () => {
                             {/*{isLogged && <NavLink className={s.link} to={'/log-in'}>log-in</NavLink>}*/}
                             {isLogged && <NavLink onClick={logOutClick} className={s.link} to={'/log-out'}>log-out</NavLink>}
                             {/*{!isLogged &&   <NavLink className={s.link} to={'/forgot'}>forgot password?</NavLink>}*/}
-                            {isLogged && <NavLink className={s.link} to={'/table'}>Table</NavLink>}
+                            {isLogged && <NavLink className={s.link} to={'/table'}>Packs</NavLink>}
                         </ul>
 
 

@@ -34,32 +34,73 @@
         height: 13px;
         background: tomato;
         border-radius: 50%;
-        cursor: pointer;
+        cursor: pointer;z-index: 1000;
+
+        &:hover {
+          .tipDelete {
+            display: block;
+          }
+        }
+
+        .tipDelete {
+          display: none;
+          position: absolute;
+          top: -27px;
+          left: 5px;
+          color: tomato;
+        }
 
       }
 
-      .getAnswerElement {
+      .updateElement {
         width: 13px;
         height: 13px;
         background: goldenrod;
         border-radius: 50%;
         opacity: 0.9;
         cursor: pointer;
+
+        .tipUpdate {
+          display: none;
+          color: goldenrod;
+          position: absolute;
+          top: -28px;
+          left: 29px;
+        }
+
+        &:hover {
+          .tipUpdate {
+            display: block;
+          }
+        }
       }
 
-      .buttonElement {
+      .cardsElement {
         width: 13px;
         height: 13px;
         background: limegreen;
         border-radius: 50%;
         opacity: 0.9;
+        &:hover {
+          .cards {
+            display: block;
+          }
+        }
         & .navLink{
           width: 13px;
           height: 13px;
           cursor: pointer;
           display: block;
-
         }
+        .cards {
+          display: none;
+          color: limegreen;
+          position: absolute;
+          top: -28px;
+          left: 53px;
+        }
+
+
 
       }
 
