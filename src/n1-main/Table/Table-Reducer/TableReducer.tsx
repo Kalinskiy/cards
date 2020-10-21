@@ -1,4 +1,4 @@
-import {PackType, packsAPI, AddPackDataType} from "../Table-API/API-Table";
+import {packsAPI, PackType} from "../Table-API/API-Table";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "../../m2-bll/store";
 import {
