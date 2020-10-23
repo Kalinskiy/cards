@@ -83,7 +83,7 @@ const tableReducer = (state: InitialStateType = initialState, action: ActionType
         case "table/SET_IS_MY_PACKS" :
             return {
                 ...state,
-                value: action.value
+                isMyPacks: action.value
             }
         case "table/SET_ERROR_SEARCH" :
             return {
@@ -121,13 +121,10 @@ export const getPacksTC = (userId: string | null, pageCount = 9, page = 0, isMyP
         dispatch(savePack(data.cardPacks))
         dispatch(setTotalPacks(data.cardPacksTotalCount))
         dispatch(getPackPage(data.page))
-        dispatch(setIsMyCards(true))
 
-        if (isMyPacks)
-            dispatch(setIsMyPacks(false))
-        else {
-            dispatch(setIsMyPacks(true))
-        }
+        dispatch(setIsMyCards(true))
+        dispatch(setIsMyPacks(true))
+
 
 
     } catch (error) {
@@ -138,6 +135,7 @@ export const getPacksTC = (userId: string | null, pageCount = 9, page = 0, isMyP
 export const getPacksAllTC = (pageCount = 9, page = 0, name?: string): ThunkActionType => async (dispatch) => {
     dispatch(changePreloaderTrigger(true))
     try {
+
         const data = await packsAPI.getPacksAll(pageCount, page, name)
         dispatch(savePack(data.cardPacks))
         dispatch(setTotalPacks(data.cardPacksTotalCount))

@@ -15,10 +15,8 @@
 }
 
 .preloader {
-  position: fixed !important;
-  top: 30% !important;
-  right: 50% !important;
   width: 100px;
+  margin: 100px auto auto auto;
 }
 
 .App-header {

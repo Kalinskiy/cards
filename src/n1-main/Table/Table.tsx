@@ -43,6 +43,12 @@ export const Table = () => {
 
     useEffect(() => {
         userId && dispatch(getPacksTC(userId))
+        /*if (isMyPacks && userId) {
+            userId && dispatch(getPacksTC(userId))
+        } else {
+            dispatch(getPacksAllTC(9, 1))
+        }*/
+
     }, [userId])
 
 
