@@ -1,5 +1,6 @@
 .container {
-  margin: 100px 150px 150px 150px;
+  margin: 100px auto auto auto;
+  width: 80%;
   display: block;
   position: relative;
 
@@ -8,26 +9,30 @@
 
   }
   @media screen and (max-width: 768px) {
-
+    width: 70%;
   }
   @media screen and (max-width: 600px) {
-    margin: 100px 100px 100px 100px;
+    width: 60%;
   }
   @media screen and (max-width: 525px) {
-
+    width: 50%;
   }
   @media screen and (max-width: 480px) {
-    margin: 100px 80px 80px 80px;
+    width: 40%;
 
 }
+  @media screen and (max-width: 420px) {
+
+
+  }
   @media screen and (max-width: 350px) {
-    margin: 100px 70px 70px 70px;
+
   }
   @media screen and (max-width: 330px) {
-    margin: 100px 60px 60px 60px;
+
   }
   @media screen and (max-width: 320px) {
-    margin: 100px 50px 50px 50px;
+
   }
 
   .title {
@@ -98,4 +103,9 @@
 
     }
   }
+}
+
+.preloader {
+  width: auto;
+  margin: 100px auto auto auto;
 }

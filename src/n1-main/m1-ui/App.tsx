@@ -28,7 +28,7 @@ const App = () => {
     }, [])
 
     if (!initialized) {
-        return <div className={style.preloader}><Preloader/></div>
+        return <div className={'preloader'}><Preloader/></div>
     }
 
     return (

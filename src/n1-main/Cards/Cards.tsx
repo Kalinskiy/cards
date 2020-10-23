@@ -13,7 +13,6 @@ import {LoginAuthStateType} from "../Login/Reducer/login-reducer";
 import {BackButton} from "../../n3-common_components/Back-button/BackButton";
 import {AddButton} from "../../n3-common_components/Add-button/AddButton";
 import {PlayButton} from "../../n3-common_components/Play-button/PlayButton";
-import ReactSimplePagination from "../../n3-common_components/Pagination/Pagination";
 import {PackType} from "../Table/Table-API/API-Table";
 import {getPacksTC} from "../Table/Table-Reducer/TableReducer";
 
@@ -24,33 +23,31 @@ export const Cards = () => {
     //const [title, setTitle] = useState<string | null>(null)
 
 
-
-
     const params = useParams<{ packId: string }>()
 
     const dispatch = useDispatch()
 
     const userId = useSelector<AppStateType, string | null>(state => state.login.auth._id)
     const packs = useSelector<AppStateType, PackType[]>(state => state.table.packs)
-    const page = useSelector<AppStateType, number | null>(state => state.cards.page)
-    const totalCards = useSelector<AppStateType, number | null>(state => state.cards.cardsTotalCount)
     const isMyCards = useSelector<AppStateType, boolean>(state => state.cards.isMyCards)
-
+    const isMyPacks = useSelector<AppStateType, boolean>(state => state.table.isMyPacks)
     const cards = useSelector<AppStateType, CardsType[]>(state => state.cards.cards)
     const auth = useSelector<AppStateType, LoginAuthStateType>(state => state.login.auth)
     const triggerPreloader = useSelector<AppStateType, boolean>(state => state.preloader.trigger)
-    const initialized = useSelector<AppStateType, boolean>(state => state.app.initialized)
+
+
 
 
     useEffect(() => {
+        debugger
         auth && dispatch(getCardsTC(params.packId, isMyCards))
-        userId && dispatch(getPacksTC(userId))
+        // userId && dispatch(getPacksTC(userId))
     }, [params.packId, auth, userId])
 
-    useEffect(() => {
+   /* useEffect(() => {
         let title = packs.find((e) => e._id === params.packId)?.name
         title && setTitle(title)
-    }, [packs])
+    }, [packs])*/
 
     const showModalAddCard = () => {
         setAddCardState(true)
@@ -66,22 +63,26 @@ export const Cards = () => {
 
     return (
         <>
-            {!auth && <Preloader/>}
+            {!auth && <div className={style.preloader}><Preloader/></div>}
 
             {
                 triggerPreloader
-                    ? <Preloader/>
+                    ? <div className={style.preloader}><Preloader/></div>
                     : <div className={style.container}>
 
-                        <div className={style.title}>
-                            {title}
-                        </div>
+                        {/*<div className={style.title}>*/}
+                        {/*    {title}*/}
+                        {/*</div>*/}
 
                         <div className={style.buttonsContainer}>
                             <BackButton to={'/table'}/>
-                            <AddButton onClick={showModalAddCard}
-                                       length={cards.length}
-                                       message={'Add Card here'}/>
+                            {
+                                isMyCards && <AddButton onClick={showModalAddCard}
+                                                         length={cards.length}
+                                                         message={'Add Card here'}/>
+                            }
+
+
                             <PlayButton to={`/card-game/${params.packId}`}/>
                         </div>
 

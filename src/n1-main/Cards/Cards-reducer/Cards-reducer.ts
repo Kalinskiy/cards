@@ -16,6 +16,7 @@ export type ChangeCurrentCardActionType = ReturnType<typeof changeCurrentCard>
 export type GetPageType = ReturnType<typeof getCardPage>
 export type TotalCardsType = ReturnType<typeof setTotalCards>
 export type SetIsMyCardsType = ReturnType<typeof setIsMyCards>
+export type SetIsMyCardsLoaded = ReturnType<typeof setIsCardsLoaded>
 
 type ActionsType = SaveCardsActionType
     | SavePackIdActionType
@@ -25,6 +26,7 @@ type ActionsType = SaveCardsActionType
     | GetPageType
     | TotalCardsType
     | SetIsMyCardsType
+    | SetIsMyCardsLoaded
 
 
 type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
@@ -37,6 +39,7 @@ type InitialStateType = {
     page: number
     cardsTotalCount: number | null
     isMyCards: boolean
+    isCardsLoaded: boolean
 }
 
 //state-----------------------------------------------------------------------------------------------------------------
@@ -48,7 +51,8 @@ const initialState = {
     addCard: false,
     page: 1,
     cardsTotalCount: 0,
-    isMyCards: true
+    isMyCards: true,
+    isCardsLoaded: false
 
 }
 
@@ -79,6 +83,12 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
                 ...state,
                 isMyCards: action.isMyCards
             }
+        case "cards/SET_IS_CARDS_LOADED":
+            return {
+                ...state, isCardsLoaded: action.isCardsLoaded
+            }
+
+
         default:
             return state;
     }
@@ -94,6 +104,10 @@ export const changeCurrentCard = (value: number) => ({type: "cards/SET_CURRENT_C
 export const getCardPage = (page: number) => ({type: "cards/GET_PAGE", page} as const)
 export const setTotalCards = (cardsTotalCount: number) => ({type: "cards/SET_TOTAL_CARDS", cardsTotalCount} as const)
 export const setIsMyCards = (isMyCards: boolean) => ({type: 'cards/SET_IS_MY_CARDS', isMyCards} as const)
+export const setIsCardsLoaded = (isCardsLoaded: boolean) => ({
+    type: 'cards/SET_IS_CARDS_LOADED',
+    isCardsLoaded
+} as const)
 
 //thunks-----------------------------------------------------------------------------------------------------------------
 
@@ -102,13 +116,10 @@ export const getCardsTC = (packId: string | null, isMyCards: boolean, pageCount:
 
     try {
         const data = await cardsAPI.getCards(packId, isMyCards, pageCount, page)
+        dispatch(setIsCardsLoaded(true))
         dispatch(savePackId(packId))
         dispatch(saveCards(data))
-        if (isMyCards)
-            dispatch(setIsMyCards(false))
-        else {
-            dispatch(setIsMyCards(true))
-        }
+
     } catch (error) {
         console.log('catch')
     }
