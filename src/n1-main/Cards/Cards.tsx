@@ -43,7 +43,7 @@ export const Cards = () => {
 
 
     useEffect(() => {
-        auth && dispatch(getCardsTC(params.packId))
+        auth && dispatch(getCardsTC(params.packId, isMyCards))
         userId && dispatch(getPacksTC(userId))
     }, [params.packId, auth, userId])
 
@@ -105,15 +105,7 @@ export const Cards = () => {
                                 />)
                             }
                         </div>
-                        {
-                            page
-                                ? <ReactSimplePagination
-                                    page={page}
-                                    maxPage={totalCards ? Math.ceil(totalCards / 7) : 0}
-                                    onClickAction={handleChangePage}
-                                />
-                                : null
-                        }
+
 
                     </div>
             }

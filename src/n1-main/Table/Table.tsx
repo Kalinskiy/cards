@@ -40,7 +40,7 @@ export const Table = () => {
     const totalPacks = useSelector<AppStateType, number | null>(state => state.table.packsCount)
     const isLogged = useSelector<AppStateType, boolean>(state => state.login.isLogged)
     const initialized = useSelector<AppStateType, boolean>(state => state.app.initialized)
-    console.log(page)
+
     useEffect(() => {
         userId && dispatch(getPacksTC(userId))
     }, [userId])
@@ -71,6 +71,7 @@ export const Table = () => {
     }
 
     const getCardsOnClick = (packId: string, pageCount: number) => {
+
         dispatch(getCardsTC(packId, isMyCards, pageCount))
 
     }

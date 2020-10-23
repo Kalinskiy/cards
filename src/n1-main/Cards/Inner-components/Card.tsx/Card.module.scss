@@ -10,6 +10,24 @@
   font-family: 'Poppins', sans-serif;
   position: relative;
 
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+    min-width: 350px;
+  }
+  @media screen and (max-width: 992px) {
+
+  }
+  @media screen and (max-width: 768px) {
+
+  }
+  @media screen and (max-width: 480px) {
+    font-size: 50px;
+    min-width: 300px;
+  }
+  @media screen and (max-width: 320px) {
+    font-size: 44px;
+  }
+
   &:hover {
     transition: all 0.3s ease-out;
     background-color: rgba(10, 22, 26, 0.64);
@@ -22,6 +40,10 @@
 
   .displayContainer {
     display: none;
+    @media screen and (max-width: 1200px) {
+     display: block;
+    }
+
     .buttonsContainer {
       width: 60px;
       display: inline-flex;
@@ -107,6 +129,26 @@
     bottom: 1%;
     right: 2%;
 
+    @media screen and (max-width: 1200px) {
+
+    }
+    @media screen and (max-width: 992px) {
+
+    }
+    @media screen and (max-width: 768px) {
+
+    }
+    @media screen and (max-width: 525px) {
+      font-size: 15px;
+      right: 5%;
+    }
+    @media screen and (max-width: 414px) {
+      margin-left: 50px;
+    }
+    @media screen and (max-width: 320px) {
+
+    }
+
     .star > img {
       height: 20px;
     }
@@ -122,6 +164,23 @@
     font-size: 35px;
     font-weight: bold;
     margin-top: 20px;
+
+    @media screen and (max-width: 1200px) {
+
+    }
+    @media screen and (max-width: 992px) {
+
+    }
+    @media screen and (max-width: 768px) {
+
+    }
+    @media screen and (max-width: 525px) {
+      font-size: 30px;
+    }
+    @media screen and (max-width: 320px) {
+
+    }
+
   }
 
   .answer {

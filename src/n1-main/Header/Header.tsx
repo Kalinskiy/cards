@@ -3,7 +3,6 @@ import s from './header.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink, useHistory} from "react-router-dom";
 import {logoutTC} from "../Login/Reducer/login-reducer";
-import icon from '../../n2-assets/images/react_icon.png'
 import commonStyle from '../../n3-common_components/CommonStyles/common.module.css'
 import {AppStateType} from "../m2-bll/store";
 import defaultImage from '../../n2-assets/images/user.png'
@@ -45,16 +44,18 @@ const Header = () => {
 
     return (
         <section id={s.header} className={windowScroll > 50 ? s.headerScrolled : ''}>
+
             {!initialized && <Preloader/>}
+
             <div className={`${commonStyle.container} ${s.header}`}>
 
-                {
+               {/* {
                     isLogged && <div className={s.avatar}>
                         <NavLink to={'/profile'}>
                             <img src={avatar || defaultImage}/>
                         </NavLink>
                     </div>
-                }
+                }*/}
                 <div className={s.navBar}>
                     <div className={s.navList}>
                         <div className={hamburger ? s.hamburger + ' ' + s.active : s.hamburger} onClick={getBurger}>
@@ -64,11 +65,9 @@ const Header = () => {
                         <ul onClick={getBurger} className={hamburger ? s.active : ''}>
 
                             {isLogged && <NavLink className={s.link} to={'/profile'}>Profile</NavLink>}
-                            {/*{!isLogged &&    <NavLink className={s.link} to={'/register'}>registration</NavLink>}*/}
-                            {/*{isLogged && <NavLink className={s.link} to={'/log-in'}>log-in</NavLink>}*/}
-                            {isLogged && <NavLink onClick={logOutClick} className={s.link} to={'/log-out'}>log-out</NavLink>}
-                            {/*{!isLogged &&   <NavLink className={s.link} to={'/forgot'}>forgot password?</NavLink>}*/}
                             {isLogged && <NavLink className={s.link} to={'/table'}>Packs</NavLink>}
+                            {isLogged && <NavLink onClick={logOutClick} className={s.link} to={'/log-out'}>log-out</NavLink>}
+
                         </ul>
 
 

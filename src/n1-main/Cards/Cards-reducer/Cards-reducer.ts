@@ -48,7 +48,7 @@ const initialState = {
     addCard: false,
     page: 1,
     cardsTotalCount: 0,
-    isMyCards: false
+    isMyCards: true
 
 }
 
@@ -77,7 +77,7 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
         case "cards/SET_IS_MY_CARDS" :
             return {
                 ...state,
-                isMyСards: action.isMyСards
+                isMyCards: action.isMyCards
             }
         default:
             return state;
@@ -93,21 +93,22 @@ export const changeCurrentCard = (value: number) => ({type: "cards/SET_CURRENT_C
 
 export const getCardPage = (page: number) => ({type: "cards/GET_PAGE", page} as const)
 export const setTotalCards = (cardsTotalCount: number) => ({type: "cards/SET_TOTAL_CARDS", cardsTotalCount} as const)
-export const setIsMyCards = (isMyСards: boolean) => ({type: 'cards/SET_IS_MY_CARDS', isMyСards} as const)
+export const setIsMyCards = (isMyCards: boolean) => ({type: 'cards/SET_IS_MY_CARDS', isMyCards} as const)
 
 //thunks-----------------------------------------------------------------------------------------------------------------
 
-export const getCardsTC = (packId: string | null, isMyCards: boolean = false, pageCount: number = 10, page = 1,): ThunkActionType => async (dispatch) => {
+export const getCardsTC = (packId: string | null, isMyCards: boolean, pageCount: number = 100, page = 1,): ThunkActionType => async (dispatch) => {
     dispatch(changePreloaderTrigger(true))
+
     try {
         const data = await cardsAPI.getCards(packId, isMyCards, pageCount, page)
         dispatch(savePackId(packId))
         dispatch(saveCards(data))
-        // if (isMyCards)
-        //     dispatch(setIsMyCards(false))
-        // else {
-        //     dispatch(setIsMyCards(true))
-        // }
+        if (isMyCards)
+            dispatch(setIsMyCards(false))
+        else {
+            dispatch(setIsMyCards(true))
+        }
     } catch (error) {
         console.log('catch')
     }
@@ -115,12 +116,13 @@ export const getCardsTC = (packId: string | null, isMyCards: boolean = false, pa
 
 }
 
-export const addCardTC = (card: CardDataType, packId?: any, pageCount?: any, page = 1): ThunkActionType => async (dispatch) => {
+export const addCardTC = (card: CardDataType, packId?: any, pageCount: any = 100, page = 1): ThunkActionType => async (dispatch) => {
     dispatch(changePreloaderTrigger(true))
     try {
         const data = await cardsAPI.addCard(card)
         dispatch(addCard(false))
-        dispatch(getCardsTC(card.cardsPack_id, pageCount, page))
+        debugger
+        dispatch(getCardsTC(card.cardsPack_id, true))
     } catch (error) {
         console.log(error)
     }
@@ -128,7 +130,7 @@ export const addCardTC = (card: CardDataType, packId?: any, pageCount?: any, pag
 
 }
 
-export const deleteCardTC = (cardId: string | null, packId?: any, pageCount?: any): ThunkActionType => async (dispatch) => {
+export const deleteCardTC = (cardId: string | null, packId?: any, pageCount: any = 100): ThunkActionType => async (dispatch) => {
     dispatch(changePreloaderTrigger(true))
     try {
         const data = await cardsAPI.deleteCard(cardId)

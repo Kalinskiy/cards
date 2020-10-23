@@ -115,6 +115,7 @@ export const setIsSearch = (value: boolean) => ({type: 'table/SET_ISE_SEARCH', v
 //Thunks
 
 export const getPacksTC = (userId: string | null, pageCount = 8, page = 0, isMyPacks?: boolean, name?: string,): ThunkActionType => async (dispatch) => {
+
     dispatch(changePreloaderTrigger(true))
     try {
         const data = await packsAPI.getPacks(userId, pageCount, page, name)

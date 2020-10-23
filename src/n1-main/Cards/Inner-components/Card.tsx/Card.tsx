@@ -74,6 +74,7 @@ export const Card = (props: CardType) => {
                    onCancel={() => setDeleteCardState(false)}>
                 <p className={style.answer}>Do you want to remove this card?</p>
             </Modal>
+
             <ModalWithChildren modalActive={answer}
                                setModalActive={setAnswer}
                                onCancel={() => setAnswer(false)}
@@ -81,6 +82,7 @@ export const Card = (props: CardType) => {
                 <p className={style.answer}> {props.answer}</p>
                 <button onClick={() => setAnswer(false)}>X</button>
             </ModalWithChildren>
+
         </div>
     )
 }

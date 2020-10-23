@@ -26,6 +26,7 @@ const App = () => {
     useEffect(() => {
         dispatch(initializeApp())
     }, [])
+
     if (!initialized) {
         return <div className={style.preloader}><Preloader/></div>
     }
@@ -36,9 +37,6 @@ const App = () => {
 
 
            {/* {!initialized && <div className={style.preloader}><Preloader/></div>}*/}
-
-
-
 
             <HashRouter>
                 {!isLogged && <Redirect to={'/log-in'}/>}

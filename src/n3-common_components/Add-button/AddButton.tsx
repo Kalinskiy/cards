@@ -20,6 +20,7 @@ export const AddButton = (props: AddButtonPropsType) => {
 
     const isMyPacks = useSelector<AppStateType, boolean>(state => state.table.isMyPacks)
     const isMyCards = useSelector<AppStateType, boolean>(state => state.cards.isMyCards)
+
     const conditionArrow = isMyPacks && !props.length
     const conditionArrow2 = isMyCards && !props.length
 
@@ -29,9 +30,12 @@ export const AddButton = (props: AddButtonPropsType) => {
              onClick={props.onClick}
         >
             {
-                conditionArrow2 || conditionArrow
-                    ? <div className={style.hint}><Hint message={props.message}/></div>
-                    : null
+
+                conditionArrow && <div className={style.hint}><Hint message={props.message}/></div>
+
+            }
+            {
+                conditionArrow2 && <div className={style.hint}><Hint message={props.message}/></div>
             }
             <img src={addButton}/>
         </div>

@@ -23,6 +23,9 @@ export const GameCard = (props: CardType) => {
             <div className={style.showAnswer} onClick={() => {setAnswer(true)}}>
                 <img src={question}/>
             </div>
+            <div className={style.tip}>
+                Grade you'r knowledge from 1 to 5
+            </div>
             <ModalWithChildren modalActive={answer}
                                setModalActive={setAnswer}
                                onCancel={() => setAnswer(false)}

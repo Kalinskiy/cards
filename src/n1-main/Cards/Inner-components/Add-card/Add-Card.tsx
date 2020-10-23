@@ -28,7 +28,7 @@ export const AddCard = (props: any) => {
             }
             props.hideModalAddCard(true)
 
-            dispatch(addCardTC(card, packId, 10))
+            dispatch(addCardTC(card, packId))
         }
 
     })

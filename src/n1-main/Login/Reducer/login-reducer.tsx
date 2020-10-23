@@ -35,19 +35,7 @@ type ThunkActionType = ThunkAction<Promise<void>, AppStateType, unknown, LoginRe
 
 //initialState
 const initialState = {
-    auth: {
-        _id: null,
-        email: null,
-        name: null,
-        avatar: null,
-        publicCardPacksCount: null,
-        created: null,
-        updated: null,
-        isAdmin: null,
-        verified: null,
-        rememberMe: null,
-        error: null
-    },
+    auth: {} as LoginAuthStateType,
     initializedApp: false,
     isLogged: false,
     verified: false,
