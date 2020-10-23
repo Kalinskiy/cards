@@ -9,9 +9,37 @@
   & .image {
     width: 400px;
     display: block;
+    margin: 0 auto;
   }
 
   & .notification {
-    color:forestgreen;
+    color: forestgreen;
+  }
+
+  & .modalProfileContainer {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+
+    & .choosePicture, .changeName {
+      display: block;
+      width: 100%;
+
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .container {
+    h2{
+      font-size: 24px;
+      line-height: 1.5em;
+    }
+    .image {
+      width: 300px;
+    }
   }
 }

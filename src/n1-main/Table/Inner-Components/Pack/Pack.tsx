@@ -45,7 +45,7 @@ export const Pack2 = (props: PackType) => {
         setIsUpdatePackActive(true)
     }
     const onClickUpdateHandler = (packId: string) => {
-        let obj: RenamePackDataType = {
+        const obj: RenamePackDataType = {
             _id: packId,
             name: updatePackValue
         }

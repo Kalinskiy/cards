@@ -19,7 +19,6 @@ const Profile = () => {
     const userName = useSelector<AppStateType, string | null>(state => state.login.auth.name)
 
 
-
     let dispatch = useDispatch()
     useEffect(() => {
         dispatch(authTC())
@@ -75,10 +74,9 @@ const Profile = () => {
 
     const send = async () => {
         //const response = instance.post('/file', fileData);
-        const response = await loginAPI.setProfile({avatar: file64, name:nameValue})
+        const response = await loginAPI.setProfile({avatar: file64, name: nameValue})
         setShowInputDetails(false)
         setIsShowSettings(false)
-
 
 
         dispatch(setProfile('', response.data.name))
@@ -89,7 +87,7 @@ const Profile = () => {
     const showSettingsModal = () => {
         setIsShowSettings(true)
     }
-    const onChangeNameValue = (e:ChangeEvent<HTMLInputElement>)=>{
+    const onChangeNameValue = (e: ChangeEvent<HTMLInputElement>) => {
         setNameValue(e.currentTarget.value)
     }
 
@@ -98,7 +96,7 @@ const Profile = () => {
         <div className={style.container}>
             {!isLogged && <Redirect to='/log-in'/>}
             <div>
-            <h1>{`Welcome to Cards Game, ${nameValue || 'User'}!`}</h1>
+                <h2>{`Welcome to Cards Game, ${nameValue || 'User'}!`}</h2>
                 <img className={style.image} src={avatar || defaultImage} alt={'file'} width={'300px'}/>
 
 
@@ -111,32 +109,38 @@ const Profile = () => {
                 <ModalWithChildren modalActive={isShowSettings}
                                    setModalActive={setIsShowSettings}
                                    onCancel={() => setIsShowSettings(false)}>
+                    <div className={style.modalProfileContainer}>
+                        <h3>Edit Profile:</h3>
+                        <div className={style.choosePicture}>
+                            <span>Choose your picture from files:</span>
+                            <button onClick={() => inRef && inRef.current && inRef.current.click()}>Select</button>
+                        </div>
 
-                    <span>Choose your picture from files:</span>
-                    <button onClick={() => inRef && inRef.current && inRef.current.click()}>choose</button>
 
-                    {showDetailsInput &&
-                    <div>
-                        {/*<div>name: {file && file.name}</div>*/}
-                        {/*<div>lastModified: {file && file.lastModified}</div>*/}
-                        <div>size: {file && returnFileSize(file.size)}</div>
-                        {/*<div>type: {file && file.type}</div>*/}
-                    </div>
-                    }
-                    <div><span>Change your name:</span><input
-                        type="text"
-                        value={nameValue}
-                        onChange={onChangeNameValue}
-                    /></div>
-                    <div>
-                        <button onClick={send}>save</button>
+                        {showDetailsInput &&
+                        <div>
+                            {/*<div>name: {file && file.name}</div>*/}
+                            {/*<div>lastModified: {file && file.lastModified}</div>*/}
+                            <div>size: {file && returnFileSize(file.size)}</div>
+                            {/*<div>type: {file && file.type}</div>*/}
+                        </div>
+                        }
+                        <div className={style.changeName}><span>Change  name:</span><input
+                            type="text"
+                            value={nameValue}
+                            onChange={onChangeNameValue}
+                        />
+                            <button onClick={send}>Save</button>
+                        </div>
+
+
                     </div>
                 </ModalWithChildren>
 
-
-                {/*<div className={style.notification}>Фотография успешно загружена!</div>*/}
+                <SettingsAnimation showSettingsModal={showSettingsModal}/>
             </div>
-            <SettingsAnimation showSettingsModal={showSettingsModal}/>
+
+
         </div>
     );
 }

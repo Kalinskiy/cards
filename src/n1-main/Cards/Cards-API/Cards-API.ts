@@ -46,9 +46,9 @@ export type CardDataType = {
 
 }
 
-export type AddCardDataType = {
-    card: CardDataType
-}
+// export type AddCardDataType = {
+//     card: CardDataType
+// }
 
 export type UpdateCardDataType = {
     _id: string

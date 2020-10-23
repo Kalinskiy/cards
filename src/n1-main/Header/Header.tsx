@@ -3,13 +3,13 @@ import s from './header.module.scss'
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink, useHistory} from "react-router-dom";
 import {logoutTC} from "../Login/Reducer/login-reducer";
-import icon from '../../n2-assets/images/react_icon.png'
 import commonStyle from '../../n3-common_components/CommonStyles/common.module.css'
 import {AppStateType} from "../m2-bll/store";
 import defaultImage from '../../n2-assets/images/user.png'
 import {Preloader} from "../../n3-common_components/Preloader/Preloader";
 
 const Header = () => {
+
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -20,6 +20,7 @@ const Header = () => {
     }
 
     const [windowScroll, setWindowScroll] = useState(window.scrollY)
+    const [hamburger, setHamburger] = useState(false)
 
     const avatar = useSelector<AppStateType, any>(state => state.login.auth.avatar)
     const isLogged = useSelector<AppStateType, any>(state => state.login.isLogged)
@@ -36,12 +37,11 @@ const Header = () => {
         }
     }, [])
 
-    const [hamburger, setHamburger] = useState(false)
-
-
     const getBurger = () => {
         setHamburger(!hamburger);
     }
+const isShowHam = hamburger ? s.hamburger + ' ' + s.active : s.hamburger
+
 
     return (
         <section id={s.header} className={windowScroll > 50 ? s.headerScrolled : ''}>
@@ -57,16 +57,18 @@ const Header = () => {
                 }
                 <div className={s.navBar}>
                     <div className={s.navList}>
-                        <div className={hamburger ? s.hamburger + ' ' + s.active : s.hamburger} onClick={getBurger}>
+                        <div className={ hamburger ? s.hamburger + ' ' + s.active : s.hamburger} onClick={getBurger}>
                             <div className={s.bar}></div>
                         </div>
 
-                        <ul onClick={getBurger} className={hamburger ? s.active : ''}>
+                         <ul onClick={getBurger} className={hamburger ? s.active : ''}>
+
 
                             {isLogged && <NavLink className={s.link} to={'/profile'}>Profile</NavLink>}
                             {/*{!isLogged &&    <NavLink className={s.link} to={'/register'}>registration</NavLink>}*/}
                             {/*{isLogged && <NavLink className={s.link} to={'/log-in'}>log-in</NavLink>}*/}
-                            {isLogged && <NavLink onClick={logOutClick} className={s.link} to={'/log-out'}>log-out</NavLink>}
+                            {isLogged &&
+                            <NavLink onClick={logOutClick} className={s.link} to={'/log-out'}>log-out</NavLink>}
                             {/*{!isLogged &&   <NavLink className={s.link} to={'/forgot'}>forgot password?</NavLink>}*/}
                             {isLogged && <NavLink className={s.link} to={'/table'}>Packs</NavLink>}
                         </ul>

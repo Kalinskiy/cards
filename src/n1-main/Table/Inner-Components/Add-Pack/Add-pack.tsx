@@ -5,7 +5,6 @@ import {addPackTC} from "../../Table-Reducer/TableReducer";
 import {AppStateType} from "../../../m2-bll/store";
 import s from './Add-pack.module.css'
 
-import { Dispatch } from "redux";
 
 type PropsType = {
     modalActive: boolean
