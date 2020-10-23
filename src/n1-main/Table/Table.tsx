@@ -58,7 +58,7 @@ export const Table = () => {
         isAddSetModalActive(!isAddSetModalActive)
     }
     const onClickAllPacks = () => {
-        dispatch(getPacksAllTC(8, 1))
+        dispatch(getPacksAllTC(9, 1))
         setIsAllPacks(true)
     }
     const onClickPacks = () => {
@@ -82,10 +82,10 @@ export const Table = () => {
     }
 
     const handleChangePage = (page: number) => {
-        dispatch(getPacksTC(userId, 8, page, isMyPacks, searchName))
+        dispatch(getPacksTC(userId, 9, page, isMyPacks, searchName))
     }
     const handleChangePageAll = (page: number) => {
-        dispatch(getPacksAllTC(8, page, searchName))
+        dispatch(getPacksAllTC(9, page, searchName))
     }
 
 

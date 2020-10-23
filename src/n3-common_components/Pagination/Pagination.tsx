@@ -67,6 +67,7 @@ const ReactSimplePagination: FC<PaginateProps> = (props: PaginateProps) => {
                 </ul>
             </div>
 
+
     )
 };
 
