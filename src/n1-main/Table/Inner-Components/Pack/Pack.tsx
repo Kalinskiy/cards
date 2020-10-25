@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useCallback, useState} from "react";
 import style from "./Pack.module.scss"
 import {CardDataType} from "../../../Cards/Cards-API/Cards-API";
 import {NavLink} from "react-router-dom";
@@ -24,19 +24,19 @@ export type PackType = {
 
 }
 
-export const Pack2 = (props: PackType) => {
+export const Pack = React.memo((props: PackType) => {
+
     const [isDeletePackActive, setIsDeletePackActive] = useState(false)
     const [isUpdatePackActive, setIsUpdatePackActive] = useState(false)
     const [updatePackValue, setUpdatePackValue] = useState('')
 
     const date = parseISO(props.lastUpdate).toString().slice(0, 24)
 
-
     //delete pack functions
-    const onClickDeleteHandler = () => {
+    const onClickDeleteHandler = useCallback(() => {
         props.onClickDeleteHandler(props.packId, props.userId)
         setIsDeletePackActive(false)
-    }
+    }, [props.packId, props.userId])
     const showModalDelete = () => {
         setIsDeletePackActive(true)
     }
@@ -44,7 +44,7 @@ export const Pack2 = (props: PackType) => {
     const showModalUpdate = () => {
         setIsUpdatePackActive(true)
     }
-    const onClickUpdateHandler = (packId: string) => {
+    const onClickUpdateHandler = useCallback((packId: string) => {
         const obj: RenamePackDataType = {
             _id: packId,
             name: updatePackValue
@@ -52,17 +52,14 @@ export const Pack2 = (props: PackType) => {
         props.onClickUpdateHandler(obj)
         setIsUpdatePackActive(false)
         setUpdatePackValue('')
-    }
-
-    const getCardsOnClick = () => {
-
+    }, [props.onClickUpdateHandler])
+    const getCardsOnClick = useCallback(() => {
         props.getCardsOnClick(props.packId, 10)
-    }
+    }, [props.getCardsOnClick, props.packId])
+
     const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setUpdatePackValue(e.currentTarget.value)
     }
-
-
     return (
         <>
             <Modal modalActive={isDeletePackActive}
@@ -122,4 +119,4 @@ export const Pack2 = (props: PackType) => {
         </>
 
     )
-}
+})

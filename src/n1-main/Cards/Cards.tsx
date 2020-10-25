@@ -18,6 +18,7 @@ import {getPacksTC} from "../Table/Table-Reducer/TableReducer";
 
 
 export const Cards = () => {
+    console.log('Cards')
     const [addCardState, setAddCardState] = useState(false)
     const [title, setTitle] = useState('')
     //const [title, setTitle] = useState<string | null>(null)
@@ -52,11 +53,9 @@ export const Cards = () => {
     const showModalAddCard = () => {
         setAddCardState(true)
     }
-
     const hideModalAddCard = () => {
         setAddCardState(false)
     }
-
     const handleChangePage = (page: number) => {
         //  dispatch(getCardsTC(userId, 8, page))
     }

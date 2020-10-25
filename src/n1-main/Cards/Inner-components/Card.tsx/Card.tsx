@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import style from "./Card.module.scss"
 import {useDispatch, useSelector} from "react-redux";
 import {deleteCardTC} from "../../Cards-reducer/Cards-reducer";
@@ -14,7 +14,11 @@ export type CardType = {
     grade: number | null
 }
 
-export const Card = (props: CardType) => {
+export const Card = React.memo((props: CardType) => {
+    console.log('Card')
+
+    const dispatch = useDispatch()
+    const packId = useSelector<AppStateType, string | null>(state => state.cards.packId)
 
     const [deleteCardState, setDeleteCardState] = useState(false)
     const [answer, setAnswer] = useState(false)
@@ -22,14 +26,9 @@ export const Card = (props: CardType) => {
     const showModalDeleteCard = () => {
         setDeleteCardState(true)
     }
-
-
-    const dispatch = useDispatch()
-    const packId = useSelector<AppStateType, string | null>(state => state.cards.packId)
-
-    const deleteHandler = () => {
+    const deleteHandler = useCallback(() => {
         dispatch(deleteCardTC(props.id, packId))
-    }
+    },[props.id])
 
     return (
         <div className={style.container}>
@@ -85,4 +84,4 @@ export const Card = (props: CardType) => {
 
         </div>
     )
-}
+})

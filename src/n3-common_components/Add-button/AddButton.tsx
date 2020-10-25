@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import style from './AddButton.module.scss'
 import addButton from '../../n2-assets/icons/add.svg'
 import {Hint} from "../Hint/Hint";
@@ -12,11 +12,12 @@ type AddButtonPropsType = {
     onClick: () => void
     message: string
     length: number
-    searchName?:string
+    searchName?: string
 }
 
 
-export const AddButton = (props: AddButtonPropsType) => {
+export const AddButton = React.memo( (props: AddButtonPropsType) => {
+    console.log('AddButton')
 
     const isMyPacks = useSelector<AppStateType, boolean>(state => state.table.isMyPacks)
     const isMyCards = useSelector<AppStateType, boolean>(state => state.cards.isMyCards)
@@ -31,7 +32,8 @@ export const AddButton = (props: AddButtonPropsType) => {
              onClick={props.onClick}
         >
             {
-                isCardsLoaded &&  (conditionArrow || conditionArrow2) && <div className={style.hint}><Hint message={props.message}/></div>
+                isCardsLoaded && (conditionArrow || conditionArrow2) &&
+                <div className={style.hint}><Hint message={props.message}/></div>
             }
 
 
@@ -43,4 +45,4 @@ export const AddButton = (props: AddButtonPropsType) => {
         </div>
 
     )
-}
+})

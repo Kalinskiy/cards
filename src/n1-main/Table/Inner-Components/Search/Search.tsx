@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import style from './Search.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {getPacksAllTC, getPacksTC, setErrorSearch, setIsSearch} from "../../Table-Reducer/TableReducer";
@@ -12,7 +12,7 @@ type PropsType = {
     searchName: string
 }
 
-const Search = (props: PropsType) => {
+const Search = React.memo((props: PropsType) => {
     const dispatch = useDispatch()
 
     const userId = useSelector<AppStateType, string | null>(state => state.login.auth._id)
@@ -20,9 +20,9 @@ const Search = (props: PropsType) => {
     const packs = useSelector<AppStateType, PackType[]>(state => state.table.packs)
     const isSearch = useSelector<AppStateType, boolean>(state => state.table.isSearch)
 
-    const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         props.setSearchName(e.currentTarget.value)
-    }
+    }, [props.setSearchName])
 
     useEffect(() => {
         if (!packs.length && isSearch) {
@@ -34,9 +34,7 @@ const Search = (props: PropsType) => {
 
 
     const onKeyPressHandler = (e: React.KeyboardEvent<HTMLDivElement>) => {
-
         if (e.key === 'Enter') {
-
             dispatch(setIsSearch(true))
             dispatch(getPacksTC(userId, 8, page, true, props.searchName))
 
@@ -57,6 +55,6 @@ const Search = (props: PropsType) => {
                placeholder={'Search...'} onKeyPress={!props.isAllPacks ? onKeyPressHandler : onKeyPressHandlerAll}/>
 
     </div>
-}
+})
 
 export default Search

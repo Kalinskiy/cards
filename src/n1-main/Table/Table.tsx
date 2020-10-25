@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import style from "./Table.module.scss"
-import {Pack2} from "./Inner-Components/Pack/Pack";
+import {Pack} from "./Inner-Components/Pack/Pack";
 import {useDispatch, useSelector} from "react-redux";
 import {addPackTC, changePackNameTC, deletePackTC, getPacksAllTC, getPacksTC} from "./Table-Reducer/TableReducer";
 import {AppStateType} from "../m2-bll/store";
@@ -19,7 +19,8 @@ import onePack from '../../n2-assets/icons/one.png';
 import all from '../../n2-assets/icons/all.png'
 
 
-export const Table = () => {
+export const Table = React.memo(() => {
+    console.log('Table')
     const dispatch = useDispatch()
 
 
@@ -43,19 +44,12 @@ export const Table = () => {
 
     useEffect(() => {
         userId && dispatch(getPacksTC(userId))
-        /*if (isMyPacks && userId) {
-            userId && dispatch(getPacksTC(userId))
-        } else {
-            dispatch(getPacksAllTC(9, 1))
-        }*/
-
     }, [userId])
 
 
     const onChangeValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setAddPackValue(e.currentTarget.value)
     }
-
     const onClickDeleteHandler = (packId: string | null, userId: string | null) => {
         dispatch(deletePackTC(packId, userId))
     }
@@ -71,22 +65,16 @@ export const Table = () => {
         dispatch(getPacksTC(userId))
         setIsAllPacks(false)
     }
-
     const onClickUpdateHandler = (obj: RenamePackDataType) => {
         dispatch(changePackNameTC(obj, userId))
     }
-
     const getCardsOnClick = (packId: string, pageCount: number) => {
-
         dispatch(getCardsTC(packId, isMyCards, pageCount))
-
     }
-
     const onClickAddCardHandler = (card: CardDataType) => {
         isAddSetModalActive(true)
         dispatch(addCardTC(card))
     }
-
     const handleChangePage = (page: number) => {
         dispatch(getPacksTC(userId, 9, page, isMyPacks, searchName))
     }
@@ -98,8 +86,6 @@ export const Table = () => {
     return (
 
         <div className={common.container}>
-
-            {/* {!initialized && <div className={style.preloader}><Preloader/></div>}*/}
 
 
             <ModalInput modalActive={isAddModalActive}
@@ -113,81 +99,79 @@ export const Table = () => {
             </ModalInput>
 
             {
-                /*triggerPreloader
-                    ? <Preloader/>*/
-                /*:*/ <div className={style.wrapper}>
-                <Search setIsAllPacks={setIsAllPacks} isAllPacks={isAllPacks} searchName={searchName}
-                        setSearchName={setSearchName}/>
-                {
-                    search
-                        ? search
-                        : ''
-                }
+                <div className={style.wrapper}>
+                    <Search setIsAllPacks={setIsAllPacks} isAllPacks={isAllPacks} searchName={searchName}
+                            setSearchName={setSearchName}/>
+                    {
+                        search
+                            ? search
+                            : ''
+                    }
 
-                <div className={style.buttonsContainer}>
+                    <div className={style.buttonsContainer}>
 
-                    <AllButton onClick={!isAllPacks ? onClickAllPacks : onClickPacks}
-                               icon={!isAllPacks ? all : onePack}
-                    />
+                        <AllButton onClick={!isAllPacks ? onClickAllPacks : onClickPacks}
+                                   icon={!isAllPacks ? all : onePack}
+                        />
 
-                    <div className={!isMyPacks ? style.addButton : ''}>
+                        <div className={!isMyPacks ? style.addButton : ''}>
 
-                        {
-                            !isAllPacks && <AddButton
-                                onClick={() => isAddSetModalActive(true)}
-                                message={'Add card here'}
-                                length={packs.length}
-                                searchName={searchName}
-                            />
-                        }
+                            {
+                                !isAllPacks && <AddButton
+                                    onClick={() => isAddSetModalActive(true)}
+                                    message={'Add card here'}
+                                    length={packs.length}
+                                    searchName={searchName}
+                                />
+                            }
+
+                        </div>
 
                     </div>
+
+                    {
+
+                        triggerPreloader
+                            ? <Preloader/>
+                            : <div className={style.packs}>
+
+                                {
+                                    packs.map(e =>
+                                        <Pack key={e._id}
+                                              packId={e._id}
+                                              name={e.name}
+                                              cardsCount={e.cardsCount}
+                                              lastUpdate={e.updated}
+                                              userId={userId}
+                                              onClickDeleteHandler={onClickDeleteHandler}
+                                              isDeleteModalActive={isDeleteModalActive}
+                                              isDeleteSetModalActive={isDeleteSetModalActive}
+                                              onClickUpdateHandler={onClickUpdateHandler}
+                                              onClickAddCardHandler={onClickAddCardHandler}
+                                              getCardsOnClick={getCardsOnClick}
+
+
+                                        />)
+                                }
+                            </div>
+
+                    }
+
+                    {
+                        triggerRename && <div className={style.rename}><RenameWindow/></div>
+                    }
+                    {
+                        packs.length
+
+                            ? <ReactSimplePagination
+                                page={page ? page : 0}
+                                maxPage={totalPacks ? Math.ceil(totalPacks / 9) : 0}
+                                onClickAction={isAllPacks ? handleChangePageAll : handleChangePage}
+                            />
+                            : null
+                    }
 
                 </div>
-
-                {
-
-                    triggerPreloader
-                        ? <Preloader/>
-                        :<div className={style.packs}>
-
-                        {
-                            packs.map(e =>
-                                <Pack2 key={e._id}
-                                       packId={e._id}
-                                       name={e.name}
-                                       cardsCount={e.cardsCount}
-                                       lastUpdate={e.updated}
-                                       userId={userId}
-                                       onClickDeleteHandler={onClickDeleteHandler}
-                                       isDeleteModalActive={isDeleteModalActive}
-                                       isDeleteSetModalActive={isDeleteSetModalActive}
-                                       onClickUpdateHandler={onClickUpdateHandler}
-                                       onClickAddCardHandler={onClickAddCardHandler}
-                                       getCardsOnClick={getCardsOnClick}
-
-
-                                />)
-                        }
-                    </div>
-
-                }
-
-                {
-                    triggerRename && <div className={style.rename}><RenameWindow/></div>
-                }
-                {
-                    packs.length
-
-                        ? <ReactSimplePagination
-                            page={page ? page : 0}
-                            maxPage={totalPacks ? Math.floor(totalPacks / 7) : 0}
-                            onClickAction={isAllPacks ? handleChangePageAll : handleChangePage}
-                        />
-                        : null
-                }
-
-            </div>
 
             }
 
@@ -195,4 +179,4 @@ export const Table = () => {
 
     )
 
-}
+})
