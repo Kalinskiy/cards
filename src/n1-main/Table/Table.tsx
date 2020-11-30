@@ -181,7 +181,7 @@ export const Table = () => {
 
                         ? <ReactSimplePagination
                             page={page ? page : 0}
-                            maxPage={totalPacks ? Math.floor(totalPacks / 7) : 0}
+                            maxPage={totalPacks ? Math.ceil(totalPacks / 9) : 0}
                             onClickAction={isAllPacks ? handleChangePageAll : handleChangePage}
                         />
                         : null

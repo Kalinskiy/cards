@@ -153,6 +153,7 @@ export const getPacksAllTC = (pageCount = 9, page = 0, name?: string): ThunkActi
 export const addPackTC = (userId: string | null, addPackData?: string): ThunkActionType => async (dispatch) => {
     dispatch(changePreloaderTrigger(true))
     try {
+        debugger
         const cardsPack = addPackData ? {name: addPackData} : {}
         const response = await packsAPI.addPack(cardsPack)
 

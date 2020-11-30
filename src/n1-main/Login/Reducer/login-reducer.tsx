@@ -127,7 +127,7 @@ export const authTC = (): ThunkActionType => async (dispatch) => {
 
         }
     } catch (e) {
-        console.log(e.response.data.error)
+        //console.log(e.response.data.error)
     } finally {
         dispatch(setPreloader(false))
     }

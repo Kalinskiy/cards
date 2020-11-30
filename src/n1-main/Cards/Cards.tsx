@@ -14,7 +14,6 @@ import {BackButton} from "../../n3-common_components/Back-button/BackButton";
 import {AddButton} from "../../n3-common_components/Add-button/AddButton";
 import {PlayButton} from "../../n3-common_components/Play-button/PlayButton";
 import {PackType} from "../Table/Table-API/API-Table";
-import {getPacksTC} from "../Table/Table-Reducer/TableReducer";
 
 
 export const Cards = () => {
@@ -39,7 +38,6 @@ export const Cards = () => {
 
 
     useEffect(() => {
-        debugger
         auth && dispatch(getCardsTC(params.packId, isMyCards))
         // userId && dispatch(getPacksTC(userId))
     }, [params.packId, auth, userId])
